@@ -1,0 +1,15 @@
+#
+# Copyright 2017 Alien Labs.
+#
+
+type Node {
+  title: String!
+}
+
+type RootQuery {
+  root: Node!
+}
+
+schema {
+  query: RootQuery
+}

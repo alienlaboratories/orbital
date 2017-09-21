@@ -1,0 +1,52 @@
+#
+# Copyright 2017 Alien Labs.
+#
+
+#
+# Service definitions.
+#
+
+type Service {
+  uri: String!
+  id: String!
+  provider: String!
+  title: String!
+}
+
+input ServiceInput {
+  id: String!
+  provider: String!
+  title: String!
+}
+
+#
+# Queries.
+# TODO(burdon): Query by label, provider domain, URI
+#
+
+input ServiceQuery {
+  uri: String
+  provider: String
+  label: [String]
+}
+
+type RootQuery {
+  getServices(query: ServiceQuery): [Service]
+}
+
+#
+# Mutations.
+#
+
+type RootMutation {
+  updateService(service: ServiceInput!): Service!
+}
+
+#
+# Schema.
+#
+
+schema {
+  query: RootQuery,
+  mutation: RootMutation
+}

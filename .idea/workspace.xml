@@ -2,27 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="34b656a3-71bc-48b7-8649-8b8b9b971e54" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/codeStyleSettings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/README.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/db/agent.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/db/database.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/db/resolvers.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/db/resolvers.test.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/registry/gql/schema.graphql" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/registry/resolvers.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/registry/resolvers.test.js" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/graphql.schema.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/resolvers.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/resolvers.test.js" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/gql/schema.graphql" afterPath="$PROJECT_DIR$/src/db/gql/schema.graphql" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/orbital.iml" afterPath="$PROJECT_DIR$/.idea/orbital.iml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/registry/registry.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/graphql.config.json" afterPath="$PROJECT_DIR$/graphql.config.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/update_schema.js" afterPath="$PROJECT_DIR$/scripts/update_schema.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/yarn.lock" afterPath="$PROJECT_DIR$/yarn.lock" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/db/resolvers.js" afterPath="$PROJECT_DIR$/src/db/resolvers.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/registry/resolvers.js" afterPath="$PROJECT_DIR$/src/registry/resolvers.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/registry/resolvers.test.js" afterPath="$PROJECT_DIR$/src/registry/resolvers.test.js" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -43,25 +28,85 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="resolvers.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="resolvers.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/registry/resolvers.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="405">
-              <caret line="27" column="3" lean-forward="false" selection-start-line="27" selection-start-column="3" selection-end-line="27" selection-end-column="3" />
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/README.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="SPLIT">
-              <first_editor relative-caret-position="180">
-                <caret line="12" column="0" lean-forward="false" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
-                <folding />
-              </first_editor>
-              <second_editor />
+      <file leaf-file-name="sanity.test.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/sanity.test.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="resolvers.test.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/registry/resolvers.test.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding>
+                <marker date="1506035652000" expanded="true" signature="582:721" ph="mutation...{&#10;        updateService(service: $service) {&#10;          title&#10;        }&#10;      }" />
+                <marker date="1506035652000" expanded="true" signature="591:603" ph="RootMutation...RootMutation" />
+                <marker date="1506035652000" expanded="true" signature="603:628" ph="(...)" />
+                <marker date="1506035652000" expanded="true" signature="614:626" ph="ServiceInput...ServiceInput" />
+                <marker date="1506035652000" expanded="true" signature="629:721" ph="{...}" />
+                <marker date="1506035652000" expanded="true" signature="639:652" ph="updateService...updateService" />
+                <marker date="1506035652000" expanded="true" signature="639:713" ph="updateService...{&#10;          title&#10;        }" />
+                <marker date="1506035652000" expanded="true" signature="652:671" ph="(...)" />
+                <marker date="1506035652000" expanded="true" signature="653:660" ph="service...service" />
+                <marker date="1506035652000" expanded="true" signature="672:713" ph="{...}" />
+                <marker date="1506035652000" expanded="true" signature="698:703" ph="title...title" />
+                <marker date="1506035652000" expanded="true" signature="1078:1221" ph="query...{&#10;        getServices(query: $query) {&#10;          title&#10;        }&#10;      }" />
+                <marker date="1506035652000" expanded="true" signature="1084:1093" ph="RootQuery...RootQuery" />
+                <marker date="1506035652000" expanded="true" signature="1093:1116" ph="(...)" />
+                <marker date="1506035652000" expanded="true" signature="1102:1114" ph="ServiceQuery...ServiceQuery" />
+                <marker date="1506035652000" expanded="true" signature="1117:1221" ph="{...}" />
+                <marker date="1506035652000" expanded="true" signature="1127:1138" ph="getServices...getServices" />
+                <marker date="1506035652000" expanded="true" signature="1127:1213" ph="getServices...{&#10;          title&#10;        }" />
+                <marker date="1506035652000" expanded="true" signature="1138:1153" ph="(...)" />
+                <marker date="1506035652000" expanded="true" signature="1139:1144" ph="query...query" />
+                <marker date="1506035652000" expanded="true" signature="1154:1213" ph="{...}" />
+                <marker date="1506035652000" expanded="true" signature="1198:1203" ph="title...title" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="resolvers.test.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/db/resolvers.test.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="resolvers.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/db/resolvers.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="420">
+              <caret line="28" column="0" lean-forward="false" selection-start-line="27" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="registry.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/registry/registry.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="420">
+              <caret line="28" column="0" lean-forward="false" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -107,14 +152,15 @@
         <option value="$PROJECT_DIR$/src/registry/gql/registry.graphqls" />
         <option value="$PROJECT_DIR$/src/db/gql/schema.graphqls" />
         <option value="$PROJECT_DIR$/src/db/schema.js" />
-        <option value="$PROJECT_DIR$/src/db/resolvers.js" />
         <option value="$PROJECT_DIR$/scripts/update_schema.js" />
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/src/registry/gql/schema.graphql" />
         <option value="$PROJECT_DIR$/src/db/resolvers.test.js" />
-        <option value="$PROJECT_DIR$/src/registry/resolvers.test.js" />
-        <option value="$PROJECT_DIR$/src/registry/resolvers.js" />
         <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/src/registry/resolvers.test.js" />
+        <option value="$PROJECT_DIR$/src/db/resolvers.js" />
+        <option value="$PROJECT_DIR$/src/registry/resolvers.js" />
+        <option value="$PROJECT_DIR$/src/registry/registry.js" />
       </list>
     </option>
   </component>
@@ -136,7 +182,7 @@
   </component>
   <component name="ProjectFrameBounds">
     <option name="y" value="23" />
-    <option name="width" value="1820" />
+    <option name="width" value="1262" />
     <option name="height" value="1417" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
@@ -236,6 +282,7 @@
       <recent name="$PROJECT_DIR$/tools" />
     </key>
     <key name="es6.move.members.recent.items">
+      <recent name="$PROJECT_DIR$/src/registry/registry.js" />
       <recent name="$PROJECT_DIR$/src/schema.js" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -271,7 +318,8 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1820" height="1417" extended-state="0" />
+    <frame x="0" y="23" width="1262" height="1417" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -280,7 +328,7 @@
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19291338" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28114754" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -407,13 +455,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/sanity.test.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/db/agent.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
@@ -492,7 +533,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/db/resolvers.js">
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="FIRST">
+          <first_editor relative-caret-position="180">
+            <caret line="12" column="0" lean-forward="true" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+            <folding />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/sanity.test.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -502,59 +554,64 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/db/resolvers.test.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="0" lean-forward="true" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/db/resolvers.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="28" column="0" lean-forward="false" selection-start-line="27" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/registry/registry.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="28" column="0" lean-forward="false" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/registry/resolvers.test.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="16" column="16" lean-forward="true" selection-start-line="16" selection-start-column="16" selection-end-line="16" selection-end-column="16" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1506035008000" expanded="true" signature="540:679" ph="mutation...{&#10;        updateService(service: $service) {&#10;          title&#10;        }&#10;      }" />
-            <marker date="1506035008000" expanded="true" signature="549:561" ph="RootMutation...RootMutation" />
-            <marker date="1506035008000" expanded="true" signature="561:586" ph="(...)" />
-            <marker date="1506035008000" expanded="true" signature="572:584" ph="ServiceInput...ServiceInput" />
-            <marker date="1506035008000" expanded="true" signature="587:679" ph="{...}" />
-            <marker date="1506035008000" expanded="true" signature="597:610" ph="updateService...updateService" />
-            <marker date="1506035008000" expanded="true" signature="597:671" ph="updateService...{&#10;          title&#10;        }" />
-            <marker date="1506035008000" expanded="true" signature="610:629" ph="(...)" />
-            <marker date="1506035008000" expanded="true" signature="611:618" ph="service...service" />
-            <marker date="1506035008000" expanded="true" signature="630:671" ph="{...}" />
-            <marker date="1506035008000" expanded="true" signature="656:661" ph="title...title" />
-            <marker date="1506035008000" expanded="true" signature="1036:1179" ph="query...{&#10;        getServices(query: $query) {&#10;          title&#10;        }&#10;      }" />
-            <marker date="1506035008000" expanded="true" signature="1042:1051" ph="RootQuery...RootQuery" />
-            <marker date="1506035008000" expanded="true" signature="1051:1074" ph="(...)" />
-            <marker date="1506035008000" expanded="true" signature="1060:1072" ph="ServiceQuery...ServiceQuery" />
-            <marker date="1506035008000" expanded="true" signature="1075:1179" ph="{...}" />
-            <marker date="1506035008000" expanded="true" signature="1085:1096" ph="getServices...getServices" />
-            <marker date="1506035008000" expanded="true" signature="1085:1171" ph="getServices...{&#10;          title&#10;        }" />
-            <marker date="1506035008000" expanded="true" signature="1096:1111" ph="(...)" />
-            <marker date="1506035008000" expanded="true" signature="1097:1102" ph="query...query" />
-            <marker date="1506035008000" expanded="true" signature="1112:1171" ph="{...}" />
-            <marker date="1506035008000" expanded="true" signature="1156:1161" ph="title...title" />
+            <marker date="1506035652000" expanded="true" signature="582:721" ph="mutation...{&#10;        updateService(service: $service) {&#10;          title&#10;        }&#10;      }" />
+            <marker date="1506035652000" expanded="true" signature="591:603" ph="RootMutation...RootMutation" />
+            <marker date="1506035652000" expanded="true" signature="603:628" ph="(...)" />
+            <marker date="1506035652000" expanded="true" signature="614:626" ph="ServiceInput...ServiceInput" />
+            <marker date="1506035652000" expanded="true" signature="629:721" ph="{...}" />
+            <marker date="1506035652000" expanded="true" signature="639:652" ph="updateService...updateService" />
+            <marker date="1506035652000" expanded="true" signature="639:713" ph="updateService...{&#10;          title&#10;        }" />
+            <marker date="1506035652000" expanded="true" signature="652:671" ph="(...)" />
+            <marker date="1506035652000" expanded="true" signature="653:660" ph="service...service" />
+            <marker date="1506035652000" expanded="true" signature="672:713" ph="{...}" />
+            <marker date="1506035652000" expanded="true" signature="698:703" ph="title...title" />
+            <marker date="1506035652000" expanded="true" signature="1078:1221" ph="query...{&#10;        getServices(query: $query) {&#10;          title&#10;        }&#10;      }" />
+            <marker date="1506035652000" expanded="true" signature="1084:1093" ph="RootQuery...RootQuery" />
+            <marker date="1506035652000" expanded="true" signature="1093:1116" ph="(...)" />
+            <marker date="1506035652000" expanded="true" signature="1102:1114" ph="ServiceQuery...ServiceQuery" />
+            <marker date="1506035652000" expanded="true" signature="1117:1221" ph="{...}" />
+            <marker date="1506035652000" expanded="true" signature="1127:1138" ph="getServices...getServices" />
+            <marker date="1506035652000" expanded="true" signature="1127:1213" ph="getServices...{&#10;          title&#10;        }" />
+            <marker date="1506035652000" expanded="true" signature="1138:1153" ph="(...)" />
+            <marker date="1506035652000" expanded="true" signature="1139:1144" ph="query...query" />
+            <marker date="1506035652000" expanded="true" signature="1154:1213" ph="{...}" />
+            <marker date="1506035652000" expanded="true" signature="1198:1203" ph="title...title" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/registry/resolvers.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="27" column="3" lean-forward="false" selection-start-line="27" selection-start-column="3" selection-end-line="27" selection-end-column="3" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="180">
-            <caret line="12" column="0" lean-forward="false" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
-            <folding />
-          </first_editor>
-          <second_editor />
         </state>
       </provider>
     </entry>

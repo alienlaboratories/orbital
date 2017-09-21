@@ -8,6 +8,7 @@ import { concatenateTypeDefs, makeExecutableSchema } from 'graphql-tools';
 import DatabaseSchema from './gql/schema.graphql';
 
 /**
+ * Creates the GQL client schema.
  *
  * @param database
  * @returns {GraphQLSchema}
@@ -24,7 +25,7 @@ export const createSchema = (database) => {
 };
 
 /**
- *
+ * GQL Schema Resolvers.
  */
 export class Resolvers {
 

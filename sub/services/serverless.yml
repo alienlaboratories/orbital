@@ -35,6 +35,9 @@ provider:
 
   stage: dev
 
+  environment:
+    VERSION: "0.0.1"
+
 
 # you can add statements to the Lambda function's IAM Role here
 #  iamRoleStatements:
@@ -66,11 +69,11 @@ provider:
 #    - exclude-me-dir/**
 
 functions:
-  hello:
-    handler: handler.hello
+  status:
+    handler: handler.status
     events:
       - http:
-          path: hello
+          path: status
           method: get
 
 
@@ -97,7 +100,7 @@ functions:
 #            detail:
 #              state:
 #                - pending
-#      - cloudwatchLog: '/aws/lambda/hello'
+#      - cloudwatchLog: '/aws/lambda/status'
 #      - cognitoUserPool:
 #          pool: MyUserPool
 #          trigger: PreSignUp

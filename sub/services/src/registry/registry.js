@@ -5,24 +5,54 @@
 import assert from 'assert';
 
 /**
- * Service registry abstraction.
+ * Service registry interface.
  */
-export class ServiceRegistry {
+class ServiceRegistry {
 
-  // TODO(burdon): Create interface.
-  // TODO(burdon): Implement persistent version using DynamoDB.
+  /**
+   *
+   * @param service
+   */
+  updateService(service) {
+    throw new Error('Not implemented');
+  }
+
+  /**
+   *
+   * @param query
+   */
+  getServices(query) {
+    throw new Error('Not implemented');
+  }
+}
+
+/**
+ * In-memory implementation of ServiceRegistry.
+ */
+export class MemoryServiceRegistry extends ServiceRegistry {
 
   _serviceMap = new Map();
 
   updateService(service) {
     assert(service.provider && service.id);
     service.uri = service.provider + '/' + service.id;
-    this._serviceMap.set(service.uri, service);
+    return Promise.resolve(this._serviceMap.set(service.uri, service)).then(map => {
+      return service;
+    });
   }
 
   getServices(query) {
     // TODO(burdon): Filter.
     assert(query);
-    return Array.from(this._serviceMap.values());
+    return Promise.resolve(Array.from(this._serviceMap.values()));
   }
+}
+
+/**
+ * DynamoDB implementation of ServiceRegistry.
+ */
+export class DynamoServiceRegistry extends ServiceRegistry {
+
+  // TODO(burdon): Implement persistent version using DynamoDB.
+  // https://serverless.com/blog/node-rest-api-with-serverless-lambda-and-dynamodb/
 }

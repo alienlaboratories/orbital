@@ -16,6 +16,10 @@ TODO(burdon): Set-up AWS instructions.
   
   aws lambda list-functions
 
+  API_URL="https://psuwih37r6.execute-api.us-east-1.amazonaws.com/dev/status"
+  curl ${API_URL}
+  curl -i -X POST ${API_URL} -H "Content-Type: application/json" -d "{}"
+
   sls invoke -f status | jq
 
   sls logs -f status -t

@@ -45,8 +45,7 @@ export class Resolvers {
       RootMutation: {
         updateService: (obj, args, context) => {
           let { service } = args;
-          this._registry.updateService(service);
-          return service;
+          return this._registry.updateService(service);
         }
       }
     };

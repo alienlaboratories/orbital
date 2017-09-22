@@ -5,7 +5,7 @@
 import { graphql } from 'graphql';
 
 import { createSchema} from './resolvers';
-import { ServiceRegistry } from './registry';
+import { MemoryServiceRegistry } from './registry';
 
 // TODO(burdon): Serverless/Lambda GQL service endpoint.
 // TODO(burdon): CLI with Lokka.
@@ -13,7 +13,7 @@ import { ServiceRegistry } from './registry';
 
 test('Basic registry.', async () => {
 
-  let schema = createSchema(new ServiceRegistry());
+  let schema = createSchema(new MemoryServiceRegistry());
 
   let root = {};
 

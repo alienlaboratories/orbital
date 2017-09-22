@@ -68,9 +68,14 @@ provider:
 #    - exclude-me.js
 #    - exclude-me-dir/**
 
+# API Endpoints
+# https://console.aws.amazon.com/apigateway
+# https://serverless.com/blog/node-rest-api-with-serverless-lambda-and-dynamodb
+
 functions:
   status:
     handler: handler.status
+    description: "Status service."
     events:
       - http:
           path: status

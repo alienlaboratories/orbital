@@ -1,5 +1,12 @@
 # Orbital
 
+## Getting Started
+
+~~~~
+  yarn install
+  jest
+~~~~
+
 ## Purpose
 
 - Multi-dimensional Graph Database with GraphQL API.

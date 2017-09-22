@@ -20,7 +20,7 @@ class App {
     // https://github.com/yargs/yargs/blob/master/docs/advanced.md#commands
     this._yargs = yargs
       .exitProcess(false)
-      .command(['exit', 'quit'], 'Quit', {}, argv => process.exit(0))
+      .command(['quit', 'exit'], 'Quit', {}, argv => process.exit(0))
       .help();
 
     // https://nodejs.org/api/readline.html

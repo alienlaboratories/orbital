@@ -12,10 +12,13 @@ TODO(burdon): Set-up AWS instructions.
 
 ~~~~
   sls deploy -v
-  sls deploy function -f hello
+  sls deploy function -f status
+  
+  aws lambda list-functions
 
-  sls invoke -f hello -l
-  sls logs -f hello -t
+  sls invoke -f status | jq
+
+  sls logs -f status -t
 
   sls remove
 ~~~~

@@ -4,13 +4,12 @@
 
 module.exports = {
 
-  hello: (event, context, callback) => {
+  status: (event, context, callback) => {
     callback(null, {
       statusCode: 200,
-      body: JSON.stringify({
-        message: 'Orbital OK.',
-        input: event,
-      }),
+      body: {
+        version: process.env['VERSION']
+      }
     });
   }
 

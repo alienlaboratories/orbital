@@ -17,6 +17,7 @@
     "regenerator-runtime": "^0.11.0"
   },
   "dependencies": {
+    "babel-preset-env": "^1.6.0",
     "graphql": "^0.11.3",
     "graphql-server-express": "^1.1.2",
     "graphql-tag": "^2.2.0",

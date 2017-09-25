@@ -1,7 +1,7 @@
 {
-  "name": "orbital-cli",
+  "name": "orbital-server",
   "version": "0.0.1",
-  "description": "Orbital CLI.",
+  "description": "Orbital Test Server.",
   "license": "UNLICENSED",
   "repository": "https://github.com/alienlabs/orbital",
   "main": "src/main.js",
@@ -18,10 +18,7 @@
     "regenerator-runtime": "^0.11.0"
   },
   "dependencies": {
-    "lodash": "^4.17.4",
-    "moment": "^2.18.1",
-    "node-yaml": "^3.1.0",
-    "yargs": "^9.0.1"
+    "express": "^4.15.4"
   },
   "jest": {
     "verbose": false,
@@ -32,6 +29,8 @@
   },
   "scripts": {
     "lint": "eslint -c ../../eslintrc.yml ./src",
-    "test": "jest --no-cache --silent"
+    "test": "jest --no-cache --silent",
+    "server": "babel-node ./src/main.js",
+    "start": "hilite nodemon --exec npm run server"
   }
 }

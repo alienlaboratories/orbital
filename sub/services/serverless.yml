@@ -27,6 +27,9 @@ plugins:
   # https://www.npmjs.com/package/serverless-webpack
   - "serverless-webpack"
 
+  # sls info --json | jq
+  # https://www.npmjs.com/package/serverless-plugin-info-json
+  - "serverless-plugin-info-json"
 
 provider:
   name: aws
@@ -73,6 +76,7 @@ provider:
 # https://serverless.com/blog/node-rest-api-with-serverless-lambda-and-dynamodb
 
 functions:
+
   status:
     handler: handler.status
     description: "Status service."
@@ -80,6 +84,15 @@ functions:
       - http:
           path: status
           method: get
+
+  registry:
+    handler: handler.registry
+    description: "Registry GraphQL API."
+    events:
+      - http:
+          path: registry
+          method: post
+          cors: true
 
 
 #    The following are a few example events you can configure

@@ -4,11 +4,10 @@
 
 import { graphql } from 'graphql';
 
-import { createSchema} from './resolvers';
+import { createSchema } from './resolvers';
 import { MemoryServiceRegistry } from './registry';
 
 // TODO(burdon): Serverless/Lambda GQL service endpoint.
-// TODO(burdon): CLI with Lokka.
 // TODO(burdon): End-to-end testing.
 
 test('Basic registry.', async () => {
@@ -20,14 +19,6 @@ test('Basic registry.', async () => {
   let context = {};
 
   {
-    let variables = {
-      service: {
-        id: 'test',
-        provider: 'test.com',
-        title: 'Test'
-      }
-    };
-
     const mutation = `
       mutation RootMutation($service: ServiceInput!) {
         updateService(service: $service) {
@@ -37,6 +28,14 @@ test('Basic registry.', async () => {
       }
     `;
 
+    let variables = {
+      service: {
+        id: 'test',
+        provider: 'test.com',
+        title: 'Test'
+      }
+    };
+
     let mutationResult = await graphql(schema, mutation, root, context, variables);
     let { data: { updateService:service } } = mutationResult;
     console.log('Updated:', service);
@@ -44,12 +43,6 @@ test('Basic registry.', async () => {
   }
 
   {
-    let variables = {
-      query: {
-        provider: 'test.com'
-      }
-    };
-
     const query = `
       query RootQuery($query: ServiceQuery!) {
         getServices(query: $query) {
@@ -59,6 +52,12 @@ test('Basic registry.', async () => {
         }
       }
     `;
+
+    let variables = {
+      query: {
+        provider: 'test.com'
+      }
+    };
 
     let queryResult = await graphql(schema, query, root, context, variables);
     let { data: { getServices:services } } = queryResult;

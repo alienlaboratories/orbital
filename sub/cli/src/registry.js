@@ -24,7 +24,7 @@ export const Registry = (config) => {
 
       .command({
         command: 'list',
-        describe: 'List services',
+        describe: 'List services.',
         handler: argv => {
 
           const query = `
@@ -61,7 +61,7 @@ export const Registry = (config) => {
       .command({
         command: 'update <provider> <id> <name>',
         aliases: ['up'],
-        describe: 'Add/update service record',
+        describe: 'Add/update service record.',
         handler: argv => {
 
           const query = `
@@ -91,8 +91,20 @@ export const Registry = (config) => {
       })
 
       .command({
+        command: 'test <id>',
+        describe: 'Test service.',
+        handler: argv => {
+          let { id } = argv;
+
+          // TODO(burdon): Test/Invoke service (need endpoint).
+          // TODO(burdon): Query for service endpoint then invoke.
+          console.log('TESTING: ' + id);
+        }
+      })
+
+      .command({
         command: 'clear',
-        describe: 'Clear entire registry',
+        describe: 'Clear entire registry.',
         handler: argv => {
           const query = `
             mutation Reset {

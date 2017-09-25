@@ -23,7 +23,7 @@ test('Basic registry.', async () => {
       mutation RootMutation($service: ServiceInput!) {
         updateService(service: $service) {
           uri
-          title
+          name
         }
       }
     `;
@@ -32,7 +32,7 @@ test('Basic registry.', async () => {
       service: {
         id: 'test',
         provider: 'test.com',
-        title: 'Test'
+        name: 'Test'
       }
     };
 
@@ -48,7 +48,7 @@ test('Basic registry.', async () => {
         getServices(query: $query) {
           id
           provider
-          title
+          name
         }
       }
     `;
@@ -63,5 +63,15 @@ test('Basic registry.', async () => {
     let { data: { getServices:services } } = queryResult;
     console.log('Services:', services);
     expect(services).toHaveLength(1);
+  }
+
+  {
+    const query = `
+      mutation Reset {
+        reset
+      }
+    `;
+
+    await graphql(schema, query, root, context);
   }
 });

@@ -60,22 +60,24 @@ class App {
       this._rl.prompt();
       this._rl.on('line', (input) => {
         this._yargs.parse(input, (err, argv, output) => {
-          if (err) {
-            console.error(err);
-            process.exit(1);
-          }
 
           const next = result => {
+            let log = result || output;
 
-            // TODO(burdon): How to set output?
+            // TODO(burdon): How to set output? (Is set by framework on error).
             // https://github.com/yargs/yargs/issues/960
-            output && console.log(output);
-            result && console.log(result);
+            log && console.log(log);
 
             // Next command.
             console.log();
             this._rl.prompt();
           };
+
+          if (err) {
+//          process.exit(1);
+            next();
+            return;
+          }
 
           // TODO(burdon): Async commands?
           // https://github.com/yargs/yargs/issues/918

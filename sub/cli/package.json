@@ -32,6 +32,7 @@
   },
   "scripts": {
     "lint": "eslint -c ../../eslintrc.yml ./src",
-    "test": "jest --no-cache --silent"
+    "test": "jest --no-cache --silent",
+    "start": "babel-node ./src/main.js"
   }
 }

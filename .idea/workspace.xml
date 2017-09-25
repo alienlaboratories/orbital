@@ -2,21 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="34b656a3-71bc-48b7-8649-8b8b9b971e54" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/sub/cli/src/registry.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/sub/cli/src/status.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/sub/server/package.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/sub/server/src/main.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/architecture.png" afterPath="$PROJECT_DIR$/docs/architecture.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/sub/cli/src/client.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sub/cli/package.json" afterPath="$PROJECT_DIR$/sub/cli/package.json" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sub/cli/src/main.js" afterPath="$PROJECT_DIR$/sub/cli/src/main.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sub/services/handler.js" afterPath="$PROJECT_DIR$/sub/services/handler.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sub/services/package.json" afterPath="$PROJECT_DIR$/sub/services/package.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sub/services/serverless.yml" afterPath="$PROJECT_DIR$/sub/services/serverless.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sub/cli/src/registry.js" afterPath="$PROJECT_DIR$/sub/cli/src/registry.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sub/services/src/registry/gql/schema.graphql" afterPath="$PROJECT_DIR$/sub/services/src/registry/gql/schema.graphql" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sub/services/src/registry/registry.js" afterPath="$PROJECT_DIR$/sub/services/src/registry/registry.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sub/services/src/registry/resolvers.js" afterPath="$PROJECT_DIR$/sub/services/src/registry/resolvers.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sub/services/src/registry/resolvers.test.js" afterPath="$PROJECT_DIR$/sub/services/src/registry/resolvers.test.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/yarn.lock" afterPath="$PROJECT_DIR$/yarn.lock" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -27,63 +21,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="main.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sub/cli/src/main.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-116">
-              <caret line="11" column="9" lean-forward="false" selection-start-line="11" selection-start-column="9" selection-end-line="11" selection-end-column="9" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="registry.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/sub/cli/src/registry.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="108">
-              <caret line="14" column="31" lean-forward="false" selection-start-line="14" selection-start-column="31" selection-end-line="14" selection-end-column="31" />
+            <state relative-caret-position="351">
+              <caret line="48" column="24" lean-forward="false" selection-start-line="48" selection-start-column="24" selection-end-line="48" selection-end-column="24" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="handler.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sub/services/handler.js">
+      <file leaf-file-name="main.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sub/cli/src/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="690">
-              <caret line="46" column="0" lean-forward="true" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
-              <folding>
-                <marker date="1506312387000" expanded="true" signature="838:844" ph="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="resolvers.test.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sub/services/src/registry/resolvers.test.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="915">
-              <caret line="61" column="54" lean-forward="false" selection-start-line="61" selection-start-column="54" selection-end-line="61" selection-end-column="54" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="registry.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sub/services/src/registry/registry.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="870">
-              <caret line="58" column="0" lean-forward="true" selection-start-line="58" selection-start-column="0" selection-end-line="58" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="resolvers.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sub/services/src/registry/resolvers.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="615">
-              <caret line="41" column="9" lean-forward="true" selection-start-line="41" selection-start-column="9" selection-end-line="41" selection-end-column="9" />
+            <state relative-caret-position="829">
+              <caret line="70" column="28" lean-forward="true" selection-start-line="70" selection-start-column="28" selection-end-line="70" selection-end-column="28" />
               <folding />
             </state>
           </provider>
@@ -106,9 +58,11 @@
       <find>hello</find>
       <find>curl</find>
       <find>lokka</find>
+      <find>title</find>
     </findStrings>
     <replaceStrings>
       <replace>:</replace>
+      <replace>name</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -117,8 +71,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/gql/schema.graphql" />
-        <option value="$PROJECT_DIR$/src/schema.js" />
         <option value="$PROJECT_DIR$/src/agent.js" />
         <option value="$PROJECT_DIR$/src/resolvers.js" />
         <option value="$PROJECT_DIR$/src/database.js" />
@@ -154,19 +106,21 @@
         <option value="$PROJECT_DIR$/sub/demo/README.md" />
         <option value="$PROJECT_DIR$/sub/cli/README.md" />
         <option value="$PROJECT_DIR$/sub/services/webpack.config.js" />
-        <option value="$PROJECT_DIR$/sub/services/src/registry/resolvers.js" />
         <option value="$PROJECT_DIR$/sub/services/README.md" />
         <option value="$PROJECT_DIR$/sub/cli/src/status.js" />
-        <option value="$PROJECT_DIR$/sub/cli/package.json" />
         <option value="$PROJECT_DIR$/sub/server.js" />
         <option value="$PROJECT_DIR$/sub/server/nodemon.json" />
         <option value="$PROJECT_DIR$/sub/server/package.json" />
         <option value="$PROJECT_DIR$/sub/server/src/main.js" />
         <option value="$PROJECT_DIR$/sub/services/serverless.yml" />
-        <option value="$PROJECT_DIR$/sub/cli/src/main.js" />
-        <option value="$PROJECT_DIR$/sub/services/src/registry/resolvers.test.js" />
-        <option value="$PROJECT_DIR$/sub/services/src/registry/registry.js" />
         <option value="$PROJECT_DIR$/sub/services/handler.js" />
+        <option value="$PROJECT_DIR$/sub/cli/package.json" />
+        <option value="$PROJECT_DIR$/sub/cli/src/client.js" />
+        <option value="$PROJECT_DIR$/sub/services/src/registry/resolvers.js" />
+        <option value="$PROJECT_DIR$/sub/services/src/registry/registry.js" />
+        <option value="$PROJECT_DIR$/sub/services/src/registry/gql/schema.graphql" />
+        <option value="$PROJECT_DIR$/sub/services/src/registry/resolvers.test.js" />
+        <option value="$PROJECT_DIR$/sub/cli/src/main.js" />
         <option value="$PROJECT_DIR$/sub/cli/src/registry.js" />
       </list>
     </option>
@@ -326,6 +280,15 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="registry" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="orbital" type="b2602c69:ProjectViewProjectNode" />
+              <item name="orbital" type="462c0819:PsiDirectoryNode" />
+              <item name="sub" type="462c0819:PsiDirectoryNode" />
+              <item name="services" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="registry" type="462c0819:PsiDirectoryNode" />
+              <item name="gql" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -356,6 +319,7 @@
       <recent name="$PROJECT_DIR$/sub/cli" />
     </key>
     <key name="es6.move.members.recent.items">
+      <recent name="$PROJECT_DIR$/sub/cli/src/client.js" />
       <recent name="$PROJECT_DIR$/src/registry/registry.js" />
       <recent name="$PROJECT_DIR$/src/schema.js" />
     </key>
@@ -430,13 +394,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/sub/services/src/registry/gql/schema.graphql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="765">
-          <caret line="51" column="0" lean-forward="true" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/graphql.config.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
@@ -642,13 +599,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sub/services/src/registry/gql/schema.graphql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="645">
-          <caret line="43" column="0" lean-forward="true" selection-start-line="43" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/sub/services/package.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -693,14 +643,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sub/cli/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="28" column="27" lean-forward="false" selection-start-line="28" selection-start-column="27" selection-end-line="28" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/sub/server/package.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="495">
@@ -741,30 +683,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sub/services/src/registry/resolvers.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="615">
-          <caret line="41" column="9" lean-forward="true" selection-start-line="41" selection-start-column="9" selection-end-line="41" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sub/services/src/registry/registry.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="870">
-          <caret line="58" column="0" lean-forward="true" selection-start-line="58" selection-start-column="0" selection-end-line="58" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sub/services/src/registry/resolvers.test.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="915">
-          <caret line="61" column="54" lean-forward="false" selection-start-line="61" selection-start-column="54" selection-end-line="61" selection-end-column="54" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/sub/services/handler.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="690">
@@ -775,18 +693,66 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/sub/cli/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="525">
+          <caret line="35" column="38" lean-forward="false" selection-start-line="35" selection-start-column="38" selection-end-line="35" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sub/cli/src/client.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="870">
+          <caret line="58" column="0" lean-forward="true" selection-start-line="58" selection-start-column="0" selection-end-line="58" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sub/services/src/registry/registry.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="705">
+          <caret line="47" column="0" lean-forward="true" selection-start-line="47" selection-start-column="0" selection-end-line="47" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sub/services/src/registry/resolvers.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="690">
+          <caret line="46" column="17" lean-forward="false" selection-start-line="46" selection-start-column="17" selection-end-line="46" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sub/services/src/registry/gql/schema.graphql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="615">
+          <caret line="41" column="12" lean-forward="true" selection-start-line="41" selection-start-column="12" selection-end-line="41" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sub/services/src/registry/resolvers.test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="23" column="42" lean-forward="true" selection-start-line="23" selection-start-column="42" selection-end-line="23" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/sub/cli/src/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-116">
-          <caret line="11" column="9" lean-forward="false" selection-start-line="11" selection-start-column="9" selection-end-line="11" selection-end-column="9" />
+        <state relative-caret-position="829">
+          <caret line="70" column="28" lean-forward="true" selection-start-line="70" selection-start-column="28" selection-end-line="70" selection-end-column="28" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sub/cli/src/registry.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="14" column="31" lean-forward="false" selection-start-line="14" selection-start-column="31" selection-end-line="14" selection-end-column="31" />
+        <state relative-caret-position="351">
+          <caret line="48" column="24" lean-forward="false" selection-start-line="48" selection-start-column="24" selection-end-line="48" selection-end-column="24" />
           <folding />
         </state>
       </provider>

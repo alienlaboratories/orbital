@@ -10,6 +10,14 @@
 class ServiceRegistry {
 
   /**
+   * Reset registry.
+   */
+  // TODO(burdon): By provider. Disable in prod.
+  clear() {
+    throw new Error('Not implemented');
+  }
+
+  /**
    *
    * @param service
    */
@@ -32,6 +40,11 @@ class ServiceRegistry {
 export class MemoryServiceRegistry extends ServiceRegistry {
 
   _serviceMap = new Map();
+
+  clear() {
+    this._serviceMap.clear();
+    return Promise.resolve();
+  }
 
   updateService(service) {
     // assert(service.provider && service.id);

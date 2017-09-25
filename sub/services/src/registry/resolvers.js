@@ -43,6 +43,11 @@ export class Resolvers {
       },
 
       RootMutation: {
+        reset: (obj, args, context) => {
+          this._registry.clear();
+          return 0;
+        },
+
         updateService: (obj, args, context) => {
           let { service } = args;
           return this._registry.updateService(service);

@@ -10,13 +10,13 @@ type Service {
   uri: String!
   id: String!
   provider: String!
-  title: String!
+  name: String!
 }
 
 input ServiceInput {
   id: String!
   provider: String!
-  title: String!
+  name: String!
 }
 
 #
@@ -39,6 +39,8 @@ type RootQuery {
 #
 
 type RootMutation {
+  reset: Int
+
   updateService(service: ServiceInput!): Service!
 }
 

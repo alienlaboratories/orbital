@@ -5,6 +5,9 @@
   "license": "UNLICENSED",
   "repository": "https://github.com/alienlabs/orbital",
   "main": "src/main.js",
+  "bin": {
+    "orb": "bin/orb.js"
+  },
   "devDependencies": {
     "babel-cli": "^6.24.1",
     "babel-core": "^6.24.1",
@@ -33,6 +36,7 @@
   "scripts": {
     "lint": "eslint -c ../../eslintrc.yml ./src",
     "test": "jest --no-cache --silent",
+    "build": "webpack",
     "start": "babel-node ./src/main.js"
   }
 }

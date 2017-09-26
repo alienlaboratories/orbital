@@ -2,14 +2,50 @@
 # Copyright 2017 Alien Labs.
 #
 
+#
+# Graph Nodes and Links.
+#
+
 type Node {
+  id: String!
   title: String!
 }
 
-type RootQuery {
-  root: Node!
+#
+# Queries.
+# TODO(burdon): Query by label, provider domain, URI
+#
+
+input Query {
+  ids: [String]
 }
 
+type QueryResult {
+  nodes: [Node]!
+}
+
+type RootQuery {
+  query(query: Query!): QueryResult!
+}
+
+#
+# Mutations.
+#
+
+input NodeInput {
+  id: String!
+  title: String!
+}
+
+type RootMutation {
+  updateNode(node: NodeInput!): Node!
+}
+
+#
+# Schema.
+#
+
 schema {
-  query: RootQuery
+  query: RootQuery,
+  mutation: RootMutation
 }

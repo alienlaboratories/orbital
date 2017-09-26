@@ -37,10 +37,18 @@ export class Resolvers {
   getMap() {
     return {
       RootQuery: {
+
         query: (obj, args, context) => {
           let { query } = args;
           let { domains } = context;
           return this._database.query(domains, query);
+        }
+      },
+
+      RootMutation: {
+
+        updateNodes: (obj, args, context) => {
+          return [];
         }
       }
     };

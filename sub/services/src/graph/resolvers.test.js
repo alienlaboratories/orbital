@@ -12,7 +12,7 @@ import { createSchema } from './resolvers';
 // TODO(burdon): Agent subscriptions (called on mutation).
 // TODO(burdon): Mutate graph.
 
-test('Basic query.', () => {
+test('Basic query.', async () => {
 
   let database = new Database()
     .addGraph(new Graph('x'))
@@ -43,12 +43,34 @@ test('Basic query.', () => {
       query: {}
     };
 
-    return graphql(schema, query, root, context, variables).then(response => {
-      let { data } = response;
-      let { result } = data;
-      let { nodes } = result;
+    let response = await graphql(schema, query, root, context, variables);
+    let { data } = response;
+    let { result } = data;
+    let { nodes } = result;
 
-      expect(nodes).toHaveLength(0);
-    });
+    expect(nodes).toHaveLength(0);
+  }
+
+  {
+    const query = `
+      mutation TestMutation($nodes: [NodeInput]!) {
+        nodes: updateNodes(nodes: $nodes) {
+          id
+          title
+        }
+      }
+    `;
+
+    let context = {};
+
+    let variables = {
+      nodes: []
+    };
+
+    let response = await graphql(schema, query, root, context, variables);
+    let { data } = response;
+    let { nodes } = data;
+
+    expect(nodes).toHaveLength(0);
   }
 });

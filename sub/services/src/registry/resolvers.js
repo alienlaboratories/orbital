@@ -36,6 +36,7 @@ export class Resolvers {
 
     return {
       RootQuery: {
+
         getServices: (obj, args, context) => {
           let { query } = args;
           return this._registry.getServices(query);
@@ -43,6 +44,7 @@ export class Resolvers {
       },
 
       RootMutation: {
+
         reset: (obj, args, context) => {
           this._registry.clear();
           return 0;

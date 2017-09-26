@@ -21,27 +21,34 @@ test('Basic query.', () => {
 
   let schema = createSchema(database);
 
-  const query = `
-    query RootQuery {
-      root {
-        title
-      }
-    }
-  `;
-
   let root = {};
 
-  let context = {
-    domains: [ 'x', 'z' ]
-  };
+  {
+    const query = `
+      query TestQuery($query: Query!) {
+        result: query(query: $query) {
+          nodes {
+            id
+            title
+          }
+        }
+      }
+    `;
 
-  let variables = {};
+    let context = {
+      domains: ['x', 'z']
+    };
 
-  return graphql(schema, query, root, context, variables).then(result => {
-    let { data } = result;
-    let { root } = data;
-    let { title } = root;
+    let variables = {
+      query: {}
+    };
 
-    expect(title).toBe('Root');
-  });
+    return graphql(schema, query, root, context, variables).then(response => {
+      let { data } = response;
+      let { result } = data;
+      let { nodes } = result;
+
+      expect(nodes).toHaveLength(0);
+    });
+  }
 });

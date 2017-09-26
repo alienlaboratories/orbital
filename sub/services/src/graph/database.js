@@ -29,14 +29,15 @@ export class Database {
 
   _graphMap = new Map();
 
+  // TODO(burdon): ???
   addGraph(graph) {
     this._graphMap.set(graph.domain, graph);
     return this;
   }
 
-  getRoot(domains) {
+  query(domains, query) {
     return {
-      title: 'Root'
+      nodes: []
     };
   }
 }

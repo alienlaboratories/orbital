@@ -37,9 +37,10 @@ export class Resolvers {
   getMap() {
     return {
       RootQuery: {
-        root: (obj, args, context) => {
+        query: (obj, args, context) => {
+          let { query } = args;
           let { domains } = context;
-          return this._database.getRoot(domains);
+          return this._database.query(domains, query);
         }
       }
     };

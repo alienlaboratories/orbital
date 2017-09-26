@@ -31,6 +31,7 @@ input ServiceQuery {
 }
 
 type RootQuery {
+
   getServices(query: ServiceQuery): [Service]
 }
 
@@ -39,6 +40,7 @@ type RootQuery {
 #
 
 type RootMutation {
+
   reset: Int
 
   updateService(service: ServiceInput!): Service!

@@ -2,7 +2,6 @@
 // Copyright 2017 Alien Labs.
 //
 
-import _ from 'lodash';
 import { GraphClient } from './client';
 
 /**

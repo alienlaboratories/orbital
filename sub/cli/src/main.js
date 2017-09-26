@@ -5,6 +5,7 @@
 import readline from 'readline';
 import yargs from 'yargs';
 
+import { Graph } from './graph';
 import { Registry } from './registry';
 import { Status } from './status';
 
@@ -38,8 +39,9 @@ class App {
         handler: argv => process.exit(0)
       })
 
-      .command(Status(config))
+      .command(Graph(config))
       .command(Registry(config))
+      .command(Status(config))
 
       .help();
 

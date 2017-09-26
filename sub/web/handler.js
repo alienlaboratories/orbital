@@ -2,7 +2,8 @@
 // Copyright 2017 Alien Labs.
 //
 
-// TODO(burdon): Test templates.
+// TODO(burdon): Templates.
+// TODO(burdon): Serve Webpack App.
 // TODO(burdon): Map serverless path to routes?
 // https://github.com/awslabs/aws-serverless-express/blob/master/example/app.js
 

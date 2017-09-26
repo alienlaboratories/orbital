@@ -13,7 +13,7 @@ type Node {
 
 #
 # Queries.
-# TODO(burdon): Query by label, provider domain, URI
+# TODO(burdon): Query by label, domain domain, URI
 #
 
 # TODO(burdon): Does ID reference domain?

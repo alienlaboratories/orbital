@@ -33,7 +33,7 @@ module.exports = {
   },
 
   /**
-   * Service Registry.
+   * Registry Service.
    */
   registry: (event, context, callback) => {
     let { functionName, awsRequestId } = context;
@@ -58,6 +58,16 @@ module.exports = {
         body: JSON.stringify(response)
       });
     });
+  },
+
+  /**
+   * Graph Service.
+   */
+  graph: (event, context, callback) => {
+    let { functionName, awsRequestId } = context;
+    console.log(JSON.stringify({ functionName, awsRequestId }));
+
+    // TODO(burdon): Invoke graphql.
   }
 
 };

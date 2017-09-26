@@ -12,7 +12,7 @@ TODO(burdon): Set-up AWS instructions.
 
 ~~~~
   sls deploy -v
-  sls deploy function -f status
+  sls deploy -f status
   
   aws lambda list-functions
 

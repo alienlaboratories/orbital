@@ -12,7 +12,7 @@ class ServiceRegistry {
   /**
    * Reset registry.
    */
-  // TODO(burdon): By provider. Disable in prod.
+  // TODO(burdon): By domain. Disable in prod.
   clear() {
     throw new Error('Not implemented');
   }
@@ -47,8 +47,8 @@ export class MemoryServiceRegistry extends ServiceRegistry {
   }
 
   updateService(service) {
-    // assert(service.provider && service.id);
-    service.uri = service.provider + '/' + service.id;
+    // assert(service.domain && service.id);
+    service.uri = service.domain + '/' + service.id;
     return Promise.resolve(this._serviceMap.set(service.uri, service)).then(map => {
       return service;
     });

@@ -93,7 +93,15 @@ functions:
       - http:
           path: registry
           method: post
-          cors: true
+
+  # TODO(burdon): Rename database/db.
+  graph:
+    handler: handler.graph
+    description: "Database GraphQL API."
+    events:
+      - http:
+          path: graph
+          method: post
 
 
 #    The following are a few example events you can configure

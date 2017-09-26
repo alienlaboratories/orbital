@@ -9,24 +9,24 @@
 type Service {
   uri: String!
   id: String!
-  provider: String!
+  domain: String!
   name: String!
 }
 
 input ServiceInput {
   id: String!
-  provider: String!
+  domain: String!
   name: String!
 }
 
 #
 # Queries.
-# TODO(burdon): Query by label, provider domain, URI
+# TODO(burdon): Query by label, domain domain, URI
 #
 
 input ServiceQuery {
   uri: String
-  provider: String
+  domain: String
   label: [String]
 }
 

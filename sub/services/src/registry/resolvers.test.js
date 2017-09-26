@@ -31,7 +31,7 @@ test('Basic registry.', async () => {
     let variables = {
       service: {
         id: 'test',
-        provider: 'test.com',
+        domain: 'test.com',
         name: 'Test'
       }
     };
@@ -47,7 +47,7 @@ test('Basic registry.', async () => {
       query RootQuery($query: ServiceQuery!) {
         getServices(query: $query) {
           id
-          provider
+          domain
           name
         }
       }
@@ -55,7 +55,7 @@ test('Basic registry.', async () => {
 
     let variables = {
       query: {
-        provider: 'test.com'
+        domain: 'test.com'
       }
     };
 

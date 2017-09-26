@@ -31,6 +31,7 @@ plugins:
   # https://www.npmjs.com/package/serverless-plugin-info-json
   - "serverless-plugin-info-json"
 
+
 provider:
   name: aws
   runtime: nodejs6.10

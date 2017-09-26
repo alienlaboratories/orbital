@@ -22,7 +22,7 @@
     "verbose": false,
     "cacheDirectory": "/tmp/jest",
     "transformIgnorePatterns": [
-      "/node_modules/(?!alien-)"
+      "/node_modules/(?!orbital-)"
     ]
   }
 }

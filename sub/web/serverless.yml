@@ -1,0 +1,26 @@
+#
+# Copyright 2017 Alien Labs.
+#
+
+service: web
+
+provider:
+  name: aws
+  runtime: nodejs6.10
+  region: us-east-1
+
+  stage: dev
+
+plugins:
+  # Webpack
+  # https://www.npmjs.com/package/serverless-webpack
+  - "serverless-webpack"
+
+functions:
+  home:
+    handler: handler.home
+    description: "Express home."
+    events:
+      - http:
+          path: home
+          method: get

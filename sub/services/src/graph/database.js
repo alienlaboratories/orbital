@@ -20,7 +20,7 @@ export class Graph {
     return this._domain;
   }
 
-  queryNodes() {
+  queryNodes(query) {
     return Array.from(this._nodeMap.values());
   }
 
@@ -49,7 +49,6 @@ export class Database {
   _graphMap = new Map();
 
   // TODO(burdon): Context defines domains (default from CLI).
-  // TODO(burdon): Default Graph?
   // TODO(burdon): Ignore joins and other domains for now.
 
   addGraph(graph) {
@@ -58,8 +57,23 @@ export class Database {
   }
 
   query(query) {
+    let { domains } = query;
+
+    let map = new Map();
+
+    _.each(domains, domain => {
+      let graph = this._graphMap.get(domain);
+
+      // TODO(burdon): Data model.
+      // TODO(burdon): Merge (nodes should have a map of domain specific sub-nodes).
+      let nodes = graph.queryNodes(query);
+      _.each(nodes, node => {
+        map.set(node.id, node);
+      });
+    });
+
     return {
-      nodes: []
+      nodes: Array.from(map.values())
     };
   }
 

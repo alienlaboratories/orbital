@@ -88,6 +88,6 @@ test('Basic query.', async () => {
     let { data: { result } } = response;
     let { nodes } = result;
 
-    expect(nodes).toHaveLength(0);
+    expect(nodes).toHaveLength(1);
   }
 });

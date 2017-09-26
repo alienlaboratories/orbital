@@ -23,6 +23,49 @@ test('Basic query.', async () => {
 
   let root = {};
 
+  let context = {};
+
+  {
+    const query = `
+      mutation TestMutation($batches: [Batch]!) {
+        result: update(batches: $batches) {
+          nodes {
+            id
+            title
+          }
+        }
+      }
+    `;
+
+    let variables = {
+      batches: [
+        {
+          domain: 'x',
+          mutations: [
+            {
+              id: 'Item-1',
+              mutations: [
+                {
+                  key: 'title',
+                  value: 'Item 1'
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    };
+
+    let response = await graphql(schema, query, root, context, variables);
+    let { data: { result } } = response;
+    expect(result).toHaveLength(1);
+
+    let batch = result[0];
+    let { nodes } = batch;
+    expect(nodes).toHaveLength(1);
+    expect(nodes[0].title).toBe('Item 1');
+  }
+
   {
     const query = `
       query TestQuery($query: Query!) {
@@ -35,41 +78,15 @@ test('Basic query.', async () => {
       }
     `;
 
-    let context = {
-      domains: ['x', 'z']
-    };
-
     let variables = {
-      query: {}
-    };
-
-    let response = await graphql(schema, query, root, context, variables);
-    let { data } = response;
-    let { result } = data;
-    let { nodes } = result;
-
-    expect(nodes).toHaveLength(0);
-  }
-
-  {
-    const query = `
-      mutation TestMutation($nodes: [NodeInput]!) {
-        nodes: updateNodes(nodes: $nodes) {
-          id
-          title
-        }
+      query: {
+        domains: ['x', 'z']
       }
-    `;
-
-    let context = {};
-
-    let variables = {
-      nodes: []
     };
 
     let response = await graphql(schema, query, root, context, variables);
-    let { data } = response;
-    let { nodes } = data;
+    let { data: { result } } = response;
+    let { nodes } = result;
 
     expect(nodes).toHaveLength(0);
   }

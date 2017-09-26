@@ -7,8 +7,8 @@
 #
 
 type Node {
-  id: String!
-  title: String!
+  id:         String!
+  title:      String!
 }
 
 #
@@ -16,12 +16,15 @@ type Node {
 # TODO(burdon): Query by label, provider domain, URI
 #
 
+# TODO(burdon): Does ID reference domain?
+
 input Query {
-  ids: [String]
+  domains:    [String]!
+  ids:        [String]
 }
 
 type QueryResult {
-  nodes: [Node]!
+  nodes:      [Node]!
 }
 
 type RootQuery {
@@ -30,16 +33,30 @@ type RootQuery {
 
 #
 # Mutations.
+# TODO(burdon): OT mutations.
 #
 
-input NodeInput {
-  id: String!
-  title: String!
+input NodeMutation {
+  key:        String!
+  value:      String
+}
+
+input NodeMutations {
+  id:         String!
+  mutations:  [NodeMutation]!
+}
+
+input Batch {
+  domain:     String!
+  mutations:  [NodeMutations]!
+}
+
+type BatchResult {
+  nodes:      [Node]!
 }
 
 type RootMutation {
-  # TODO(burdon): Specify domain?
-  updateNodes(nodes: [NodeInput]!): [Node]!
+  update(batches: [Batch]!): [BatchResult]!
 }
 
 #
@@ -47,6 +64,6 @@ type RootMutation {
 #
 
 schema {
-  query: RootQuery,
-  mutation: RootMutation
+  query:      RootQuery,
+  mutation:   RootMutation
 }

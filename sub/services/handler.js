@@ -4,10 +4,14 @@
 
 import { graphql } from 'graphql';
 
-import { createSchema } from './src/registry/resolvers';
+import { createSchema as createDatabaseSchema } from './src/db/resolvers';
+import { createSchema as createRegistrySchema } from './src/registry/resolvers';
+
+import { Database } from './src/db/database';
 import { MemoryServiceRegistry } from './src/registry/registry';
 
-const RegistrySchema = createSchema(new MemoryServiceRegistry());
+const DatabaseSchema = createDatabaseSchema(new Database());
+const RegistrySchema = createRegistrySchema(new MemoryServiceRegistry());
 
 module.exports = {
 
@@ -46,7 +50,6 @@ module.exports = {
     let queryContext = {};
 
     graphql(RegistrySchema, query, queryRoot, queryContext, variables).then(result => {
-
       let response = {
         version: process.env['VERSION'],
         result
@@ -67,11 +70,25 @@ module.exports = {
     let { functionName, awsRequestId } = context;
     console.log(JSON.stringify({ functionName, awsRequestId }));
 
-    // TODO(burdon): Invoke graphql.
-    callback(null, {
-      statusCode: 200,
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({})
+    // TODO(burdon): Add Graph on demand.
+
+    let { body } = event;
+    let { query, variables } = JSON.parse(body);
+
+    let queryRoot = {};
+    let queryContext = {};
+
+    graphql(DatabaseSchema, query, queryRoot, queryContext, variables).then(result => {
+      let response = {
+        version: process.env['VERSION'],
+        result
+      };
+
+      callback(null, {
+        statusCode: 200,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(response)
+      });
     });
   }
 

@@ -42,7 +42,7 @@ export const Database = (config) => {
 
           argv._result = client.query(query, variables, { verbose: argv.verbose }).then(result => {
 
-            console.log('>>>>>>>>>', result);
+            console.log('>>>>>>>>>', JSON.stringify(result));
 
           });
         }

@@ -2,7 +2,7 @@
 // Copyright 2017 Alien Labs.
 //
 
-import uuidv4 from 'uuid/v4';
+import { ID } from 'orbital-util';
 
 import { GraphClient } from './client';
 
@@ -73,8 +73,7 @@ export const Database = (config) => {
               {
                 mutations: [
                   {
-                    // TODO(burdon): Factor out to util.
-                    id: uuidv4(),
+                    id: ID.createId(),
                     mutations: [
                       {
                         key: 'title',

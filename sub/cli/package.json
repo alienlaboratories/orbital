@@ -24,7 +24,6 @@
     "moment": "^2.18.1",
     "node-yaml": "^3.1.0",
     "orbital-util": "0.0.1",
-    "uuid": "^3.1.0",
     "yargs": "^9.0.1"
   },
   "jest": {

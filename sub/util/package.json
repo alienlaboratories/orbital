@@ -4,6 +4,7 @@
   "description": "Orbital Util.",
   "license": "UNLICENSED",
   "repository": "https://github.com/alienlabs/orbital",
+  "main": "index.js",
   "devDependencies": {
     "babel-cli": "^6.24.1",
     "babel-core": "^6.24.1",

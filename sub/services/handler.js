@@ -61,13 +61,18 @@ module.exports = {
   },
 
   /**
-   * Graph Service.
+   * Database Service.
    */
-  graph: (event, context, callback) => {
+  database: (event, context, callback) => {
     let { functionName, awsRequestId } = context;
     console.log(JSON.stringify({ functionName, awsRequestId }));
 
     // TODO(burdon): Invoke graphql.
+    callback(null, {
+      statusCode: 200,
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({})
+    });
   }
 
 };

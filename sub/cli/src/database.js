@@ -7,14 +7,14 @@ import { GraphClient } from './client';
 /**
  * Graph commands.
  */
-export const Graph = (config) => {
+export const Database = (config) => {
   const { ApiEndpoint } = config;
 
-  let client = new GraphClient(ApiEndpoint + '/graph');
+  let client = new GraphClient(ApiEndpoint + '/db');
 
   return {
-    command: ['graph', 'g'],
-    describe: 'Graph API.',
+    command: ['database', 'db'],
+    describe: 'Graph Database API.',
     builder: yargs => yargs
 
       .command({
@@ -22,8 +22,6 @@ export const Graph = (config) => {
         aliases: ['q'],
         describe: 'Query nodes.',
         handler: argv => {
-
-          console.log('>>>>>>>>>>>>>>>>>>', argv);
 
           const query = `
             query Query($query: Query!) {

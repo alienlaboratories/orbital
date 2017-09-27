@@ -5,7 +5,7 @@
 import readline from 'readline';
 import yargs from 'yargs/yargs';
 
-import { Graph } from './graph';
+import { Database } from './database';
 import { Registry } from './registry';
 import { Status } from './status';
 
@@ -15,6 +15,12 @@ const VERSION = '0.0.1';
 const STAGE = 'dev';
 
 const PROMPT = '[orb]> ';
+
+const config = {
+  // TODO(burdon): NOTE: Changes each time deployed. CNAME? Route53? CloudFormation?
+  // https://github.com/serverless/serverless/issues/2074
+  ApiEndpoint: 'https://t2isk8i7ek.execute-api.us-east-1.amazonaws.com/' + STAGE
+};
 
 /**
  * CLI app.
@@ -46,7 +52,7 @@ class App {
         }
       })
 
-      .command(Graph(config))
+      .command(Database(config))
       .command(Registry(config))
       .command(Status(config))
 
@@ -112,8 +118,4 @@ class App {
   }
 }
 
-new App({
-  // TODO(burdon): NOTE: Changes each time deployed. CNAME? Route53? CloudFormation?
-  // https://github.com/serverless/serverless/issues/2074
-  ApiEndpoint: 'https://t2isk8i7ek.execute-api.us-east-1.amazonaws.com/' + STAGE
-}).start();
+new App(config).start();

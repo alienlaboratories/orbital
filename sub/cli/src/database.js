@@ -2,6 +2,8 @@
 // Copyright 2017 Alien Labs.
 //
 
+import uuidv4 from 'uuid/v4';
+
 import { GraphClient } from './client';
 
 /**
@@ -35,26 +37,64 @@ export const Database = (config) => {
           `;
 
           let variables = {
-            query: {
-              domains: ['default']
-            }
+            query: {}
           };
 
-          argv._result = client.query(query, variables, { verbose: argv.verbose }).then(result => {
-
-            console.log('>>>>>>>>>', JSON.stringify(result));
-
+          argv._result = client.query(query, variables, { verbose: argv.verbose }).then(response => {
+            let { result: { errors, data } } = response;
+            if (errors) {
+              console.error(JSON.stringify(errors, null, 2));
+            } else {
+              console.log(JSON.stringify(data, null, 2));
+            }
           });
         }
       })
 
       .command({
-        command: 'update <id> <title>',
-        aliases: ['up'],
+        command: 'create <title>',
         describe: 'Update node.',
         handler: argv => {
-          let { id, title } = argv;
-          console.log('Update', id, title);
+          let { title } = argv;
+
+          const query = `
+            mutation Mutation($batches: [Batch]!) {
+              result: update(batches: $batches) {
+                nodes {
+                  id
+                  title
+                }
+              }
+            }
+          `;
+
+          let variables = {
+            batches: [
+              {
+                mutations: [
+                  {
+                    // TODO(burdon): Factor out to util.
+                    id: uuidv4(),
+                    mutations: [
+                      {
+                        key: 'title',
+                        value: title
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          };
+
+          argv._result = client.query(query, variables, { verbose: argv.verbose }).then(response => {
+            let { result: { errors, data } } = response;
+            if (errors) {
+              console.error(JSON.stringify(errors, null, 2));
+            } else {
+              console.log(JSON.stringify(data, null, 2));
+            }
+          });
         }
       })
 

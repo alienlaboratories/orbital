@@ -19,7 +19,7 @@ type Node {
 # TODO(burdon): Does ID reference domain?
 
 input Query {
-  domains:    [String]!
+  domains:    [String]
   ids:        [String]
 }
 
@@ -47,7 +47,7 @@ input NodeMutations {
 }
 
 input Batch {
-  domain:     String!
+  domain:     String
   mutations:  [NodeMutations]!
 }
 

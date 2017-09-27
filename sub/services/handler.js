@@ -70,8 +70,6 @@ module.exports = {
     let { functionName, awsRequestId } = context;
     console.log(JSON.stringify({ functionName, awsRequestId }));
 
-    // TODO(burdon): Add Graph on demand.
-
     let { body } = event;
     let { query, variables } = JSON.parse(body);
 

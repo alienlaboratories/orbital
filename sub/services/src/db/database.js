@@ -46,6 +46,8 @@ export class Graph {
  */
 export class Database {
 
+  static DEFAULT_DOMAIN = 'default';
+
   _graphMap = new Map();
 
   // TODO(burdon): Context defines domains (default from CLI).
@@ -56,31 +58,44 @@ export class Database {
     return this;
   }
 
-  query(query) {
-    let { domains } = query;
+  getOrCreateGraph(domain) {
+    let graph = this._graphMap.get(domain);
+    if (!graph) {
+      graph = new Graph(domain);
+      this._graphMap.set(domain, graph);
+    }
 
-    let map = new Map();
+    return graph;
+  }
+
+  query(query) {
+    let { domains=[Database.DEFAULT_DOMAIN] } = query;
+
+    // TODO(burdon): Ordered.
+    let results = new Map();
 
     _.each(domains, domain => {
-      let graph = this._graphMap.get(domain);
+      let graph = this.getOrCreateGraph(domain);
+      console.log(domain, graph);
 
       // TODO(burdon): Data model.
       // TODO(burdon): Merge (nodes should have a map of domain specific sub-nodes).
       let nodes = graph.queryNodes(query);
       _.each(nodes, node => {
-        map.set(node.id, node);
+        results.set(node.id, node);
       });
     });
 
     return {
-      nodes: Array.from(map.values())
+      nodes: Array.from(results.values())
     };
   }
 
   update(batches) {
     return _.map(batches, batch => {
-      let { domain, mutations } = batch;
-      let graph = this._graphMap.get(domain);
+      let { domain=Database.DEFAULT_DOMAIN, mutations } = batch;
+
+      let graph = this.getOrCreateGraph(domain);
 
       return {
         nodes: _.map(mutations, mutation => {

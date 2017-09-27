@@ -10,13 +10,7 @@
 # TODO(burdon): Serverless offline plugin.
 # TODO(burdon): IAM roles for deploying lambda.
 
-
 service: orbital
-
-
-custom:
-  webpack: "webpack.config.js"
-
 
 plugins:
   # Webpack
@@ -27,6 +21,8 @@ plugins:
   # https://www.npmjs.com/package/serverless-plugin-info-json
   - "serverless-plugin-info-json"
 
+custom:
+  webpack: "webpack.config.js"
 
 provider:
   name: aws
@@ -37,7 +33,6 @@ provider:
 
   environment:
     VERSION: "0.0.1"
-
 
 functions:
 

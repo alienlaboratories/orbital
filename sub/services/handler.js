@@ -15,6 +15,8 @@ const RegistrySchema = createRegistrySchema(new MemoryServiceRegistry());
 
 module.exports = {
 
+  // https://github.com/boazdejong/serverless-graphql-api
+
   /**
    * Status.
    */

@@ -2,6 +2,7 @@
 // Copyright 2017 Alien Labs.
 //
 
+import _ from 'lodash';
 import express from 'express';
 import favicon from 'serve-favicon';
 import handlebars from 'express-handlebars';
@@ -12,54 +13,88 @@ const ENV = {
   STATIC_DIR: './static'
 };
 
-export const app = express();
+/**
+ * Create App.
+ *
+ * @param {Function} init
+ */
+export const createApp = init => {
+  let app = express();
 
-//
-// Static files.
-// https://expressjs.com/en/starter/static-files.html
-//
+  init(app);
 
-app.use(favicon(path.join(ENV.STATIC_DIR, 'favicon.ico')));
+  //
+  // Static files.
+  // https://expressjs.com/en/starter/static-files.html
+  //
 
-app.use('/static', express.static(ENV.STATIC_DIR));
+  app.use(favicon(path.join(ENV.STATIC_DIR, 'favicon.ico')));
 
-//
-// Handlebars.
-//
+  app.use('/static', express.static(ENV.STATIC_DIR));
 
-app.engine('hbs', handlebars({
-  extname: '.hbs',
-  layoutsDir: path.join(ENV.VIEWS_DIR, '/layouts'),
-  partialsDir: path.join(ENV.VIEWS_DIR, '/partials'),
-  defaultLayout: 'main',
-  helpers: {
+  //
+  // Middleware.
+  //
 
-    // {{#section 'body'}}
-    section: function(name, options) {
-      this.sections = this.sections || {};
-      this.sections[name] = options.fn(this);
-    }
-  }
-}));
+  app.use((req, res, next) => {
+    _.assign(res.locals, {
+      req,
+      event: req.apiGateway.event,
+      root: '/' + req.apiGateway.event.requestContext.stage
+    });
 
-app.set('view engine', 'hbs');
-app.set('views', ENV.VIEWS_DIR);
-
-//
-// Routes.
-//
-
-app.get('/home', (req, res) => {
-  res.render('home');
-});
-
-app.get('/app', (req, res) => {
-  res.render('app', {
-    config: {
-      root: 'root'
-    },
-
-    // TODO(burdon): sls client deploy.
-    bundle: 'https://s3.amazonaws.com/orbital-web-assets/app.js'
+    next();
   });
-});
+
+  //
+  // Handlebars.
+  //
+
+  app.engine('hbs', handlebars({
+    extname: '.hbs',
+    layoutsDir: path.join(ENV.VIEWS_DIR, '/layouts'),
+    partialsDir: path.join(ENV.VIEWS_DIR, '/partials'),
+    defaultLayout: 'main',
+    helpers: {
+
+      // {{#section 'body'}}
+      section: function(name, options) {
+        this.sections = this.sections || {};
+        this.sections[name] = options.fn(this);
+      },
+
+      // {{{ json var }}}
+      json: function(object, indent=0) {
+        return JSON.stringify(object, null, indent);
+      }
+    }
+  }));
+
+  app.set('view engine', 'hbs');
+  app.set('views', ENV.VIEWS_DIR);
+
+  //
+  // Routes.
+  //
+
+  app.get('/', (req, res) => {
+    res.render('home');
+  });
+
+  app.get('/app', (req, res) => {
+    res.render('app', {
+      config: {
+        root: 'root'
+      },
+
+      // TODO(burdon): sls client deploy.
+      bundle: 'https://s3.amazonaws.com/orbital-web-assets/app.js'
+    });
+  });
+
+  app.get('/debug', (req, res) => {
+    res.json(req.apiGateway.event);
+  });
+
+  return app;
+};

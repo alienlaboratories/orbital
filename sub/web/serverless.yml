@@ -75,8 +75,8 @@ functions:
           path: /
           method: get
       - http:
-          path: home
+          path: app
           method: get
       - http:
-          path: app
+          path: debug
           method: get

@@ -15,15 +15,19 @@
 // TODO(burdon): https://forum.serverless.com/t/serverless-vs-aws-sam-aws-serverless-express/2784
 
 import awsServerlessExpress from 'aws-serverless-express';
+import awsServerlessExpressMiddleware from 'aws-serverless-express/middleware';
 
-import { app } from './src/server';
+import { createApp } from './src/server';
 
-const server = awsServerlessExpress.createServer(app);
+let app = createApp(app => {
+  app.use(awsServerlessExpressMiddleware.eventContext());
+});
+
+let server = awsServerlessExpress.createServer(app);
 
 module.exports = {
 
   site: (event, context, callback) => {
     awsServerlessExpress.proxy(server, event, context);
   }
-
 };

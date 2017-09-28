@@ -16,9 +16,12 @@ export const app = express();
 
 //
 // Static files.
+// https://expressjs.com/en/starter/static-files.html
 //
 
 app.use(favicon(path.join(ENV.STATIC_DIR, 'favicon.ico')));
+
+app.use('/static', express.static(ENV.STATIC_DIR));
 
 //
 // Handlebars.

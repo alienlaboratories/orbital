@@ -28,32 +28,35 @@ plugins:
   # https://www.npmjs.com/package/serverless-webpack
   - "serverless-webpack"
 
-  # TODO(burdon): Not used.
-#  - "serverless-offline"
-
-  # TODO(burdon): Custom domain name.
-  # https://serverless.com/blog/serverless-api-gateway-domain
-  - "serverless-domain-manager"
-
   # Static assets
   # https://www.npmjs.com/package/serverless-finch
   # TODO(burdon): https://github.com/fernando-mc/serverless-finch/issues/4
   - "serverless-finch"
+
+  # TODO(burdon): Custom domain name.
+  # https://serverless.com/blog/serverless-api-gateway-domain
+#  - "serverless-domain-manager"
+
+  # TODO(burdon): Not used.
+#  - "serverless-offline"
 
 custom:
   client:
     # https://s3.amazonaws.com/orbital-web-assets
     bucketName: orbital-web-assets
 
-  # TODO(burdon): Configure CERT (email verification?)
-  # https://console.aws.amazon.com/route53/home?region=us-east-1#DomainListing
-  customDomain:
-    domainName: orbitaldb.com
-    basePath: ''
-    stage: ${self:provider.stage}
-    createRoute53Record: true
+  # TODO(burdon): Registered with AWS.
+  # https://console.aws.amazon.com/route53/home#DomainListing
+  # TODO(burdon): Configure CERT
+  # https://serverless.com/blog/serverless-api-gateway-domain
+#  customDomain:
+#    domainName: orbitaldb.com
+#    basePath: ''
+#    stage: ${self:provider.stage}
+#    createRoute53Record: true
 
 # TODO(burdon): https://forum.serverless.com/t/use-wildcard-in-path-for-http-endpoints/2203 (wildcards)
+# http://www.goingserverless.com/blog/routing-api-gateway-traffic-through-one-lambda-function
 functions:
   site:
     handler: handler.site
@@ -61,6 +64,15 @@ functions:
     events:
       - http:
           path: favicon.ico
+          method: get
+      - http:
+          path: static/{path}
+          method: get
+      - http:
+          path: static/css/{path}
+          method: get
+      - http:
+          path: /
           method: get
       - http:
           path: home

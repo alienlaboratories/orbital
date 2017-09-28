@@ -12,6 +12,7 @@ module.exports = {
 
   entry: './handler.js',
 
+  // unzip -vl .serverless/web.zip
   plugins: [
     new CopyWebpackPlugin([
       {

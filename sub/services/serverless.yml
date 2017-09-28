@@ -43,6 +43,7 @@ functions:
       - http:
           path: status
           method: get
+          cors: true
 
   registry:
     handler: handler.registry
@@ -51,6 +52,7 @@ functions:
       - http:
           path: registry
           method: post
+          cors: true
 
   database:
     handler: handler.database
@@ -59,3 +61,4 @@ functions:
       - http:
           path: db
           method: post
+          cors: true

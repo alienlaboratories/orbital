@@ -1,0 +1,69 @@
+#
+# Copyright 2017 Alien Labs.
+#
+
+#
+# Graph Nodes and Links.
+#
+
+type Node {
+  id:         String!
+  title:      String!
+}
+
+#
+# Queries.
+# TODO(burdon): Query by label, domain domain, URI
+#
+
+# TODO(burdon): Does ID reference domain?
+
+input Query {
+  domains:    [String]
+  ids:        [String]
+}
+
+type QueryResult {
+  nodes:      [Node]!
+}
+
+type RootQuery {
+  query(query: Query!): QueryResult!
+}
+
+#
+# Mutations.
+# TODO(burdon): OT mutations.
+#
+
+input NodeMutation {
+  key:        String!
+  value:      String
+}
+
+input NodeMutations {
+  id:         String!
+  mutations:  [NodeMutation]!
+}
+
+input Batch {
+  domain:     String
+  mutations:  [NodeMutations]!
+}
+
+type BatchResult {
+  nodes:      [Node]!
+}
+
+type RootMutation {
+  update(batches: [Batch]!): [BatchResult]!
+}
+
+#
+# Schema.
+#
+
+schema {
+  query:      RootQuery,
+  mutation:   RootMutation
+}

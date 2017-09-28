@@ -28,10 +28,10 @@ export const Registry = (config) => {
         handler: argv => {
 
           const query = `
-            query RootQuery($query: ServiceQuery!) {
+            query Query($query: ServiceQuery!) {
               services: getServices(query: $query) {
                 id
-                provider
+                domain
                 name
               }
             }
@@ -39,7 +39,7 @@ export const Registry = (config) => {
 
           let variables = {
             query: {
-              provider: 'test.com'
+              domain: 'test.com'
             }
           };
 
@@ -47,11 +47,11 @@ export const Registry = (config) => {
             let { result: { data: { services } } } = result;
 
             console.log();
-            console.log(`${_.padEnd('Provider', 32)} ${_.padEnd('ID', 16)} Name`);
+            console.log(`${_.padEnd('Domain', 32)} ${_.padEnd('ID', 16)} Name`);
 
             _.each(services, service => {
-              let { id, provider, name } = service;
-              console.log(`${_.padEnd(provider, 32)} ${_.padEnd(id, 16)} ${name}`);
+              let { id, domain, name } = service;
+              console.log(`${_.padEnd(domain, 32)} ${_.padEnd(id, 16)} ${name}`);
             });
           });
         }
@@ -59,26 +59,26 @@ export const Registry = (config) => {
 
       // TODO(burdon): Get from local YML file.
       .command({
-        command: 'update <provider> <id> <name>',
+        command: 'update <domain> <id> <name>',
         aliases: ['up'],
         describe: 'Add/update service record.',
         handler: argv => {
+          let { domain, id, name } = argv;
 
           const query = `
-            mutation RootQuery($service: ServiceInput!) {
-              updateService(service: $service) {
-                id
-                provider
-                name
+            mutation Mutation($batches: [Batch]!) {
+              result: update(batches: $batches) {
+                nodes {
+                  id
+                  title
+                }
               }
             }
           `;
 
-          let { provider, id, name } = argv;
-
           let variables = {
             service: {
-              provider,
+              domain,
               id,
               name
             }

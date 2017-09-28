@@ -5,4 +5,7 @@
 // TODO(burdon): webpack-dev-server
 // TODO(burdon): Apollo
 
-console.log('App');
+// https://github.com/99xt/serverless-react-boilerplate
+// https://github.com/serverlessbuch/jwtAuthorizr
+
+console.log('Orbital App');

@@ -62,3 +62,6 @@ dist/
 
 .webpack/
 .serverless/
+
+.idea/workspace.xml
+

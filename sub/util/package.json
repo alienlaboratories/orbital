@@ -1,12 +1,10 @@
 {
-  "name": "orbital-cli",
+  "name": "orbital-util",
   "version": "0.0.1",
-  "description": "Orbital CLI.",
+  "description": "Orbital Util.",
   "license": "UNLICENSED",
   "repository": "https://github.com/alienlabs/orbital",
-  "bin": {
-    "orb": "bin/orb.js"
-  },
+  "main": "index.js",
   "devDependencies": {
     "babel-cli": "^6.24.1",
     "babel-core": "^6.24.1",
@@ -22,9 +20,7 @@
   "dependencies": {
     "lodash": "^4.17.4",
     "moment": "^2.18.1",
-    "node-yaml": "^3.1.0",
-    "orbital-util": "0.0.1",
-    "yargs": "^9.0.1"
+    "uuid": "^3.1.0"
   },
   "jest": {
     "verbose": false,
@@ -35,8 +31,6 @@
   },
   "scripts": {
     "lint": "eslint -c ../../eslintrc.yml ./src",
-    "test": "jest --no-cache --silent",
-    "build": "webpack",
-    "start": "babel-node ./src/main.js"
+    "test": "jest --no-cache --silent"
   }
 }

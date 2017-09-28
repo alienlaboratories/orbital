@@ -29,7 +29,7 @@ export class Database {
 
   _graphMap = new Map();
 
-  // TODO(burdon): ???
+  // TODO(burdon): Later?
   addGraph(graph) {
     this._graphMap.set(graph.domain, graph);
     return this;
@@ -39,5 +39,9 @@ export class Database {
     return {
       nodes: []
     };
+  }
+
+  updateNodes(nodes) {
+
   }
 }

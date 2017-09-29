@@ -20,10 +20,20 @@
     "serverless-finch": "^1.1.1"
   },
   "dependencies": {
+    "apollo-client": "^1.9.3",
     "babel-loader": "^7.1.2",
     "d3": "^4.10.2",
+    "graphql": "^0.11.4",
+    "graphql-tag": "^2.4.2",
     "lodash": "^4.17.4",
-    "popsicle": "^9.1.0"
+    "popsicle": "^9.1.0",
+    "prop-types": "^15.6.0",
+    "react": "^16.0.0",
+    "react-apollo": "^1.4.16",
+    "react-redux": "^5.0.6",
+    "react-router": "^4.2.0",
+    "react-router-redux": "^4.0.8",
+    "redux": "^3.7.2"
   },
   "jest": {
     "verbose": false,

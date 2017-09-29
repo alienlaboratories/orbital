@@ -3,23 +3,27 @@
 //
 
 // TODO(burdon): webpack-dev-server
-// TODO(burdon): Apollo
+
+import { get, plugins } from 'popsicle';
+
+// TODO(burdon): React.
+// TODO(burdon): Router.
+// TODO(burdon): Apollo.
 
 // https://github.com/99xt/serverless-react-boilerplate
 // https://github.com/serverlessbuch/jwtAuthorizr
 
-// TODO(burdon): https://www.npmjs.com/package/popsicle#usage
-const popsicle = require('popsicle');
+const config = window.config;
 
 class App {
 
   init() {
-    const url = 'https://t2isk8i7ek.execute-api.us-east-1.amazonaws.com/dev/status';
+    let { rootId, apiRoot } = config;
 
-    popsicle.get(url)
-      .use(popsicle.plugins.parse(['json', 'urlencoded']))
+    get(apiRoot + '/status')
+      .use(plugins.parse(['json', 'urlencoded']))
       .then(result => {
-        console.log(JSON.stringify(result));
+        document.getElementById(rootId).innerText = JSON.stringify(result);
       });
   }
 }

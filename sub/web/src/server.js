@@ -13,6 +13,18 @@ const ENV = {
   STATIC_DIR: './static'
 };
 
+// TODO(burdon): Config.
+const config = {
+  appConfig: {
+
+    rootId: 'root',
+
+    apiRoot: 'https://t2isk8i7ek.execute-api.us-east-1.amazonaws.com/dev'
+  },
+
+  appBundle: 'https://s3.amazonaws.com/orbital-web-assets/app.bundle.js'
+};
+
 /**
  * Create App.
  *
@@ -82,14 +94,7 @@ export const createApp = init => {
   });
 
   app.get('/app', (req, res) => {
-    res.render('app', {
-      config: {
-        root: 'root'
-      },
-
-      // TODO(burdon): sls client deploy.
-      bundle: 'https://s3.amazonaws.com/orbital-web-assets/app.bundle.js'
-    });
+    res.render('app', config);
   });
 
   app.get('/debug', (req, res) => {

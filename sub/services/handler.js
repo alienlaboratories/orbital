@@ -13,6 +13,12 @@ import { MemoryServiceRegistry } from './src/registry/registry';
 const DatabaseSchema = createDatabaseSchema(new Database());
 const RegistrySchema = createRegistrySchema(new MemoryServiceRegistry());
 
+const HEADERS = {
+  'Content-Type': 'application/json',
+  'Access-Control-Allow-Origin': '*',         // Required for CORS support to work.
+  'Access-Control-Allow-Credentials' : true   // Required for cookies, authorization headers with HTTPS.
+};
+
 module.exports = {
 
   // https://github.com/boazdejong/serverless-graphql-api
@@ -33,11 +39,7 @@ module.exports = {
 
     callback(null, {
       statusCode: 200,
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',         // Required for CORS support to work.
-        'Access-Control-Allow-Credentials' : true   // Required for cookies, authorization headers with HTTPS.
-      },
+      headers: HEADERS,
       body: JSON.stringify(response)
     });
   },
@@ -63,7 +65,7 @@ module.exports = {
 
       callback(null, {
         statusCode: 200,
-        headers: { 'Content-Type': 'application/json' },
+        headers: HEADERS,
         body: JSON.stringify(response)
       });
     });
@@ -90,7 +92,7 @@ module.exports = {
 
       callback(null, {
         statusCode: 200,
-        headers: { 'Content-Type': 'application/json' },
+        headers: HEADERS,
         body: JSON.stringify(response)
       });
     });

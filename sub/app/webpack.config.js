@@ -29,7 +29,7 @@ module.exports = {
   },
 
   entry: {
-    app: [
+    'app': [
       'babel-polyfill',
       path.resolve(__dirname, './src/app.js')
     ]

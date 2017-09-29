@@ -2,30 +2,16 @@
 // Copyright 2017 Alien Labs.
 //
 
-// TODO(burdon): webpack-dev-server
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-import { get, plugins } from 'popsicle';
-
-// TODO(burdon): React.
-// TODO(burdon): Router.
-// TODO(burdon): Apollo.
-
-// https://github.com/99xt/serverless-react-boilerplate
-// https://github.com/serverlessbuch/jwtAuthorizr
+import { Root } from './root';
 
 const config = window.config;
 
-class App {
+let { rootId } = config;
 
-  init() {
-    let { rootId, apiRoot } = config;
+// TODO(burdon): webpack-dev-server
 
-    get(apiRoot + '/status')
-      .use(plugins.parse(['json', 'urlencoded']))
-      .then(result => {
-        document.getElementById(rootId).innerText = JSON.stringify(result);
-      });
-  }
-}
-
-new App().init();
+// https://facebook.github.io/react/docs/components-and-props.html
+ReactDOM.render(<Root config={ config }/>, document.getElementById(rootId));

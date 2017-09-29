@@ -88,7 +88,7 @@ export const createApp = init => {
       },
 
       // TODO(burdon): sls client deploy.
-      bundle: 'https://s3.amazonaws.com/orbital-web-assets/app.js'
+      bundle: 'https://s3.amazonaws.com/orbital-web-assets/app.bundle.js'
     });
   });
 

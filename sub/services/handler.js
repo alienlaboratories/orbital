@@ -27,13 +27,17 @@ module.exports = {
 
     console.log('Status:', JSON.stringify(response));
 
-    // TODO(burdon): When invoking from sls invoke the body can be JSON.
+    // TODO(burdon): When invoking from `sls invoke` the body can be JSON.
     // From curl unless a string is returned we get 502 (Bad Gateway).
     // https://medium.com/@jconning/tutorial-aws-lambda-with-api-gateway-36a8513ec8e3
 
     callback(null, {
       statusCode: 200,
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',         // Required for CORS support to work.
+        'Access-Control-Allow-Credentials' : true   // Required for cookies, authorization headers with HTTPS.
+      },
       body: JSON.stringify(response)
     });
   },

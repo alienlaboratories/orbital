@@ -1,0 +1,10 @@
+{
+  //
+  // http://babeljs.io/docs/usage/babelrc
+  // http://babeljs.io/docs/usage/options
+  //
+
+  "presets": [
+    "env"
+  ]
+}

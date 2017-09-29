@@ -4,15 +4,16 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import { get, plugins } from 'popsicle';
 
-// TODO(burdon): Router.
+// TODO(burdon): Redux/Router.
 // TODO(burdon): Apollo.
+// TODO(burdon): https://github.com/99xt/serverless-react-boilerplate
+// TODO(burdon): https://github.com/serverlessbuch/jwtAuthorizr
 
-// https://github.com/99xt/serverless-react-boilerplate
-// https://github.com/serverlessbuch/jwtAuthorizr
-
+/**
+ * Root component.
+ */
 export class Root extends React.Component {
 
   static propTypes = {

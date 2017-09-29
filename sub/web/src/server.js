@@ -22,7 +22,10 @@ const config = {
     apiRoot: 'https://t2isk8i7ek.execute-api.us-east-1.amazonaws.com/dev'
   },
 
-  appBundle: 'https://s3.amazonaws.com/orbital-web-assets/app.bundle.js'
+  appBundle: {
+    css: 'https://s3.amazonaws.com/orbital-web-assets/app.css',
+    js: 'https://s3.amazonaws.com/orbital-web-assets/app.bundle.js'
+  }
 };
 
 /**

@@ -86,5 +86,13 @@ module.exports = {
         })
       }
     ]
-  }
+  },
+
+
+  // https://github.com/webpack/docs/wiki/list-of-plugins
+  plugins: [
+
+    // https://github.com/webpack/extract-text-webpack-plugin
+    new ExtractTextPlugin('[name].css')
+  ]
 };

@@ -6,6 +6,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { get, plugins } from 'popsicle';
 
+import './root.less';
+
 // TODO(burdon): Redux/Router.
 // TODO(burdon): Apollo.
 // TODO(burdon): https://github.com/99xt/serverless-react-boilerplate
@@ -39,7 +41,9 @@ export class Root extends React.Component {
 
     return (
       <div>
-        <button onClick={ this.handleClick.bind(this) }>Test</button>
+        <div>
+          <button onClick={ this.handleClick.bind(this) }>Test</button>
+        </div>
 
         { result &&
         <div>{ JSON.stringify(result) }</div>

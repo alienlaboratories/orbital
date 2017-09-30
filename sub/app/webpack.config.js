@@ -17,6 +17,13 @@ module.exports = {
   // https://webpack.github.io/docs/configuration.html#devtool
   devtool: '#source-map',
 
+  // https://webpack.js.org/configuration/dev-server/#devserver
+  devServer: {
+    contentBase: path.join(__dirname, 'testing'),
+    compress: true,
+    port: 9000
+  },
+
   // https://webpack.js.org/configuration/resolve
   resolve: {
 

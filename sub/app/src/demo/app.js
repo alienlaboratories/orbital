@@ -10,6 +10,8 @@ import ReactDOM from 'react-dom';
 import { StatusContainer } from './containers/status';
 import { ListContainer } from './containers/list';
 
+import './app.less';
+
 const config = window.config;
 let { rootId, apiRoot } = config;
 
@@ -33,9 +35,9 @@ const client = new ApolloClient({
 
 const WrappedApp = (
   <ApolloProvider client={ client }>
-    <div>
+    <div className="orb-panel">
+      <ListContainer className="orb-expand" pollInterval={ 1000 }/>
       <StatusContainer/>
-      <ListContainer pollInterval={ 1000 }/>
     </div>
   </ApolloProvider>
 );

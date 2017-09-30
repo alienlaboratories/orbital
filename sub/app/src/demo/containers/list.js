@@ -7,11 +7,15 @@ import gql from 'graphql-tag';
 import React from 'react';
 import { compose, graphql } from 'react-apollo';
 
+import { ReactUtil } from '../util';
+
 /**
  * List of nodes.
  */
 class List extends React.Component {
+
   render() {
+    let defaultAttrs = ReactUtil.defaultProps(this.props);
     let { result: { nodes } } = this.props;
 
     let list = _.map(nodes, ({ id, title }) => (
@@ -19,7 +23,7 @@ class List extends React.Component {
     ));
 
     return (
-      <div>{ list }</div>
+      <div { ...defaultAttrs }>{ list }</div>
     );
   }
 }

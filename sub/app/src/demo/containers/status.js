@@ -6,15 +6,19 @@ import gql from 'graphql-tag';
 import React from 'react';
 import { compose, graphql } from 'react-apollo';
 
+import { ReactUtil } from '../util';
+
 /**
- *
+ * Statusbar.
  */
 class Status extends React.Component {
+
   render() {
+    let defaultAttrs = ReactUtil.defaultProps(this.props);
     let { result: { version } } = this.props;
 
     return (
-      <div>DB: { version }</div>
+      <div { ...defaultAttrs }>Version: { version }</div>
     );
   }
 }

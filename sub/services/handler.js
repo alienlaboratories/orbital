@@ -58,9 +58,11 @@ module.exports = {
     let queryContext = {};
 
     graphql(RegistrySchema, query, queryRoot, queryContext, variables).then(result => {
+      let { data } = result;
+
       let response = {
         version: process.env['VERSION'],
-        result
+        data
       };
 
       callback(null, {
@@ -85,9 +87,11 @@ module.exports = {
     let queryContext = {};
 
     graphql(DatabaseSchema, query, queryRoot, queryContext, variables).then(result => {
+      let { data } = result;
+
       let response = {
         version: process.env['VERSION'],
-        result
+        data
       };
 
       callback(null, {

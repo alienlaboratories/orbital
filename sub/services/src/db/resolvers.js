@@ -39,6 +39,12 @@ export class Resolvers {
 
       RootQuery: {
 
+        status: (obj, args, context) => {
+          return {
+            version: '0.0.1'
+          };
+        },
+
         query: (obj, args, context) => {
           let { query } = args;
           return this._database.query(query);

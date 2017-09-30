@@ -2,53 +2,45 @@
 // Copyright 2017 Alien Labs.
 //
 
-import React from 'react';
 import PropTypes from 'prop-types';
-import { get, plugins } from 'popsicle';
+import React from 'react';
+import { ApolloProvider } from 'react-apollo';
+import { Redirect, Router, Route } from 'react-router';
 
-import './root.less';
-
-// TODO(burdon): Redux/Router.
-// TODO(burdon): Apollo.
-// TODO(burdon): https://github.com/99xt/serverless-react-boilerplate
-// TODO(burdon): https://github.com/serverlessbuch/jwtAuthorizr
+class TestingActivity extends React.Component {
+  render() {
+    return (
+      <div>TESTING</div>
+    );
+  }
+}
 
 /**
- * Root component.
+ * Apollo root component.
  */
 export class Root extends React.Component {
 
   static propTypes = {
-    config: PropTypes.object.isRequired
+    client:   PropTypes.object.isRequired,
+    history:  PropTypes.object.isRequired
   };
 
-  state = {};
-
-  handleClick() {
-    let { config: { apiRoot } } = this.props;
-
-    get(apiRoot + '/status')
-      .use(plugins.parse(['json', 'urlencoded']))
-      .then(result => {
-        this.setState({
-          result
-        });
-      });
-  }
-
   render() {
-    let { result } = this.state;
+    let { client, history } = this.props;
+
+    // https://github.com/ReactTraining/react-router
 
     return (
-      <div>
-        <div>
-          <button onClick={ this.handleClick.bind(this) }>Test</button>
-        </div>
+      <ApolloProvider client={ client }>
+        <Router history={ history }>
+          {/* v4: <Switch> */}
 
-        { result &&
-        <div>{ JSON.stringify(result) }</div>
-        }
-      </div>
+          <Route exact path="/" component={ TestingActivity }/>
+          <Redirect from="*" to="/"/>
+
+          {/* </Switch> */}
+        </Router>
+      </ApolloProvider>
     );
   }
 }

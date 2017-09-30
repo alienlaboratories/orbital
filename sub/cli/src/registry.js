@@ -44,7 +44,7 @@ export const Registry = (config) => {
           };
 
           argv._result = client.query(query, variables, { verbose: argv.verbose }).then(result => {
-            let { result: { data: { services } } } = result;
+            let { data: { services } } = result;
 
             console.log();
             console.log(`${_.padEnd('Domain', 32)} ${_.padEnd('ID', 16)} Name`);

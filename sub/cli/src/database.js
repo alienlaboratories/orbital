@@ -41,7 +41,7 @@ export const Database = (config) => {
           };
 
           argv._result = client.query(query, variables, { verbose: argv.verbose }).then(response => {
-            let { result: { errors, data } } = response;
+            let { errors, data } = response;
             if (errors) {
               console.error(JSON.stringify(errors, null, 2));
             } else {
@@ -87,7 +87,7 @@ export const Database = (config) => {
           };
 
           argv._result = client.query(query, variables, { verbose: argv.verbose }).then(response => {
-            let { result: { errors, data } } = response;
+            let { errors, data } = response;
             if (errors) {
               console.error(JSON.stringify(errors, null, 2));
             } else {

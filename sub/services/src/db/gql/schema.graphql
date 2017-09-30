@@ -16,6 +16,10 @@ type Node {
 # TODO(burdon): Query by label, domain domain, URI
 #
 
+type StatusResult {
+  version:    String
+}
+
 # TODO(burdon): Does ID reference domain?
 
 input Query {
@@ -28,6 +32,7 @@ type QueryResult {
 }
 
 type RootQuery {
+  status: StatusResult!
   query(query: Query!): QueryResult!
 }
 

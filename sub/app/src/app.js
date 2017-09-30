@@ -2,16 +2,72 @@
 // Copyright 2017 Alien Labs.
 //
 
+import gql from 'graphql-tag';
+import { ApolloProvider } from 'react-apollo';
+import { ApolloClient, createNetworkInterface } from 'apollo-client';
 import React from 'react';
 import ReactDOM from 'react-dom';
-
-import { Root } from './root';
+import { compose, graphql } from 'react-apollo';
 
 const config = window.config;
+let { rootId, apiRoot } = config;
 
-let { rootId } = config;
+// TODO(burdon): Redux.
+// TODO(burdon): Router.
 
-// TODO(burdon): webpack-dev-server
+//
+// Apollo Client.
+//
 
-// https://facebook.github.io/react/docs/components-and-props.html
-ReactDOM.render(<Root config={ config }/>, document.getElementById(rootId));
+const client = new ApolloClient({
+  networkInterface: createNetworkInterface({
+    uri: apiRoot + '/db'
+  })
+});
+
+//
+// App.
+//
+
+class App extends React.Component {
+  render() {
+    let { result: { version } } = this.props;
+
+    return (
+      <div>DB: { version }</div>
+    );
+  }
+}
+
+const StatusQuery = gql`
+  query StatusQuery {
+    result: status {
+      version
+    }
+  }
+`;
+
+const AppContainer = compose(graphql(StatusQuery, {
+
+  options: (props) => {
+    return {
+      variables: {}
+    };
+  },
+
+  props: ({ ownProps, data }) => {
+    let { errors, loading, result={} } = data;
+    return {
+      errors, loading, result
+    };
+  }
+
+}))(App);
+
+const WrappedApp = (
+  <ApolloProvider client={ client }>
+    <AppContainer/>
+  </ApolloProvider>
+);
+
+ReactDOM.render(WrappedApp, document.getElementById(rootId));

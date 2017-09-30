@@ -34,6 +34,8 @@ export class Resolvers {
     this._database = database;
   }
 
+  // TODO(burdon): Promises.
+
   getMap() {
     return {
 
@@ -41,6 +43,7 @@ export class Resolvers {
 
         status: (obj, args, context) => {
           return {
+            timestamp: Date.now(),
             version: '0.0.1'
           };
         },
@@ -52,6 +55,11 @@ export class Resolvers {
       },
 
       RootMutation: {
+
+        clear: (obj, args, context) => {
+          this._database.clear();
+          return 0;
+        },
 
         update: (obj, args, context) => {
           let { batches } = args;

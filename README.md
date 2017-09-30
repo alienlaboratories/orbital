@@ -25,4 +25,6 @@
 - yarn remove failes: https://github.com/yarnpkg/yarn/issues/4334
   - workaround: remove modules from sub package and run yarn install from root
 
+- yarn global add (CLI) fails with workspace dependencies
+
 - graphql plugin multiple schema files? Merge

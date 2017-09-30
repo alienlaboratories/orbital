@@ -101,7 +101,22 @@ export const Database = (config) => {
         command: 'clear',
         describe: 'Clear graph.',
         handler: argv => {
-          console.log('Clear');
+          const query = `
+            mutation Mutation {
+              result: clear
+            }
+          `;
+
+          let variables = {};
+
+          argv._result = client.query(query, variables, { verbose: argv.verbose }).then(response => {
+            let { errors, data } = response;
+            if (errors) {
+              console.error(JSON.stringify(errors, null, 2));
+            } else {
+              console.log(JSON.stringify(data, null, 2));
+            }
+          });
         }
       })
 

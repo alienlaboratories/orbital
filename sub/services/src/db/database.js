@@ -24,6 +24,10 @@ export class Graph {
     return Array.from(this._nodeMap.values());
   }
 
+  clear() {
+    this._nodeMap.clear();
+  }
+
   updateNode(id, mutations) {
     let node = this._nodeMap.get(id);
     if (!node) {
@@ -89,6 +93,11 @@ export class Database {
     return {
       nodes: Array.from(results.values())
     };
+  }
+
+  clear() {
+    let graph = this.getOrCreateGraph(Database.DEFAULT_DOMAIN);
+    graph.clear();
   }
 
   update(batches) {

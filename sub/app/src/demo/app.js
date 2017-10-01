@@ -7,8 +7,9 @@ import { ApolloProvider } from 'react-apollo';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { StatusContainer } from './containers/status';
+import { GraphContainer } from './containers/graph';
 import { ListContainer } from './containers/list';
+import { StatusContainer } from './containers/status';
 
 import './app.less';
 
@@ -18,6 +19,7 @@ let { rootId, apiRoot } = config;
 // TODO(burdon): Redux.
 // TODO(burdon): Router.
 // TODO(burdon): Subscriptions: http://dev.apollodata.com/react/receiving-updates.html#Subscriptions
+// TODO(burdon): Polling spools up additional instance.
 
 //
 // Apollo Client.
@@ -36,7 +38,10 @@ const client = new ApolloClient({
 const WrappedApp = (
   <ApolloProvider client={ client }>
     <div className="orb-panel">
-      <ListContainer className="orb-expand" pollInterval={ 1000 }/>
+      <div className="orb-x-panel">
+        <ListContainer className="app-list" pollInterval={ 5000 }/>
+        <GraphContainer className="orb-expand" pollInterval={ 5000 }/>
+      </div>
       <StatusContainer/>
     </div>
   </ApolloProvider>

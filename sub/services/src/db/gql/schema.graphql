@@ -61,7 +61,7 @@ type BatchResult {
 }
 
 type RootMutation {
-  clear: Integer
+  clear: Int
   update(batches: [Batch]!): [BatchResult]!
 }
 

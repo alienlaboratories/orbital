@@ -17,6 +17,9 @@
     <orderEntry type="library" name="lodash-DefinitelyTyped" level="application" />
     <orderEntry type="library" name="node-DefinitelyTyped" level="application" />
     <orderEntry type="library" name="react-DefinitelyTyped" level="application" />
+    <orderEntry type="library" name="react-dom-DefinitelyTyped" level="application" />
+    <orderEntry type="library" name="react-router-DefinitelyTyped" level="application" />
+    <orderEntry type="library" name="d3-DefinitelyTyped" level="application" />
   </component>
   <component name="TestRunnerService">
     <option name="PROJECT_TEST_RUNNER" value="Unittests" />

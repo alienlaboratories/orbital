@@ -31,6 +31,8 @@ const client = new ApolloClient({
   })
 });
 
+const pollInterval = 0;
+
 //
 // Root App.
 //
@@ -39,8 +41,8 @@ const WrappedApp = (
   <ApolloProvider client={ client }>
     <div className="orb-panel">
       <div className="orb-x-panel">
-        <ListContainer className="app-list" pollInterval={ 5000 }/>
-        <GraphContainer className="orb-expand" pollInterval={ 5000 }/>
+        <ListContainer className="app-list" pollInterval={ pollInterval }/>
+        <GraphContainer className="orb-expand" pollInterval={ pollInterval }/>
       </div>
       <StatusContainer/>
     </div>

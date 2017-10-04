@@ -18,27 +18,57 @@ import { D3Canvas } from '../component/d3';
  */
 class Graph extends React.Component {
 
-  renderD3(node, data) {
-    let center = { x: node.clientWidth / 2, y: node.clientHeight / 2 };
-    console.log('!!!', center);
-
-    let nodes = [
+  // ID by convention.
+  state = {
+    nodes: [
       { id: 'I1', title: 'Item 1' },
       { id: 'I2', title: 'Item 2' },
       { id: 'I3', title: 'Item 3' },
-    ];
+      { id: 'I4', title: 'Item 4' },
+      { id: 'I5', title: 'Item 5' },
+    ]
+  };
+
+  constructor() {
+    super();
+
+    this.group = null;
 
     // https://github.com/d3/d3-force
-    let force = d3.forceSimulation(nodes);
+    // https://bl.ocks.org/shimizu/e6209de87cdddde38dadbb746feaf3a3
+    this.simulation = d3.forceSimulation()
+      .force('charge', d3.forceManyBody().strength(-1000))
+      .force('x', d3.forceX())
+      .force('y', d3.forceY())
+      .on('tick', () => {
+        this.group.selectAll('circle')
+          .attr('cx', d => d.x)
+          .attr('cy', d => d.y);
+      });
+  }
 
-    console.log(node);
+  renderD3(root, data) {
+    let center = { x: root.clientWidth / 2, y: root.clientHeight / 2 };
 
-    d3.select(node).append('g')
+    // TODO(burdon): Init.
+    if (!this.group) {
+      this.group = d3.select(root).append('g');
+      this.simulation.force('center', d3.forceCenter(center.x, center.y));
+    }
+
+    // TODO(burdon): When data changes. I.e., D3Canvas when properties change.
+    let { nodes } = data;
+    this.simulation.nodes(nodes);
+
+    this.group
       .selectAll('circle')
-        .data(force.nodes())
-        .enter()
-      .append('circle')
-        .attr('r', 6);
+        .data(this.simulation.nodes())
+      .enter()
+        .append('circle')
+          .attr('id', d => d.id)
+          .attr('r', d => 10 + Math.random() * 10)
+      .exit()
+        .remove();
   }
 
   render() {

@@ -5,26 +5,31 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import { ReactUtil } from '../util';
-
-// TODO(burdon): Factor out renderer.
-// http://bl.ocks.org/mbostock/1153292
+import { DomUtil, ReactUtil } from '../util';
 
 /**
  * D3 canvas.
  */
 export class D3Canvas extends React.Component {
 
-  // TODO(burdon): onResize.
-
   static propTypes = {
     data:       PropTypes.object,
-    renderer:   PropTypes.func,
+    onRender:   PropTypes.func,
+    onResize:   PropTypes.func,
     className:  PropTypes.string
   };
 
   componentDidMount() {
+    DomUtil.getResizeManager().addHandler(this._node, (element, size) => {
+      let { onResize } = this.props;
+      onResize && onResize(this._node, size);
+    });
+
     this.update();
+  }
+
+  componentWillUnmount() {
+    DomUtil.getResizeManager().removeHandler(this._node);
   }
 
   componentDidUpdate() {
@@ -36,13 +41,15 @@ export class D3Canvas extends React.Component {
   }
 
   update() {
-    let { data, renderer } = this.props;
-    renderer && this._node && renderer(this._node, data);
+    let { onRender, data } = this.props;
+    onRender && this._node && onRender(this._node, data);
   }
 
   render() {
     let defaultAttrs = ReactUtil.defaultProps(this.props, { className: 'orb-d3-canvas' });
 
+    // ref callback is called after mount and unmount.
+    // https://reactjs.org/docs/refs-and-the-dom.html
     return (
       <svg ref={ node => this._node = node } { ...defaultAttrs }/>
     );

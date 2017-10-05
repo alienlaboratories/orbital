@@ -18,17 +18,6 @@ import { D3Canvas } from '../component/d3';
  */
 class Graph extends React.Component {
 
-  // ID by convention.
-  state = {
-    nodes: [
-      { id: 'I1', title: 'Item 1' },
-      { id: 'I2', title: 'Item 2' },
-      { id: 'I3', title: 'Item 3' },
-      { id: 'I4', title: 'Item 4' },
-      { id: 'I5', title: 'Item 5' },
-    ]
-  };
-
   constructor() {
     super();
 
@@ -47,9 +36,16 @@ class Graph extends React.Component {
       });
   }
 
-  renderD3(root, data) {
-    let center = { x: root.clientWidth / 2, y: root.clientHeight / 2 };
+  componentWillReceiveProps(nextProps) {
+    let { result: { nodes=[] } } = nextProps;
+    this.setState({
+      nodes
+    });
+  }
 
+  handleRender(root, data={}) {
+    let center = { x: root.clientWidth / 2, y: root.clientHeight / 2 };
+ 
     // TODO(burdon): Init.
     if (!this.group) {
       this.group = d3.select(root).append('g');
@@ -57,7 +53,7 @@ class Graph extends React.Component {
     }
 
     // TODO(burdon): When data changes. I.e., D3Canvas when properties change.
-    let { nodes } = data;
+    let { nodes=[] } = data || {};
     this.simulation.nodes(nodes);
 
     this.group
@@ -71,11 +67,17 @@ class Graph extends React.Component {
         .remove();
   }
 
+  handleResize(root, size) {
+    this.simulation.force('center', d3.forceCenter(size.width / 2, size.height / 2));
+  }
+
   render() {
     let defaultAttrs = ReactUtil.defaultProps(this.props);
 
     return (
-      <D3Canvas { ...defaultAttrs } data={ this.state } renderer={ this.renderD3.bind(this) }/>
+      <D3Canvas { ...defaultAttrs } data={ this.state }
+                onRender={ this.handleRender.bind(this) }
+                onResize={ this.handleResize.bind(this) }/>
     );
   }
 }
@@ -105,6 +107,18 @@ export const GraphContainer = compose(graphql(GraphQuery, {
 
   props: ({ ownProps, data }) => {
     let { errors, loading, result={} } = data;
+
+    // TODO(burdon): ???
+    result = {
+      nodes: [
+        { id: 'I1', title: 'Item 1' },
+        { id: 'I2', title: 'Item 2' },
+        { id: 'I3', title: 'Item 3' },
+        { id: 'I4', title: 'Item 4' },
+        { id: 'I5', title: 'Item 5' },
+      ]
+    };
+
     return {
       errors, loading, result
     };

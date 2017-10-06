@@ -67,7 +67,7 @@ const WrappedApp = (
         <GraphContainer className="orb-expand" pollInterval={ pollInterval }/>
       </div>
 
-      <StatusContainer/>
+      <StatusContainer className="app-status-bar"/>
     </div>
   </ApolloProvider>
 );

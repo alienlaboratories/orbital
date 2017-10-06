@@ -50,6 +50,35 @@ a {
 // App-specific.
 //
 
+@ux-scrollbar-width:                    2px;
+@ux-scrollbar-height:                   8px;
+@ux-scrollbar-color:                    #666;
+@ux-scrollbar-background:               transparent;
+
 .app-list {
+  overflow-y: scroll;
   width: 200px;
+
+  background-color: #6cc38f;
+
+  &::-webkit-scrollbar {
+    width: @ux-scrollbar-width;
+    height: @ux-scrollbar-height;
+    background-color: @ux-scrollbar-background;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: @ux-scrollbar-color;
+  }
+
+  div {
+    padding: 12px;
+    font-size: large;
+  }
+}
+
+.app-status-bar {
+  text-align: center;
+  background-color: #DDD;
+  font-size: small;
 }

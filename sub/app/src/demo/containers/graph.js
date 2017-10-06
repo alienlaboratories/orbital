@@ -52,8 +52,8 @@ class Graph extends React.Component {
     this.simulation.force('center', d3.forceCenter(center.x, center.y));
   }
 
-  handleRender(data={}) {
-    let { nodes=[] } = data || {};
+  handleRender(root) {
+    let { nodes=[] } = this.state;
     this.simulation.nodes(nodes);
 
     this.group
@@ -76,7 +76,6 @@ class Graph extends React.Component {
 
     return (
       <D3Canvas { ...defaultAttrs }
-                data={ this.state }
                 onInit={ this.handleInit.bind(this) }
                 onRender={ this.handleRender.bind(this) }
                 onResize={ this.handleResize.bind(this) }/>

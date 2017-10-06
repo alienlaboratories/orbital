@@ -18,7 +18,9 @@ class Status extends React.Component {
     let { result: { version } } = this.props;
 
     return (
-      <div { ...defaultAttrs }>Version: { version }</div>
+      <div { ...defaultAttrs }>
+        <span>Version { version }</span>
+      </div>
     );
   }
 }

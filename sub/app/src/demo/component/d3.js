@@ -13,7 +13,6 @@ import { DomUtil, ReactUtil } from './util';
 export class D3Canvas extends React.Component {
 
   static propTypes = {
-    data:       PropTypes.object,
     onInit:     PropTypes.func,
     onRender:   PropTypes.func,
     onResize:   PropTypes.func,
@@ -39,8 +38,8 @@ export class D3Canvas extends React.Component {
   }
 
   componentDidUpdate() {
-    let { onRender, data } = this.props;
-    onRender && onRender(data);
+    let { onRender } = this.props;
+    onRender && onRender(this._node);
   }
 
   render() {

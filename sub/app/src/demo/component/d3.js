@@ -14,6 +14,7 @@ export class D3Canvas extends React.Component {
 
   static propTypes = {
     data:       PropTypes.object,
+    onInit:     PropTypes.func,
     onRender:   PropTypes.func,
     onResize:   PropTypes.func,
     className:  PropTypes.string
@@ -25,24 +26,21 @@ export class D3Canvas extends React.Component {
       onResize && onResize(this._node, size);
     });
 
-    this.update();
+    let { onInit } = this.props;
+    onInit && onInit(this._node);
   }
 
   componentWillUnmount() {
     DomUtil.getResizeManager().removeHandler(this._node);
   }
 
-  componentDidUpdate() {
-    this.update();
-  }
-
   componentWillReceiveProps(nextProps) {
     this.forceUpdate();
   }
 
-  update() {
+  componentDidUpdate() {
     let { onRender, data } = this.props;
-    onRender && this._node && onRender(this._node, data);
+    onRender && onRender(data);
   }
 
   render() {

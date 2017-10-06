@@ -45,16 +45,14 @@ class Graph extends React.Component {
     });
   }
 
-  handleRender(root, data={}) {
-    let center = { x: root.clientWidth / 2, y: root.clientHeight / 2 };
- 
-    // TODO(burdon): Init.
-    if (!this.group) {
-      this.group = d3.select(root).append('g');
-      this.simulation.force('center', d3.forceCenter(center.x, center.y));
-    }
+  handleInit(root) {
+    this.group = d3.select(root).append('g');
 
-    // TODO(burdon): When data changes. I.e., D3Canvas when properties change.
+    let center = { x: root.clientWidth / 2, y: root.clientHeight / 2 };
+    this.simulation.force('center', d3.forceCenter(center.x, center.y));
+  }
+
+  handleRender(data={}) {
     let { nodes=[] } = data || {};
     this.simulation.nodes(nodes);
 
@@ -79,6 +77,7 @@ class Graph extends React.Component {
     return (
       <D3Canvas { ...defaultAttrs }
                 data={ this.state }
+                onInit={ this.handleInit.bind(this) }
                 onRender={ this.handleRender.bind(this) }
                 onResize={ this.handleResize.bind(this) }/>
     );

@@ -80,7 +80,6 @@ export class Database {
 
     _.each(domains, domain => {
       let graph = this.getOrCreateGraph(domain);
-      console.log(domain, graph);
 
       // TODO(burdon): Data model.
       // TODO(burdon): Merge (nodes should have a map of domain specific sub-nodes).

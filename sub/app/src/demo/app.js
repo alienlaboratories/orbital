@@ -7,7 +7,7 @@ import { ApolloProvider } from 'react-apollo';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { TestResolver } from 'orbital-services/testing';
+import { TestNetworkInterface } from 'orbital-services/testing';
 
 import { GraphContainer } from './containers/graph';
 import { ListContainer } from './containers/list';
@@ -16,10 +16,17 @@ import { StatusContainer } from './containers/status';
 import './app.less';
 
 const config = window.config;
-let { rootId, apiRoot } = config;
+let { rootId, apiRoot, network, pollInterval } = config;
+
+// TODO(burdon): TypeScript/Flow
+// http://dev.apollodata.com/react/using-with-types.html
+// http://dev-blog.apollodata.com/a-stronger-typed-react-apollo-c43bd52be0d8
+// http://discuss.reactjs.org/t/if-typescript-is-so-great-how-come-all-notable-reactjs-projects-use-babel/4887
 
 // TODO(burdon): Redux.
 // TODO(burdon): Router.
+
+// TODO(burdon): Refresh button.
 // TODO(burdon): Subscriptions: http://dev.apollodata.com/react/receiving-updates.html#Subscriptions
 // TODO(burdon): Polling spools up additional instance.
 
@@ -27,34 +34,26 @@ let { rootId, apiRoot } = config;
 // Apollo Client.
 //
 
-// http://dev.apollodata.com/core/network.html#NetworkInterface
-class TestNetworkInterface {
+let networkInterface;
+switch (network) {
+  case 'local': {
+    networkInterface = new TestNetworkInterface();
+    break;
+  }
 
-  resolver = new TestResolver();
-
-  query(request) {
-    let { operationName, query, variables } = request;
-    console.log('Q:', operationName);
-
-    return this.resolver.exec(query, variables).then(result => {
-      console.log('R:', result);
-      return result;
+  default: {
+    // http://dev.apollodata.com/core/network.html#createNetworkInterface
+    networkInterface = createNetworkInterface({
+      uri: apiRoot + '/db'
     });
   }
 }
 
-// TODO(burdon): Test network interface.
+// http://dev.apollodata.com/core/apollo-client-api.html#constructor
 const client = new ApolloClient({
-
-  // http://dev.apollodata.com/core/network.html#createNetworkInterface
-  // networkInterface: createNetworkInterface({
-  //   uri: apiRoot + '/db'
-  // })
-
-  networkInterface: new TestNetworkInterface()
+  networkInterface,
+  queryDeduplication: true
 });
-
-const pollInterval = 0;
 
 //
 // Root App.
@@ -67,6 +66,7 @@ const WrappedApp = (
         <ListContainer className="app-list" pollInterval={ pollInterval }/>
         <GraphContainer className="orb-expand" pollInterval={ pollInterval }/>
       </div>
+
       <StatusContainer/>
     </div>
   </ApolloProvider>

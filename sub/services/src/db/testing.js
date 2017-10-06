@@ -38,3 +38,22 @@ export class TestResolver {
     return graphql(this.schema, print(query), this.root, this.context, variables);
   }
 }
+
+/**
+ * Test Apollo Network Interface.
+ */
+export class TestNetworkInterface {
+
+  resolver = new TestResolver();
+
+  // http://dev.apollodata.com/core/network.html#NetworkInterface
+  query(request) {
+    let { operationName, query, variables } = request;
+    console.log('Q:', operationName);
+
+    return this.resolver.exec(query, variables).then(result => {
+      console.log('R:', result);
+      return result;
+    });
+  }
+}

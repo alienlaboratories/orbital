@@ -5,7 +5,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import { DomUtil, ReactUtil } from '../util';
+import { DomUtil, ReactUtil } from './util';
 
 /**
  * D3 canvas.

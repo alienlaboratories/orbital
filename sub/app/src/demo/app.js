@@ -7,6 +7,8 @@ import { ApolloProvider } from 'react-apollo';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import { TestResolver } from 'orbital-services/testing';
+
 import { GraphContainer } from './containers/graph';
 import { ListContainer } from './containers/list';
 import { StatusContainer } from './containers/status';
@@ -25,10 +27,31 @@ let { rootId, apiRoot } = config;
 // Apollo Client.
 //
 
+// http://dev.apollodata.com/core/network.html#NetworkInterface
+class TestNetworkInterface {
+
+  resolver = new TestResolver();
+
+  query(request) {
+    let { operationName, query, variables } = request;
+    console.log('Q:', operationName);
+
+    return this.resolver.exec(query, variables).then(result => {
+      console.log('R:', result);
+      return result;
+    });
+  }
+}
+
+// TODO(burdon): Test network interface.
 const client = new ApolloClient({
-  networkInterface: createNetworkInterface({
-    uri: apiRoot + '/db'
-  })
+
+  // http://dev.apollodata.com/core/network.html#createNetworkInterface
+  // networkInterface: createNetworkInterface({
+  //   uri: apiRoot + '/db'
+  // })
+
+  networkInterface: new TestNetworkInterface()
 });
 
 const pollInterval = 0;

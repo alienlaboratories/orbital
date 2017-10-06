@@ -12,6 +12,7 @@ module.exports = {
 
   entry: './handler.js',
 
+  // Copy static files to deployment (available locally to Lambda functions).
   // unzip -vl .serverless/web.zip
   plugins: [
     new CopyWebpackPlugin([

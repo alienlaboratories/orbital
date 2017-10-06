@@ -58,7 +58,8 @@ module.exports = {
         exclude: /node_modules/,      // Don't transpile deps.
         include: [
           path.resolve('src'),
-          path.resolve(__dirname, '../util/src')
+          path.resolve(__dirname, '../services'),
+          path.resolve(__dirname, '../util')
         ],
         use: {
           loader: 'babel-loader',

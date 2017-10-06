@@ -2,12 +2,13 @@
 // Copyright 2017 Alien Labs.
 //
 
+import _ from 'lodash';
 import * as d3 from 'd3';
 import gql from 'graphql-tag';
 import React from 'react';
 import { compose, graphql } from 'react-apollo';
 
-import { ReactUtil } from '../util';
+import { ReactUtil } from '../component/util';
 import { D3Canvas } from '../component/d3';
 
 // TODO(burdon): Contact network from email service.
@@ -37,9 +38,10 @@ class Graph extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    let { result: { nodes=[] } } = nextProps;
+    let { nodes } = nextProps;
+
     this.setState({
-      nodes
+      nodes: _.map(nodes, n => _.pick(n, 'id', 'title'))
     });
   }
 
@@ -75,7 +77,8 @@ class Graph extends React.Component {
     let defaultAttrs = ReactUtil.defaultProps(this.props);
 
     return (
-      <D3Canvas { ...defaultAttrs } data={ this.state }
+      <D3Canvas { ...defaultAttrs }
+                data={ this.state }
                 onRender={ this.handleRender.bind(this) }
                 onResize={ this.handleResize.bind(this) }/>
     );
@@ -107,20 +110,10 @@ export const GraphContainer = compose(graphql(GraphQuery, {
 
   props: ({ ownProps, data }) => {
     let { errors, loading, result={} } = data;
-
-    // TODO(burdon): ???
-    result = {
-      nodes: [
-        { id: 'I1', title: 'Item 1' },
-        { id: 'I2', title: 'Item 2' },
-        { id: 'I3', title: 'Item 3' },
-        { id: 'I4', title: 'Item 4' },
-        { id: 'I5', title: 'Item 5' },
-      ]
-    };
+    let { nodes=[] } = result;
 
     return {
-      errors, loading, result
+      errors, loading, nodes
     };
   }
 

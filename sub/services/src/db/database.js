@@ -55,14 +55,28 @@ export class Database {
   // TODO(burdon): Context defines domains (default from CLI).
   // TODO(burdon): Ignore joins and other domains for now.
 
+  /**
+   *
+   * @param query
+   * @return {Promise}
+   */
   query(query) {
     throw new Error('Not implemented');
   }
 
+  /**
+   *
+   * @return {Promise}
+   */
   clear() {
     throw new Error('Not implemented');
   }
 
+  /**
+   *
+   * @param batches
+   * @return {Promise}
+   */
   update(batches) {
     throw new Error('Not implemented');
   }
@@ -102,18 +116,19 @@ export class MemoryDatabase extends Database {
       });
     });
 
-    return {
+    return Promise.resolve({
       nodes: Array.from(results.values())
-    };
+    });
   }
 
   clear() {
     let graph = this._getOrCreateGraph(Database.DEFAULT_DOMAIN);
     graph.clear();
+    return Promise.resolve();
   }
 
   update(batches) {
-    return _.map(batches, batch => {
+    return Promise.resolve(_.map(batches, batch => {
       let { domain=Database.DEFAULT_DOMAIN, mutations } = batch;
 
       let graph = this._getOrCreateGraph(domain);
@@ -124,6 +139,6 @@ export class MemoryDatabase extends Database {
           return graph.updateNode(id, mutations);
         })
       };
-    });
+    }));
   }
 }

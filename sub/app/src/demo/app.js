@@ -7,11 +7,13 @@ import { ApolloProvider } from 'react-apollo';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { TestNetworkInterface } from 'orbital-services/testing';
+import { TestDataGenerator, TestNetworkInterface } from 'orbital-services/testing';
 
 import { GraphContainer } from './containers/graph';
 import { ListContainer } from './containers/list';
 import { StatusContainer } from './containers/status';
+
+import { QueryManager } from './component/util';
 
 import './app.less';
 
@@ -38,6 +40,10 @@ let networkInterface;
 switch (network) {
   case 'local': {
     networkInterface = new TestNetworkInterface();
+    let generator = new TestDataGenerator(networkInterface.database).addItems(10);
+    setInterval(() => {
+      generator.addItems(1);
+    }, 5000);
     break;
   }
 
@@ -59,11 +65,28 @@ const client = new ApolloClient({
 // Root App.
 //
 
+// TODO(burdon): Pass into context.
+const queryManager = new QueryManager();
+
+// TODO(burdon): Factor out toolbars (refresh and create).
+
 const WrappedApp = (
   <ApolloProvider client={ client }>
-    <div className="orb-panel">
-      <div className="orb-x-panel">
-        <ListContainer className="app-list" pollInterval={ pollInterval }/>
+    <div className="orb-panel orb-expand">
+      <div className="orb-x-panel orb-toolbar">
+        <div className="orb-expand"/>
+        <div>
+          <button onClick={ queryManager.refetch.bind(queryManager) }>Refresh</button>
+        </div>
+      </div>
+
+      <div className="orb-x-panel orb-expand">
+        <div className="app-sidebar orb-panel">
+          <ListContainer className="app-list orb-expand" pollInterval={ pollInterval } queryId="X" queryManager={ queryManager }/>
+          <div className="orb-toolbar">
+            <button>Create</button>
+          </div>
+        </div>
         <GraphContainer className="orb-expand" pollInterval={ pollInterval }/>
       </div>
 

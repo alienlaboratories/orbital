@@ -4,7 +4,7 @@
 
 import { graphql } from 'graphql';
 
-import { Database, Graph } from './database';
+import { MemoryDatabase } from './database';
 import { createSchema } from './resolvers';
 
 // TODO(burdon): Configure query with multiple graph domains (context).
@@ -14,10 +14,7 @@ import { createSchema } from './resolvers';
 
 test('Basic query.', async () => {
 
-  let database = new Database()
-    .addGraph(new Graph('x'))
-    .addGraph(new Graph('y'))
-    .addGraph(new Graph('z'));
+  let database = new MemoryDatabase();
 
   let schema = createSchema(database);
 

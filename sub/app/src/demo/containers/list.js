@@ -7,7 +7,7 @@ import gql from 'graphql-tag';
 import React from 'react';
 import { compose, graphql } from 'react-apollo';
 
-import { ReactUtil } from '../component/util';
+import { QueryManager, ReactUtil } from '../component/util';
 
 /**
  * List of nodes.
@@ -39,23 +39,27 @@ const NodeQuery = gql`
   }
 `;
 
-export const ListContainer = compose(graphql(NodeQuery, {
+export const ListContainer = compose(
+  graphql(NodeQuery, {
+    options: (props) => {
+      let { pollInterval } = props;
+      return {
+        variables: {
+          query: {}
+        },
+        pollInterval
+      };
+    },
 
-  options: (props) => {
-    let { pollInterval } = props;
-    return {
-      variables: {
-        query: {}
-      },
-      pollInterval
-    };
-  },
+    props: ({ ownProps, data }) => {
+      let { errors, loading, result={} } = data;
 
-  props: ({ ownProps, data }) => {
-    let { errors, loading, result={} } = data;
-    return {
-      errors, loading, result
-    };
+      // TODO(burdon): Unregister?
+      QueryManager.init(ownProps, data);
+
+      return {
+        errors, loading, result
+      };
+    }
   }
-
-}))(List);
+))(List);

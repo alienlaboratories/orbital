@@ -6,36 +6,66 @@ import { graphql } from 'graphql';
 import { print } from 'graphql/language/printer';
 
 import { createSchema } from './resolvers';
-import { Database, Graph } from './database';
+import { MemoryDatabase } from './database';
+
+/**
+ * Test data generator.
+ */
+export class TestDataGenerator {
+
+  _counter = 0;
+
+  constructor(database) {
+    console.assert(database);
+    this._database = database;
+  }
+
+  addItems(count=20) {
+    let mutations = _.times(count, i => {
+      this._counter++;
+      return {
+        id: `I-${this._counter}`,
+        mutations: [
+          {
+            key: 'title',
+            value: `Item ${this._counter}`
+          }
+        ]
+      };
+    });
+
+    let batches = [
+      {
+        mutations
+      }
+    ];
+
+    this._database.update(batches);
+    return this;
+  }
+}
 
 /**
  * Test resolver.
  */
 export class TestResolver {
 
-  // TODO(burdon): Test database.
-  database = new Database();
+  _database = new MemoryDatabase();
 
-  schema = createSchema(this.database);
+  _schema = createSchema(this._database);
 
-  root = {};
+  _root = {};
 
-  context = {};
+  _context = {};
 
-  constructor() {
-    let graph = new Graph(Database.DEFAULT_DOMAIN);
-
-    _.times(10, i => {
-      graph.updateNode(`I-${i}`, [{ key: 'title', value: `Item ${i}` }]);
-    });
-
-    this.database.addGraph(graph);
+  get database() {
+    return this._database;
   }
 
   exec(query, variables) {
 
     // https://github.com/graphql/graphql-js/blob/master/src/graphql.js
-    return graphql(this.schema, print(query), this.root, this.context, variables);
+    return graphql(this._schema, print(query), this._root, this._context, variables);
   }
 }
 
@@ -44,15 +74,21 @@ export class TestResolver {
  */
 export class TestNetworkInterface {
 
-  resolver = new TestResolver();
+  constructor(resolver) {
+    this._resolver = resolver || new TestResolver();
+  }
+
+  get database() {
+    return this._resolver.database;
+  }
 
   // http://dev.apollodata.com/core/network.html#NetworkInterface
   query(request) {
     let { operationName, query, variables } = request;
-    console.log('Q:', operationName);
+    console.log('=>>', operationName);
 
-    return this.resolver.exec(query, variables).then(result => {
-      console.log('R:', result);
+    return this._resolver.exec(query, variables).then(result => {
+      console.log('<<=', result);
       return result;
     });
   }

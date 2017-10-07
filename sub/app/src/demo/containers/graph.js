@@ -27,6 +27,7 @@ class Graph extends React.Component {
     // https://github.com/d3/d3-force
     // https://bl.ocks.org/shimizu/e6209de87cdddde38dadbb746feaf3a3
     this.simulation = d3.forceSimulation()
+      .alphaTarget(1)
       .force('charge', d3.forceManyBody().strength(-1000))
       .force('x', d3.forceX())
       .force('y', d3.forceY())
@@ -54,6 +55,8 @@ class Graph extends React.Component {
 
   handleRender(root) {
     let { nodes=[] } = this.state;
+    console.log('handleRender', _.size(nodes));
+
     this.simulation.nodes(nodes);
 
     this.group

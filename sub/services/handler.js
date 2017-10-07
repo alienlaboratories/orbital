@@ -7,10 +7,10 @@ import { graphql } from 'graphql';
 import { createSchema as createDatabaseSchema } from './src/db/resolvers';
 import { createSchema as createRegistrySchema } from './src/registry/resolvers';
 
-import { Database } from './src/db/database';
+import { MemoryDatabase } from './src/db/database';
 import { MemoryServiceRegistry } from './src/registry/registry';
 
-const DatabaseSchema = createDatabaseSchema(new Database());
+const DatabaseSchema = createDatabaseSchema(new MemoryDatabase());
 const RegistrySchema = createRegistrySchema(new MemoryServiceRegistry());
 
 const HEADERS = {

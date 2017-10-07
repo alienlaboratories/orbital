@@ -1,0 +1,27 @@
+{
+  "TableName": "Items",
+  "AttributeDefinitions": [
+    {
+      "AttributeName": "Domain",
+      "AttributeType": "S"
+    },
+    {
+      "AttributeName": "Key",
+      "AttributeType": "S"
+    }
+  ],
+  "KeySchema": [
+    {
+      "AttributeName": "Domain",
+      "KeyType": "HASH"
+    },
+    {
+      "AttributeName": "Key",
+      "KeyType": "RANGE"
+    }
+  ],
+  "ProvisionedThroughput": {
+    "ReadCapacityUnits": 1,
+    "WriteCapacityUnits": 1
+  }
+}

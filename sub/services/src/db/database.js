@@ -46,23 +46,36 @@ export class Graph {
 }
 
 /**
- *
+ * Database interface.
  */
 export class Database {
 
   static DEFAULT_DOMAIN = 'default';
 
-  _graphMap = new Map();
-
   // TODO(burdon): Context defines domains (default from CLI).
   // TODO(burdon): Ignore joins and other domains for now.
 
-  addGraph(graph) {
-    this._graphMap.set(graph.domain, graph);
-    return this;
+  query(query) {
+    throw new Error('Not implemented');
   }
 
-  getOrCreateGraph(domain) {
+  clear() {
+    throw new Error('Not implemented');
+  }
+
+  update(batches) {
+    throw new Error('Not implemented');
+  }
+}
+
+/**
+ * Memory Database.
+ */
+export class MemoryDatabase extends Database {
+
+  _graphMap = new Map();
+
+  _getOrCreateGraph(domain) {
     let graph = this._graphMap.get(domain);
     if (!graph) {
       graph = new Graph(domain);
@@ -79,7 +92,7 @@ export class Database {
     let results = new Map();
 
     _.each(domains, domain => {
-      let graph = this.getOrCreateGraph(domain);
+      let graph = this._getOrCreateGraph(domain);
 
       // TODO(burdon): Data model.
       // TODO(burdon): Merge (nodes should have a map of domain specific sub-nodes).
@@ -95,7 +108,7 @@ export class Database {
   }
 
   clear() {
-    let graph = this.getOrCreateGraph(Database.DEFAULT_DOMAIN);
+    let graph = this._getOrCreateGraph(Database.DEFAULT_DOMAIN);
     graph.clear();
   }
 
@@ -103,7 +116,7 @@ export class Database {
     return _.map(batches, batch => {
       let { domain=Database.DEFAULT_DOMAIN, mutations } = batch;
 
-      let graph = this.getOrCreateGraph(domain);
+      let graph = this._getOrCreateGraph(domain);
 
       return {
         nodes: _.map(mutations, mutation => {

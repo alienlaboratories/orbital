@@ -17,7 +17,7 @@ const ENV = {
 const config = {
   appConfig: {
 
-    rootId: 'root',
+    rootId: 'orb-root',
 
     apiRoot: 'https://t2isk8i7ek.execute-api.us-east-1.amazonaws.com/dev'
   },

@@ -3,7 +3,7 @@
 //
 
 import _ from 'lodash';
-import { GraphClient } from './client';
+import { ApiClient } from './client';
 
 /**
  * Registry commands.
@@ -11,7 +11,7 @@ import { GraphClient } from './client';
 export const Registry = (config) => {
   const { ApiEndpoint } = config;
 
-  let client = new GraphClient(ApiEndpoint + '/registry');
+  let client = new ApiClient(ApiEndpoint + '/registry');
 
   return {
     command: ['registry', 'reg'],

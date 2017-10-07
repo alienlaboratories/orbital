@@ -1,0 +1,15 @@
+#
+# AWS defs.
+#
+
+region: "us-east-1"
+
+account: "956243632840"
+
+# https://console.aws.amazon.com/iam/home?name=apps#/users
+users:
+
+  # Updated 10/07/17
+  testing:
+    aws_access_key_id: "AKIAIBK7HT7QFKMYOPWA"
+    aws_secret_access_key: "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"

@@ -1,0 +1,27 @@
+{
+  //
+  // NOTE: BABEL_DISABLE_CACHE=1 otherwise cached.
+  // http://babeljs.io/docs/usage/babelrc
+  // http://babeljs.io/docs/usage/options
+  //
+
+  "presets": [
+//  "env",
+    "stage-0",
+    "es2015"
+  ],
+
+  "plugins": [
+    // https://www.npmjs.com/package/babel-plugin-transform-runtime
+    "transform-runtime",
+
+    // http://babeljs.io/docs/plugins/transform-async-to-generator
+    "transform-async-to-generator",
+
+    // https://www.npmjs.com/package/babel-plugin-transform-class-properties
+    "transform-class-properties",
+
+    // http://www.npmjs.com/package/babel-plugin-inline-import
+    "babel-plugin-inline-import"
+  ]
+}

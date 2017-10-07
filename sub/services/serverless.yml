@@ -32,7 +32,11 @@ provider:
   stage: dev
 
   environment:
-    VERSION: "0.0.1"
+    VERSION:      "0.0.1"
+    CONFIG_DIR:   "./config"
+    DATABASE:     'dynamodb'
+    AWS_USER:     "testing"
+    AWS_CONFIG:   "aws-dev.yml"
 
 functions:
 

@@ -4,7 +4,7 @@
 
 import { ID } from 'orbital-util';
 
-import { GraphClient } from './client';
+import { ApiClient } from './client';
 
 /**
  * Graph commands.
@@ -12,7 +12,7 @@ import { GraphClient } from './client';
 export const Database = (config) => {
   const { ApiEndpoint } = config;
 
-  let client = new GraphClient(ApiEndpoint + '/db');
+  let client = new ApiClient(ApiEndpoint + '/db');
 
   return {
     command: ['database', 'db'],

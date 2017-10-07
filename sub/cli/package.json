@@ -8,7 +8,7 @@
     "orb": "bin/orb.js"
   },
   "devDependencies": {
-    "babel-cli": "^6.24.1",
+    "babel-cli": "^6.26.0",
     "babel-core": "^6.24.1",
     "babel-jest": "^21.0.2",
     "babel-plugin-inline-import": "^2.0.4",

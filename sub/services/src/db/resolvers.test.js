@@ -14,6 +14,7 @@ import { createSchema } from './resolvers';
 
 test('Basic query.', async () => {
 
+  // TODO(burdon): Test DB.
   let database = new MemoryDatabase();
 
   let schema = createSchema(database);
@@ -38,7 +39,7 @@ test('Basic query.', async () => {
       batches: [
         {
           domain: 'x',
-          mutations: [
+          mutations: [              // TODO(burdon): Rename batch
             {
               id: 'Item-1',
               mutations: [

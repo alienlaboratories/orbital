@@ -55,6 +55,7 @@
   "scripts": {
     "lint": "eslint -c ../../eslintrc.yml ./src",
     "test": "jest --no-cache --silent",
-    "dev": "webpack-dev-server"
-  }
+    "dev": "webpack-dev-server",
+    "deploy": "webpack && sls client deploy"
+ }
 }

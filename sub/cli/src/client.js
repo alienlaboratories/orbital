@@ -7,8 +7,9 @@ import request from 'request';
 /**
  * GraphQL Client.
  */
-export class GraphClient {
+export class ApiClient {
 
+  // TODO(burdon): Database Client.
   constructor(url) {
     this._url = url;
   }
@@ -50,7 +51,16 @@ export class GraphClient {
             console.log(JSON.stringify({ headers }, null, 2));
           }
 
-          resolve(JSON.parse(body));
+          switch (response.statusCode) {
+            case 200: {
+              resolve(JSON.parse(body));
+              break;
+            }
+
+            default: {
+              reject(response.statusCode);
+            }
+          }
         }
       });
     });

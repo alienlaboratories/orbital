@@ -2,7 +2,7 @@
   "TableName": "Items",
   "AttributeDefinitions": [
     {
-      "AttributeName": "Domain",
+      "AttributeName": "DomainUri",
       "AttributeType": "S"
     },
     {
@@ -12,7 +12,7 @@
   ],
   "KeySchema": [
     {
-      "AttributeName": "Domain",
+      "AttributeName": "DomainUri",
       "KeyType": "HASH"
     },
     {

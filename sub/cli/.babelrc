@@ -4,8 +4,6 @@
   // http://babeljs.io/docs/usage/babelrc
   // http://babeljs.io/docs/usage/options
   //
-  // NOTE: Root .babelrc files is referenced by sub modules.
-  //
 
   "presets": [
     "stage-0",

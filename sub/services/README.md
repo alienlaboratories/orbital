@@ -26,3 +26,8 @@ TODO(burdon): Set-up AWS instructions.
 
   sls remove
 ~~~~
+
+
+## Build
+
+Babel config: http://jessesnet.com/development-notes/2016/nodejs-es7-aws-lambda

@@ -16,7 +16,7 @@ import DatabaseSchema from './gql/schema.graphql';
 export const createSchema = (database) => {
   return makeExecutableSchema({
 
-    //
+    // Schema defs.
     typeDefs: concatenateTypeDefs([ DatabaseSchema ]),
 
     // http://dev.apollodata.com/tools/graphql-tools/resolvers.html
@@ -34,10 +34,10 @@ export class Resolvers {
     this._database = database;
   }
 
-  // TODO(burdon): Promises.
-
   getMap() {
     return {
+
+      // TODO(burdon): Should format result here (not in database).
 
       RootQuery: {
 

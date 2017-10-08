@@ -52,7 +52,10 @@ export const createApp = init => {
     _.assign(res.locals, {
       req,
       event: req.apiGateway.event,
-      root: '/' + req.apiGateway.event.requestContext.stage
+      root: '/'
+
+      // TODO(burdon): Only from non domain URL.
+//    root: '/' + req.apiGateway.event.requestContext.stage
     });
 
     next();

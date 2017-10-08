@@ -12,17 +12,6 @@
 
 service: orbital
 
-plugins:
-  # Webpack
-  # https://www.npmjs.com/package/serverless-webpack
-  - "serverless-webpack"
-
-  # sls info --json | jq
-  # https://www.npmjs.com/package/serverless-plugin-info-json
-  - "serverless-plugin-info-json"
-
-custom:
-  webpack: "webpack.config.js"
 
 provider:
   name: aws
@@ -32,11 +21,27 @@ provider:
   stage: dev
 
   environment:
-    VERSION:      "0.0.1"
-    CONFIG_DIR:   "./config"
-    DATABASE:     'dynamodb'
-    AWS_USER:     "testing"
-    AWS_CONFIG:   "aws-dev.yml"
+    SERVICE_NAME:   ${self:service}
+    VERSION:        "0.0.1"
+    CONFIG_DIR:     "./config"
+    DATABASE:       'dynamodb'
+    AWS_USER:       "testing"
+    AWS_CONFIG:     "aws-dev.yml"
+
+
+plugins:
+  # Webpack
+  # https://www.npmjs.com/package/serverless-webpack
+  - "serverless-webpack"
+
+  # sls info --json | jq
+  # https://www.npmjs.com/package/serverless-plugin-info-json
+  - "serverless-plugin-info-json"
+
+
+custom:
+  webpack: "webpack.config.js"
+
 
 functions:
 

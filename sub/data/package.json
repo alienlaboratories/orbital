@@ -1,7 +1,7 @@
 {
-  "name": "orbital-util",
+  "name": "orbital-data",
   "version": "0.0.1",
-  "description": "Orbital Util.",
+  "description": "Orbital Data Framework.",
   "license": "UNLICENSED",
   "repository": "https://github.com/alienlabs/orbital",
   "main": "index.js",

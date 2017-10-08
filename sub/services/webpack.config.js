@@ -2,9 +2,8 @@
 // Copyright 2017 Alien Labs.
 //
 
+const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-
-// const slsw = require('serverless-webpack');
 
 module.exports = {
 
@@ -28,8 +27,15 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /node_modules/,    // Don't transpile deps.
+        include: [
+          path.resolve('.'),
+          path.resolve(__dirname, '../util')
+        ],
         use: {
-          loader: 'babel-loader'
+          loader: 'babel-loader',
+          options: {
+            cacheDirectory: './dist/babel-cache/'
+          }
         }
       }
     ]

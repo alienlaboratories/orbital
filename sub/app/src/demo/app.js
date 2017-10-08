@@ -7,7 +7,7 @@ import { ApolloProvider } from 'react-apollo';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { TestDataGenerator, TestNetworkInterface } from 'orbital-services/testing';
+import { TestDataGenerator, TestNetworkInterface } from 'orbital-services';
 
 import { GraphContainer } from './containers/graph';
 import { ListContainer } from './containers/list';

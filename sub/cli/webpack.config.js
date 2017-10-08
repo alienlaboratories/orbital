@@ -10,7 +10,6 @@ module.exports = {
 
   entry: {
     orb: [
-      // 'babel-polyfill',
       path.resolve(__dirname, './src/main.js')
     ],
 
@@ -31,11 +30,12 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /node_modules/,      // Don't transpile deps.
+        include: [
+          path.resolve('.'),
+          path.resolve('../util')
+        ],
         use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['env']
-          }
+          loader: 'babel-loader'
         }
       }
     ]

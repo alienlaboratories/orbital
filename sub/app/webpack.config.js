@@ -5,7 +5,7 @@
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-// TODO(burdon): See beta rules.
+// TODO(burdon): Copy defaults to root directory.
 
 module.exports = {
 
@@ -32,12 +32,15 @@ module.exports = {
     // Resolve imports/requires.
     modules: [
       'node_modules'
-    ]
+    ],
+
+    // alias: {
+    //   'orbital-services/testing': path.resolve('../services/src/testing.js')
+    // }
   },
 
   entry: {
     'app': [
-      'babel-polyfill',
       path.resolve(__dirname, './src/demo/app.js')
     ]
   },
@@ -57,7 +60,7 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,      // Don't transpile deps.
         include: [
-          path.resolve('src'),
+          path.resolve('.'),
           path.resolve(__dirname, '../services'),
           path.resolve(__dirname, '../util')
         ],

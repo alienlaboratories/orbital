@@ -19,6 +19,23 @@
 
 
 
+## Domains
+
+- https://serverless.com/blog/api-gateway-multiple-services
+
+1. Register name and cert with AWS.
+  - http://docs.aws.amazon.com/Route53/latest/DeveloperGuide/registrar.html
+  - https://serverless.com/blog/serverless-api-gateway-domain
+
+
+## Tools
+
+// TODO(burdon): babel-preset-env; remove stage-0
+
+
+// const slsw = require('serverless-webpack');
+// sls local testing
+
 
 ## Issues
 
@@ -28,3 +45,6 @@
 - yarn global add (CLI) fails with workspace dependencies
 
 - graphql plugin multiple schema files? Merge
+
+- Object.defineProperty(exports, '__esModule'
+

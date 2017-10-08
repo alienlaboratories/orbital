@@ -13,12 +13,9 @@ const ENV = {
   STATIC_DIR: './static'
 };
 
-// TODO(burdon): Config.
 const config = {
   appConfig: {
-
     rootId: 'orb-root',
-
     apiRoot: 'https://t2isk8i7ek.execute-api.us-east-1.amazonaws.com/dev'
   },
 
@@ -97,7 +94,12 @@ export const createApp = init => {
   });
 
   app.get('/app', (req, res) => {
-    res.render('app', config);
+    let { pollInterval } = req.apiGateway.event.queryStringParameters || {};
+    res.render('app', _.merge({}, config, {
+      appConfig: {
+        pollInterval: parseInt(pollInterval) || 0
+      }
+    }));
   });
 
   app.get('/debug', (req, res) => {

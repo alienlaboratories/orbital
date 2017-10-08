@@ -41,19 +41,19 @@ type RootQuery {
 # TODO(burdon): OT mutations.
 #
 
-input NodeMutation {
+input FieldMutation {
   key:        String!
   value:      String
 }
 
-input NodeMutations {
+input ItemMutations {
   id:         String!
-  mutations:  [NodeMutation]!
+  mutations:  [FieldMutation]!
 }
 
 input Batch {
   domain:     String
-  mutations:  [NodeMutations]!
+  mutations:  [ItemMutations]!      # TODO(burdon): Rename.
 }
 
 type BatchResult {

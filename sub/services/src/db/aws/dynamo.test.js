@@ -47,6 +47,7 @@ test('AWS config.', async () => {
       }
     ];
 
+    // TODO(burdon): Clear first.
     let database = new DynamoDatabase();
     return database.test().then(() => {
       return database.update(batches).then(() => {

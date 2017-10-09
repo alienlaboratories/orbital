@@ -2,12 +2,17 @@
 // Copyright 2017 Alien Labs.
 //
 
+import PropTypes from 'prop-types';
 import React from 'react';
 
 /**
- *
+ * Item editor.
  */
 export class Editor extends React.Component {
+
+  static propTypes = {
+    createItem: PropTypes.func.isRequired
+  };
 
   state = {
     text: ''
@@ -18,8 +23,11 @@ export class Editor extends React.Component {
   }
 
   handleCreate() {
+    let { createItem } = this.props;
     let { text } = this.state;
-    console.log('Create:', text);
+
+    createItem(text);
+
     this.setState({
       text: ''
     }, () => {
@@ -50,6 +58,7 @@ export class Editor extends React.Component {
                onChange={this.handleTextChange.bind(this)}
                onKeyDown={this.handleKeyDown.bind(this)}
                ref={node => this._input = node}/>
+
         <button onClick={this.handleCreate.bind(this)}>Create</button>
       </div>
     );

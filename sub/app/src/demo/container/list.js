@@ -8,6 +8,7 @@ import { compose, graphql } from 'react-apollo';
 import { List } from '../component/list';
 import { subscribe } from './subscription';
 
+// TODO(burdon): Factor out query.
 const NodeQuery = gql`
   query NodeQuery($query: Query!) {
     result: query(query: $query) {
@@ -18,7 +19,6 @@ const NodeQuery = gql`
     }
   }
 `;
-
 
 export const ListContainer = compose(
   graphql(NodeQuery, {
@@ -35,9 +35,10 @@ export const ListContainer = compose(
     props: ({ ownProps, data }) => {
       let { errors, loading, refetch, result={} } = data;
 
+      // TODO(burdon): Refetch not working.
       // TODO(burdon): Util to wrap standard data params.
       return {
-        errors, loading, refetch, result
+        errors, loading, refetch, result, xxx:1000
       };
     }
   }

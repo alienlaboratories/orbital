@@ -5,6 +5,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+// TODO(burdon): Subscriptions: http://dev.apollodata.com/react/receiving-updates.html#Subscriptions
+// TODO(burdon): Polling spools up additional instance. Back-off?
+
 /**
  * Query manager.
  */
@@ -14,7 +17,9 @@ export class QueryManager {
 
   refetch() {
     this._queryMap.forEach((refetch, queryId) => {
-      refetch();
+      refetch().then(r => {
+        console.log('Updated:', queryId);
+      });
     });
   }
 
@@ -42,9 +47,9 @@ export const subscribe = (WrappedComponent) => {
     };
 
     componentDidMount() {
-      let { queryId, refetch } = this.props;
+      let { queryId } = this.props;
       let { queryManager } = this.context;
-      queryManager.registerQuery(queryId, refetch);
+      queryManager.registerQuery(queryId, () => this.props.refetch());
     }
 
     componentWillUnmount() {

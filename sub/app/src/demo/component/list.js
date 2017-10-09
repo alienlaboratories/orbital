@@ -20,7 +20,7 @@ export class List extends React.Component {
     ));
 
     return (
-      <div {...defaultAttrs}>{list}</div>
+      <div { ...defaultAttrs }>{ list }</div>
     );
   }
 }

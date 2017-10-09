@@ -7,9 +7,7 @@ import { compose, graphql } from 'react-apollo';
 
 import { Graph } from '../component/graph';
 
-// TODO(burdon): Contact network from email service.
-// TODO(burdon): Extract text from email messages. Topics.
-
+// TODO(burdon): Factor out query.
 const GraphQuery = gql`
   query GraphQuery($query: Query!) {
     result: query(query: $query) {

@@ -10,9 +10,8 @@ import ReactDOM from 'react-dom';
 
 import { TestDataGenerator, TestNetworkInterface } from 'orbital-api';
 
-import { GraphContainer, ListContainer, StatusContainer } from './container';
+import { EditorContainer, GraphContainer, ListContainer, StatusContainer } from './container';
 import { QueryManager } from './container/subscription';
-import { Editor } from './component';
 
 import './app.less';
 
@@ -27,15 +26,13 @@ let { rootId, apiRoot, network } = config;
 // TODO(burdon): Redux.
 // TODO(burdon): Router.
 
-// TODO(burdon): Refresh button.
-// TODO(burdon): Subscriptions: http://dev.apollodata.com/react/receiving-updates.html#Subscriptions
-// TODO(burdon): Polling spools up additional instance.
-
 // TODO(burdon): Async set-up. App class.
 
 //
 // Apollo Client.
 //
+
+network = 'prod';
 
 let networkInterface;
 switch (network) {
@@ -116,11 +113,13 @@ class Application extends React.Component {
 
           <div className="orb-x-panel orb-expand">
             <div className="app-sidebar orb-panel">
-              <ListContainer className="app-list orb-expand"
-                             pollInterval={ pollInterval }
-                             queryId="list"/>
+              <div className="orb-panel orb-expand">
+                <ListContainer className="app-list orb-expand"
+                               pollInterval={ pollInterval }
+                               queryId="list"/>
 
-              <Editor/>
+                <EditorContainer/>
+              </div>
             </div>
 
             <GraphContainer className="orb-expand" pollInterval={ pollInterval }/>

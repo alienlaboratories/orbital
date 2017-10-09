@@ -14,6 +14,14 @@ import { Database } from '../database';
  */
 export class DynamoDatabase extends Database {
 
+  // TODO(burdon): Schema (property types)?
+  static recordToItem(item) {
+    return {
+      id: _.get(item, 'DomainUri.S') + '/' + _.get(item, 'Key.S'),
+      title: _.get(item, 'Data.M.title.S')
+    };
+  }
+
   static TABLE_NAME = 'Items';
 
   // https://console.aws.amazon.com/dynamodb/home#tables:selected=Items
@@ -54,12 +62,7 @@ export class DynamoDatabase extends Database {
       }, callback);
     }).then(result => {
       let nodes = _.map(_.get(result, 'Items'), item => {
-
-        // TODO(burdon): Schema (property types)?
-        return {
-          id: _.get(item, 'DomainUri.S') + '/' + _.get(item, 'Key.S'),
-          title: _.get(item, 'Data.M.title.S')
-        };
+        return DynamoDatabase.recordToItem(item);
       });
 
       return {
@@ -72,6 +75,7 @@ export class DynamoDatabase extends Database {
     let promises = _.map(batches, batch => {
       let { mutations } = batch;
 
+      let nodes = [];
       return AWSUtil.promisify(callback => {
 
         // http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB.html#batchWriteItem-property
@@ -81,32 +85,33 @@ export class DynamoDatabase extends Database {
               let { id, mutations } = mutation;
 
               // TODO(burdon): Apply mutations.
-              // TODO(burdon): Schema (property types)?
               let data = {};
               _.each(mutations, mutation => {
                 let { key, value } = mutation;
                 data[key] = AWSUtil.Property.S(value);
               });
 
+              let item = {
+                'DomainUri': AWSUtil.Property.S(Database.DEFAULT_DOMAIN),
+                'Key': AWSUtil.Property.S(id),
+                'Data': {
+                  M: data
+                }
+              };
+
+              nodes.push(DynamoDatabase.recordToItem(item));
+
               return {
                 PutRequest: {
-                  Item: {
-                    'DomainUri': AWSUtil.Property.S(Database.DEFAULT_DOMAIN),
-                    'Key': AWSUtil.Property.S(id),
-                    'Data': {
-                      M: data
-                    }
-                  }
+                  Item: item
                 }
               };
             })
           }
         }, callback);
       }).then(result => {
-
-        // TODO(burdon): Update mutated nodes.
         return {
-          nodes: []
+          nodes
         };
       });
     });

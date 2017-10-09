@@ -11,15 +11,10 @@ import { Status } from './status';
 
 const VERSION = '0.0.1';
 
-// TODO(burdon): Env.
-const STAGE = 'dev';
-
 const PROMPT = '[orb]> ';
 
 const config = {
-  // TODO(burdon): NOTE: Changes each time deployed. CNAME? Route53? CloudFormation?
-  // https://github.com/serverless/serverless/issues/2074
-  ApiEndpoint: 'https://t2isk8i7ek.execute-api.us-east-1.amazonaws.com/' + STAGE
+  ApiEndpoint: 'https://api.orbitaldb.com'
 };
 
 /**

@@ -32,8 +32,6 @@ let { rootId, apiRoot, network } = config;
 // Apollo Client.
 //
 
-network = 'prod';
-
 let networkInterface;
 switch (network) {
   case 'local': {

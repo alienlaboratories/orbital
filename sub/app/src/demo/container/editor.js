@@ -9,7 +9,7 @@ import { ID } from 'orbital-util';
 
 import { Editor } from '../component/editor';
 
-const NodeMutation = gql`
+const UpdateMutation = gql`
   mutation UpdateMutation($batches: [Batch]!) {
     result: update(batches: $batches) {
       nodes {
@@ -23,13 +23,14 @@ const NodeMutation = gql`
 export const EditorContainer = compose(
 
   // http://dev.apollodata.com/react/mutations.html
-  graphql(NodeMutation, {
+  graphql(UpdateMutation, {
 
     props: ({ ownProps, mutate }) => {
       return {
         createItem: (title) => {
 
-          // TODO(burdon): Update cache.
+          // TODO(burdon): Update query (add to query results).
+          // TODO(burdon): Optimistic update.
           mutate({
             variables: {
               batches: [

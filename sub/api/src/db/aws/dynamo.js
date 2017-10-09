@@ -120,6 +120,48 @@ export class DynamoDatabase extends Database {
   }
 
   clear() {
-    // TODO(burdon): Query items then BatchWriteItem.
+    let { domain=Database.DEFAULT_DOMAIN } = {};
+
+    // TODO(burdon): Page query.
+    return AWSUtil.promisify(callback => {
+
+      // http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB.html#query-property
+      this._dynamodb.query({
+        TableName: DynamoDatabase.TABLE_NAME,
+        KeyConditionExpression: 'DomainUri = :v1',
+        ExpressionAttributeValues: {
+          ':v1': {
+            S: domain
+          }
+        }
+      }, callback);
+    }).then(result => {
+      return AWSUtil.promisify(callback => {
+        let items = _.map(_.get(result, 'Items'));
+
+        // TODO(burdon): Iterate (batch size is 25).
+        items = _.slice(items, 0, 25);
+
+        // http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB.html#batchWriteItem-property
+        this._dynamodb.batchWriteItem({
+          RequestItems: {
+            [DynamoDatabase.TABLE_NAME]: _.map(items, item => {
+              let { Key, DomainUri } = item;
+
+              return {
+                DeleteRequest: {
+
+                  // TODO(burdon): Disambiguate Key.
+                  Key: {
+                    Key,
+                    DomainUri
+                  }
+                }
+              };
+            })
+          }
+        }, callback);
+      });
+    });
   }
 }

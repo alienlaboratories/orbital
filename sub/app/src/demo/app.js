@@ -70,23 +70,95 @@ const queryManager = new QueryManager();
 
 // TODO(burdon): Factor out toolbars (refresh and create).
 
-const WrappedApp = (
-  <ApolloProvider client={ client }>
-    <div className="orb-panel orb-expand">
+/**
+ *
+ */
+class Header extends React.Component {
+
+  handleRefetch() {
+    let { queryManager } = this.props;
+    queryManager.refetch();
+  }
+
+  render() {
+
+    return (
       <div className="orb-x-panel orb-toolbar">
         <div className="orb-expand"/>
         <div>
-          <button onClick={ queryManager.refetch.bind(queryManager) }>Refresh</button>
+          <button onClick={ this.handleRefetch.bind(this) }>Refresh</button>
         </div>
       </div>
+    );
+  }
+}
+
+/**
+ *
+ */
+class Editor extends React.Component {
+
+  state = {
+    text: ''
+  };
+
+  componentDidMount(){
+    this._input.focus();
+  }
+
+  handleCreate() {
+    let { text } = this.state;
+    console.log('Create:', text);
+    this.setState({
+      text: ''
+    }, () => {
+      this._input.focus();
+    });
+  }
+
+  handleTextChange(event) {
+    this.setState({
+      text: event.target.value
+    });
+  }
+
+  handleKeyDown(event) {
+    switch (event.keyCode) {
+      case 13: {
+        this.handleCreate();
+        break;
+      }
+    }
+  }
+
+  render() {
+    let { text } = this.state;
+    return (
+      <div className="orb-toolbar">
+        <input type="text" className="orb-expand" value={ text }
+               onChange={ this.handleTextChange.bind(this) }
+               onKeyDown={ this.handleKeyDown.bind(this) }
+               ref={ node => this._input = node }/>
+        <button onClick={ this.handleCreate.bind(this) }>Create</button>
+      </div>
+    );
+  }
+}
+
+const WrappedApp = (
+  <ApolloProvider client={ client }>
+    <div className="orb-panel orb-expand">
+      <Header queryManager={ queryManager }/>
 
       <div className="orb-x-panel orb-expand">
         <div className="app-sidebar orb-panel">
-          <ListContainer className="app-list orb-expand" pollInterval={ pollInterval } queryId="X" queryManager={ queryManager }/>
-          <div className="orb-toolbar">
-            <button>Create</button>
-          </div>
+          <ListContainer className="app-list orb-expand"
+                         pollInterval={ pollInterval }
+                         queryId="X" queryManager={ queryManager }/>
+
+          <Editor/>
         </div>
+
         <GraphContainer className="orb-expand" pollInterval={ pollInterval }/>
       </div>
 

@@ -13,7 +13,7 @@
 # unzip -vl .serverless/web.zip
 #
 
-service: web
+service: orbital-demo
 
 
 provider:
@@ -28,17 +28,17 @@ provider:
 
 
 plugins:
-  # Webpack
-  # NOTE: Configures packaging (so package field in this config is ignored).
-  # https://www.npmjs.com/package/serverless-webpack
-  - "serverless-webpack"
-
   # Custom domain name.
   # https://serverless.com/blog/serverless-api-gateway-domain
   # https://www.npmjs.com/package/serverless-domain-manager
   - "serverless-domain-manager"
 
-  # TODO(burdon): Not used.
+  # Webpack
+  # NOTE: Configures packaging (so package field in this config is ignored).
+  # https://www.npmjs.com/package/serverless-webpack
+  - "serverless-webpack"
+
+  # TODO(burdon): Test.
 #  - "serverless-offline"
 
 
@@ -47,7 +47,9 @@ custom:
   # https://console.aws.amazon.com/route53/home#DomainListing
   # https://serverless.com/blog/serverless-api-gateway-domain
   # sls create_domain Assigns cert to domain and configures CNAMES
-  # https://github.com/amplify-education/serverless-domain-manager/issues/31 (burdon)
+  # TODO(burdon): https://github.com/amplify-education/serverless-domain-manager/issues/31 (burdon)
+  # TODO(burdon): https://github.com/amplify-education/serverless-domain-manager/issues/32 (burdon)
+  # TODO(burdon): https://console.aws.amazon.com/support/home?region=us-east-1#/case/?displayId=4512256671&language=en
   customDomain:
     domainName: www.orbitaldb.com
     basePath: ''

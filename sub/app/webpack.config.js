@@ -32,11 +32,7 @@ module.exports = {
     // Resolve imports/requires.
     modules: [
       'node_modules'
-    ],
-
-    // alias: {
-    //   'orbital-services/testing': path.resolve('../services/src/testing.js')
-    // }
+    ]
   },
 
   entry: {
@@ -61,7 +57,7 @@ module.exports = {
         exclude: /node_modules/,      // Don't transpile deps.
         include: [
           path.resolve('.'),
-          path.resolve(__dirname, '../services'),
+          path.resolve(__dirname, '../api'),
           path.resolve(__dirname, '../util')
         ],
         use: {

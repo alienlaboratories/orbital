@@ -16,7 +16,7 @@ const ENV = {
 const config = {
   appConfig: {
     rootId: 'orb-root',
-    apiRoot: 'https://t2isk8i7ek.execute-api.us-east-1.amazonaws.com/dev'
+    apiRoot: 'https://api.orbitaldb.com'
   },
 
   appBundle: {
@@ -52,7 +52,7 @@ export const createApp = init => {
     _.assign(res.locals, {
       req,
       event: req.apiGateway.event,
-      root: '/'
+      root: ''
 
       // TODO(burdon): Only from non domain URL.
 //    root: '/' + req.apiGateway.event.requestContext.stage

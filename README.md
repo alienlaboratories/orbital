@@ -26,6 +26,9 @@
 1. Register name and cert with AWS.
   - http://docs.aws.amazon.com/Route53/latest/DeveloperGuide/registrar.html
   - https://serverless.com/blog/serverless-api-gateway-domain
+  - Approve email
+
+NOTE: Takes about an hour for sls delete_domain to release CERT.
 
 
 ## Tools

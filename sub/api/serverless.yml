@@ -7,10 +7,8 @@
 # https://console.aws.amazon.com/lambda/home?region=us-east-1#/functions?display=list
 #
 
-# TODO(burdon): Serverless offline plugin.
-# TODO(burdon): IAM roles for deploying lambda.
-
-service: orbital
+# TODO(burdon): Change sub/api
+service: orbital-api
 
 
 provider:
@@ -30,17 +28,26 @@ provider:
 
 
 plugins:
-  # Webpack
-  # https://www.npmjs.com/package/serverless-webpack
-  - "serverless-webpack"
+  # https://www.npmjs.com/package/serverless-domain-manager
+  - "serverless-domain-manager"
 
   # sls info --json | jq
   # https://www.npmjs.com/package/serverless-plugin-info-json
   - "serverless-plugin-info-json"
 
+  # Webpack
+  # https://www.npmjs.com/package/serverless-webpack
+  - "serverless-webpack"
+
 
 custom:
   webpack: "webpack.config.js"
+
+  customDomain:
+    domainName: api.orbitaldb.com
+    basePath: ''
+    stage: ${self:provider.stage}
+    createRoute53Record: true
 
 
 functions:

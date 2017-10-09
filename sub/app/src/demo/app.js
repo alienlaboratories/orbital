@@ -3,22 +3,21 @@
 //
 
 import { ApolloClient, createNetworkInterface } from 'apollo-client';
+import PropTypes from 'prop-types';
 import { ApolloProvider } from 'react-apollo';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
 import { TestDataGenerator, TestNetworkInterface } from 'orbital-api';
 
-import { GraphContainer } from './containers/graph';
-import { ListContainer } from './containers/list';
-import { StatusContainer } from './containers/status';
-
-import { QueryManager } from './component/util';
+import { GraphContainer, ListContainer, StatusContainer } from './container';
+import { QueryManager } from './container/subscription';
+import { Editor } from './component';
 
 import './app.less';
 
 const config = window.config;
-let { rootId, apiRoot, network, pollInterval } = config;
+let { rootId, apiRoot, network } = config;
 
 // TODO(burdon): TypeScript/Flow
 // http://dev.apollodata.com/react/using-with-types.html
@@ -31,6 +30,8 @@ let { rootId, apiRoot, network, pollInterval } = config;
 // TODO(burdon): Refresh button.
 // TODO(burdon): Subscriptions: http://dev.apollodata.com/react/receiving-updates.html#Subscriptions
 // TODO(burdon): Polling spools up additional instance.
+
+// TODO(burdon): Async set-up. App class.
 
 //
 // Apollo Client.
@@ -65,23 +66,23 @@ const client = new ApolloClient({
 // Root App.
 //
 
-// TODO(burdon): Pass into context.
-const queryManager = new QueryManager();
-
-// TODO(burdon): Factor out toolbars (refresh and create).
-
 /**
- *
+ * Header component.
  */
 class Header extends React.Component {
 
+  static contextTypes = {
+    queryManager: PropTypes.object.isRequired
+  };
+
   handleRefetch() {
-    let { queryManager } = this.props;
+    let { queryManager } = this.context;
     queryManager.refetch();
   }
 
-  render() {
+  // TODO(burdon): Searchbar.
 
+  render() {
     return (
       <div className="orb-x-panel orb-toolbar">
         <div className="orb-expand"/>
@@ -93,78 +94,47 @@ class Header extends React.Component {
   }
 }
 
-/**
- *
- */
-class Editor extends React.Component {
+class Application extends React.Component {
 
-  state = {
-    text: ''
+  static childContextTypes = {
+    queryManager: PropTypes.object.isRequired
   };
 
-  componentDidMount(){
-    this._input.focus();
-  }
-
-  handleCreate() {
-    let { text } = this.state;
-    console.log('Create:', text);
-    this.setState({
-      text: ''
-    }, () => {
-      this._input.focus();
-    });
-  }
-
-  handleTextChange(event) {
-    this.setState({
-      text: event.target.value
-    });
-  }
-
-  handleKeyDown(event) {
-    switch (event.keyCode) {
-      case 13: {
-        this.handleCreate();
-        break;
-      }
-    }
+  getChildContext() {
+    return {
+      queryManager: new QueryManager()
+    };
   }
 
   render() {
-    let { text } = this.state;
+    let { config: { pollInterval }, client } = this.props;
+
     return (
-      <div className="orb-toolbar">
-        <input type="text" className="orb-expand" value={ text }
-               onChange={ this.handleTextChange.bind(this) }
-               onKeyDown={ this.handleKeyDown.bind(this) }
-               ref={ node => this._input = node }/>
-        <button onClick={ this.handleCreate.bind(this) }>Create</button>
-      </div>
+      <ApolloProvider client={ client }>
+        <div className="orb-panel orb-expand">
+          <Header/>
+
+          <div className="orb-x-panel orb-expand">
+            <div className="app-sidebar orb-panel">
+              <ListContainer className="app-list orb-expand"
+                             pollInterval={ pollInterval }
+                             queryId="list"/>
+
+              <Editor/>
+            </div>
+
+            <GraphContainer className="orb-expand" pollInterval={ pollInterval }/>
+          </div>
+
+          <StatusContainer className="app-status-bar"/>
+        </div>
+      </ApolloProvider>
     );
   }
 }
 
-const WrappedApp = (
-  <ApolloProvider client={ client }>
-    <div className="orb-panel orb-expand">
-      <Header queryManager={ queryManager }/>
-
-      <div className="orb-x-panel orb-expand">
-        <div className="app-sidebar orb-panel">
-          <ListContainer className="app-list orb-expand"
-                         pollInterval={ pollInterval }
-                         queryId="X" queryManager={ queryManager }/>
-
-          <Editor/>
-        </div>
-
-        <GraphContainer className="orb-expand" pollInterval={ pollInterval }/>
-      </div>
-
-      <StatusContainer className="app-status-bar"/>
-    </div>
-  </ApolloProvider>
-);
-
-ReactDOM.render(WrappedApp, document.getElementById(rootId));
+ReactDOM.render(
+  <Application
+    config={ config }
+    client={ client }/>,
+  document.getElementById(rootId));

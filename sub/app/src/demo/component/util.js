@@ -5,30 +5,6 @@
 import _ from 'lodash';
 
 /**
- * Query manager.
- */
-export class QueryManager {
-
-  static init(ownProps, data) {
-    let { queryId, queryManager } = ownProps;
-    let { refetch } = data;
-    queryManager && queryManager.registerQuery(queryId, refetch);
-  }
-
-  queryMap = new Map();
-
-  refetch() {
-    this.queryMap.forEach((refetch, queryId) => {
-      refetch();
-    });
-  }
-
-  registerQuery(queryId, refetch) {
-    this.queryMap.set(queryId, refetch);
-  }
-}
-
-/**
  * React utils.
  */
 export class ReactUtil {

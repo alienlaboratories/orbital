@@ -41,6 +41,7 @@ class Graph extends React.Component {
     let { nodes } = nextProps;
 
     this.setState({
+      // Copy read-only nodes.
       nodes: _.map(nodes, n => _.pick(n, 'id', 'title'))
     });
   }
@@ -54,7 +55,6 @@ class Graph extends React.Component {
       this.simulation.force('center', d3.forceCenter(center.x, center.y));
     }
 
-    // TODO(burdon): When data changes. I.e., D3Canvas when properties change.
     let { nodes=[] } = data || {};
     this.simulation.nodes(nodes);
 
@@ -70,7 +70,7 @@ class Graph extends React.Component {
   }
 
   handleResize(root, size) {
-    this.simulation.force('center', d3.forceCenter(size.width / 2, size.height / 2));
+    this.simulation.force('center', d3.forceCenter(size.width / 2, size.height / 2)).restart();
   }
 
   render() {

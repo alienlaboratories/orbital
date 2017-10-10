@@ -14,6 +14,8 @@ export const Database = (config) => {
 
   let client = new ApiClient(ApiEndpoint + '/db');
 
+  // TODO(burdon): Extract API.
+
   return {
     command: ['database', 'db'],
     describe: 'Graph Database API.',

@@ -13,8 +13,8 @@ export class Registry {
     console.assert(config);
     this._config = config;
 
-    let { url } = config;
-    this._client = new ApiClient(url + '/db');
+    let { apiKey, url } = config;
+    this._client = new ApiClient({ apiKey, url: url + '/registry' });
   }
 
   list() {

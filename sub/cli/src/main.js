@@ -2,6 +2,7 @@
 // Copyright 2017 Alien Labs.
 //
 
+import _ from 'lodash';
 import readline from 'readline';
 import yargs from 'yargs/yargs';
 
@@ -15,7 +16,11 @@ const VERSION = '0.0.1';
 
 const PROMPT = '[orb]> ';
 
-const config = {};
+const config = {
+  orbital: {
+    API_KEY: 'TEST'
+  }
+};
 
 /**
  * CLI app.
@@ -25,7 +30,7 @@ class App {
   constructor(config) {
 
     // TODO(burdon): API config.
-    Orb.config.update({});
+    Orb.config.update(_.get(config, 'orbital'));
 
     // TODO(burdon): '*' default command.
     // https://github.com/yargs/yargs/blob/master/docs/advanced.md#commands

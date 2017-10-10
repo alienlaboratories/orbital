@@ -7,10 +7,10 @@ import _ from 'lodash';
 import { Orb } from 'orbital-api';
 
 const log = (nodes) => {
-  const col1 = 50;
+  const col = 48;
 
-  console.log(_.padEnd('Key', col1), 'Data');
-  console.log(_.padEnd('---', col1, '-'), _.pad('---', 40, '-'));
+  console.log(_.padEnd('Key', col), 'Data');
+  console.log(_.padEnd('---', col, '-'), _.pad('---', col, '-'));
 
   _.each(nodes, node => {
     let { type, id } = node;
@@ -18,7 +18,7 @@ const log = (nodes) => {
     // TODO(burdon): Util.
     let key = `${type}/${id}`;
 
-    console.log(_.padEnd(key, col1), JSON.stringify(_.omit(node, 'type', 'id')));
+    console.log(_.padEnd(key, col), JSON.stringify(_.omit(node, 'type', 'id')));
   });
 };
 

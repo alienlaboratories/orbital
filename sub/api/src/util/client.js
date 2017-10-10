@@ -9,21 +9,25 @@ import request from 'request';
  */
 export class ApiClient {
 
-  // TODO(burdon): Database Client.
-  constructor(url) {
-    this._url = url;
+  constructor(config) {
+    this._config = config;
   }
 
   query(query, variables, options={}) {
+    let { url, apiKey } = this._config;
 
     const args = {
-      url: this._url,
+      url,
 
       headers: {
         'User-Agent': 'orbital-cli',
         'Content-Type': 'application/json',
         'Accept': '*/*',
-//      'Authorization': 'None'
+
+        // https://swagger.io/docs/specification/authentication/api-keys
+        'X-API-Key': apiKey,
+
+//      'Authorization': ''   // JWT
       },
 
       body: JSON.stringify({

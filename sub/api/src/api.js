@@ -26,7 +26,7 @@ class Config {
    * @param {{ verbose, url }} config
    */
   update(config) {
-    console.assert(config);
+    console.assert(config && config.API_KEY, 'API_KEY must be set.');
     this._config = _.defaults(config, Config.DEFAULTS);
   }
 }

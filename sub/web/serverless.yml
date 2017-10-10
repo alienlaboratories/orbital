@@ -82,3 +82,6 @@ functions:
       - http:
           path: debug
           method: get
+      - http:
+          path: login/{path}
+          method: get

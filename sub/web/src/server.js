@@ -109,5 +109,14 @@ export const createApp = init => {
     res.json(req.apiGateway.event);
   });
 
+  // TODO(burdon): Router?
+  // TODO(burdon): From beta; separate service to handle OAuth callback, etc.
+  app.get('/login/:providerId', (req, res) => {
+    let { providerId } = req.params;
+    res.json({
+      providerId
+    });
+  });
+
   return app;
 };

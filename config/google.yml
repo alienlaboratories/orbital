@@ -1,0 +1,18 @@
+#
+# Google defs.
+#
+# APIs
+# https://console.developers.google.com/apis/library?creatingProject=true&project=orbitaldb&organizationId=87382925251
+
+orgId: "87382925251"
+projectId: "orbitaldb"
+
+#
+# Credentials
+# https://console.developers.google.com/apis/credentials?project=orbitaldb&organizationId=87382925251
+#
+credentials:
+  web:
+    # 10/10/17 "Web App"
+    clientId: "296271481911-bdd9ergb3ru9jr7ucrldc75esud74057.apps.googleusercontent.com"
+    clientSecret: "kOcu0LEETBvkQvpTrbupYLVS"

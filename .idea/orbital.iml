@@ -5,6 +5,7 @@
       <excludeFolder url="file://$MODULE_DIR$/dist" />
       <excludeFolder url="file://$MODULE_DIR$/sub/api/.serverless" />
       <excludeFolder url="file://$MODULE_DIR$/sub/api/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/sub/api/node_modules" />
       <excludeFolder url="file://$MODULE_DIR$/sub/app/client" />
       <excludeFolder url="file://$MODULE_DIR$/sub/app/dist" />
       <excludeFolder url="file://$MODULE_DIR$/sub/cli/dist" />

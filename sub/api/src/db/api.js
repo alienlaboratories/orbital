@@ -2,6 +2,8 @@
 // Copyright 2017 Alien Labs.
 //
 
+// TODO(burdon): Move to sub/data?
+
 import _ from 'lodash';
 
 import { ID } from 'orbital-util';

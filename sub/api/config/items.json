@@ -6,7 +6,7 @@
       "AttributeType": "S"
     },
     {
-      "AttributeName": "Key",
+      "AttributeName": "ItemKey",
       "AttributeType": "S"
     }
   ],
@@ -16,7 +16,7 @@
       "KeyType": "HASH"
     },
     {
-      "AttributeName": "Key",
+      "AttributeName": "ItemKey",
       "KeyType": "RANGE"
     }
   ],

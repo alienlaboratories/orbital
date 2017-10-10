@@ -16,7 +16,6 @@
 # http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.CoreComponents.html#HowItWorks.CoreComponents.PrimaryKey
 #
 
-# TODO(burdon): DynamoDB
 # http://docs.aws.amazon.com/lambda/latest/dg/with-ddb.html
 # https://github.com/serverless/examples/tree/master/aws-node-rest-api-with-dynamodb
 # https://github.com/serverless/examples/blob/master/aws-node-rest-api-with-dynamodb/todos/create.js

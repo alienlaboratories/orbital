@@ -7,6 +7,7 @@
 #
 
 type Node {
+  type:       String!
   id:         String!
   title:      String!
 }
@@ -47,6 +48,7 @@ input FieldMutation {
 }
 
 input ItemMutations {
+  type:       String!
   id:         String!
   mutations:  [FieldMutation]!
 }

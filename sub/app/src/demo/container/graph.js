@@ -12,6 +12,7 @@ const GraphQuery = gql`
   query GraphQuery($query: Query!) {
     result: query(query: $query) {
       nodes {
+        type
         id
         title
       }

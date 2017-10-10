@@ -13,6 +13,7 @@ const NodeQuery = gql`
   query NodeQuery($query: Query!) {
     result: query(query: $query) {
       nodes {
+        type
         id
         title
       }
@@ -35,10 +36,9 @@ export const ListContainer = compose(
     props: ({ ownProps, data }) => {
       let { errors, loading, refetch, result={} } = data;
 
-      // TODO(burdon): Refetch not working.
       // TODO(burdon): Util to wrap standard data params.
       return {
-        errors, loading, refetch, result, xxx:1000
+        errors, loading, refetch, result
       };
     }
   }

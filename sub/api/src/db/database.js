@@ -10,7 +10,7 @@ import assert from 'assert';
  */
 export class Database {
 
-  static DEFAULT_DOMAIN = 'default';
+  static DEFAULT_DOMAIN = '_';
 
   // TODO(burdon): Context defines domains (default from CLI).
   // TODO(burdon): Ignore joins and other domains for now.

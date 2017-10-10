@@ -13,6 +13,7 @@ const UpdateMutation = gql`
   mutation UpdateMutation($batches: [Batch]!) {
     result: update(batches: $batches) {
       nodes {
+        type
         id
         title
       }
@@ -37,6 +38,7 @@ export const EditorContainer = compose(
                 {
                   mutations: [
                     {
+                      type: 'test',
                       id: ID.createId(),
                       mutations: [
                         {

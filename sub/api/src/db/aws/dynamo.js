@@ -16,10 +16,37 @@ export class DynamoDatabase extends Database {
 
   static MAX_BATCH_SIZE = 25;
 
+  // Key Structure
+  // http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.CoreComponents.html#HowItWorks.CoreComponents.PrimaryKey
+  //
+  // item {
+  //   domain       google.com/mail/team-X
+  //   type         contact
+  //   id           x-123
+  // }
+  //
+  // Permalink:     google.com/mail/team-X:contact/x-123
+
+  static encodeKey(type, id) {
+    console.assert(type && id);
+    return type + '/' + id;
+  }
+
+  static decodeKey(key) {
+    console.assert(key);
+    let [ type, id ] = key.split('/');
+    return {
+      type, id
+    };
+  }
+
   // TODO(burdon): Schema (property types)?
   static recordToItem(item) {
     return {
-      id: _.get(item, 'DomainUri.S') + '/' + _.get(item, 'Key.S'),
+      domain: _.get(item, 'DomainUri.S'),
+
+      ...DynamoDatabase.decodeKey(_.get(item, 'ItemKey.S')),
+
       title: _.get(item, 'Data.M.title.S')
     };
   }
@@ -84,7 +111,7 @@ export class DynamoDatabase extends Database {
         this._dynamodb.batchWriteItem({
           RequestItems: {
             [DynamoDatabase.TABLE_NAME]: _.map(mutations, mutation => {
-              let { id, mutations } = mutation;
+              let { type, id, mutations } = mutation;
 
               // TODO(burdon): Apply mutations.
               let data = {};
@@ -95,7 +122,7 @@ export class DynamoDatabase extends Database {
 
               let item = {
                 'DomainUri': AWSUtil.Property.S(Database.DEFAULT_DOMAIN),
-                'Key': AWSUtil.Property.S(id),
+                'ItemKey': AWSUtil.Property.S(DynamoDatabase.encodeKey(type, id)),
                 'Data': {
                   M: data
                 }
@@ -150,15 +177,13 @@ export class DynamoDatabase extends Database {
           this._dynamodb.batchWriteItem({
             RequestItems: {
               [DynamoDatabase.TABLE_NAME]: _.map(items, item => {
-                let { Key, DomainUri } = item;
+                let { ItemKey, DomainUri } = item;
 
                 return {
                   DeleteRequest: {
-
-                    // TODO(burdon): Disambiguate Key.
                     Key: {
-                      Key,
-                      DomainUri
+                      DomainUri,
+                      ItemKey
                     }
                   }
                 };

@@ -29,6 +29,7 @@ export const Database = (config) => {
             query Query($query: Query!) {
               result: query(query: $query) {
                 nodes {
+                  type
                   id
                   title
                 }
@@ -59,8 +60,9 @@ export const Database = (config) => {
 
           const query = `
             mutation Mutation($batches: [Batch]!) {
-              result: update(batches: $batches) {
+              result: update(batches: $batches) {              
                 nodes {
+                  type
                   id
                   title
                 }
@@ -73,6 +75,7 @@ export const Database = (config) => {
               {
                 mutations: [
                   {
+                    type: 'test',
                     id: ID.createId(),
                     mutations: [
                       {

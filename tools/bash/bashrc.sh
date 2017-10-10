@@ -17,7 +17,7 @@ source <(kubectl completion bash)
 #
 
 export PROJECTS_HOME=${PROJECTS_HOME:-$HOME/projects}
-export PROJECT_HOME=${PROJECTS_HOME}/src/alienlabs/beta
+export PROJECT_HOME=${PROJECTS_HOME}/src/alienlabs/orbital
 
 # ~/.aws/credentials
 export AWS_PROFILE="alienlabs"

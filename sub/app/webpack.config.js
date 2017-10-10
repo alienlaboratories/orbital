@@ -32,7 +32,11 @@ module.exports = {
     // Resolve imports/requires.
     modules: [
       'node_modules'
-    ]
+    ],
+
+    alias: {
+      'orbital-api/testing': path.join(__dirname, '../api/src/testing.js')
+    }
   },
 
   entry: {

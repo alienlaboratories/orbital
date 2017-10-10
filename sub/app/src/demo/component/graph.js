@@ -36,6 +36,8 @@ export class Graph extends React.Component {
   componentWillReceiveProps(nextProps) {
     let { nodes } = nextProps;
 
+    console.log('::::::::::', JSON.stringify(nodes, null, 2));
+
     // TODO(burdon): Adapter.
     this.setState({
       nodes: _.map(nodes, n => _.pick(n, 'id', 'title'))
@@ -53,17 +55,19 @@ export class Graph extends React.Component {
     let { nodes = [] } = this.state;
     console.log('handleRender', _.size(nodes));
 
-    this._simulation.nodes(nodes);
-
-    this._group
+    let circles = this._group
       .selectAll('circle')
-      .data(this._simulation.nodes())
+      .data(this._simulation.nodes());
+
+    circles
       .enter()
-      .append('circle')
-      .attr('id', d => d.id)
-      .attr('r', d => 10 + Math.random() * 10)
+        .append('circle')
+        .attr('id', d => d.id)
+        .attr('r', d => 10 + Math.random() * 10);
+
+    circles
       .exit()
-      .remove();
+        .remove();
   }
 
   handleResize(root, size) {

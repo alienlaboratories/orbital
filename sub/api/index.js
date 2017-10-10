@@ -3,4 +3,4 @@
 //
 
 export * from './src/api';
-export * from './src/db/testing';
+export * from './src/testing';

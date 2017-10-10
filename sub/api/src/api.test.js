@@ -6,7 +6,9 @@ import { Orb } from './api';
 
 test('Basic API.', async () => {
 
-  Orb.config.update({});
+  Orb.config.update({
+    API_KEY: 'test'
+  });
 
   let db = Orb.DB();
 

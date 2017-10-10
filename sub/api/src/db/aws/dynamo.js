@@ -14,6 +14,8 @@ import { Database } from '../database';
  */
 export class DynamoDatabase extends Database {
 
+  static MAX_BATCH_SIZE = 25;
+
   // TODO(burdon): Schema (property types)?
   static recordToItem(item) {
     return {
@@ -122,7 +124,9 @@ export class DynamoDatabase extends Database {
   clear() {
     let { domain=Database.DEFAULT_DOMAIN } = {};
 
-    // TODO(burdon): Page query.
+    // TODO(burdon): Page query (max 1M results).
+    // http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Query.html#Query.Pagination
+
     return AWSUtil.promisify(callback => {
 
       // http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB.html#query-property
@@ -136,32 +140,34 @@ export class DynamoDatabase extends Database {
         }
       }, callback);
     }).then(result => {
-      return AWSUtil.promisify(callback => {
-        let items = _.map(_.get(result, 'Items'));
+      let chunks = _.chunk(_.get(result, 'Items'), DynamoDatabase.MAX_BATCH_SIZE);
 
-        // TODO(burdon): Iterate (batch size is 25).
-        items = _.slice(items, 0, 25);
+      return Promise.all(_.map(chunks, items => {
 
-        // http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB.html#batchWriteItem-property
-        this._dynamodb.batchWriteItem({
-          RequestItems: {
-            [DynamoDatabase.TABLE_NAME]: _.map(items, item => {
-              let { Key, DomainUri } = item;
+        return AWSUtil.promisify(callback => {
 
-              return {
-                DeleteRequest: {
+          // http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB.html#batchWriteItem-property
+          this._dynamodb.batchWriteItem({
+            RequestItems: {
+              [DynamoDatabase.TABLE_NAME]: _.map(items, item => {
+                let { Key, DomainUri } = item;
 
-                  // TODO(burdon): Disambiguate Key.
-                  Key: {
-                    Key,
-                    DomainUri
+                return {
+                  DeleteRequest: {
+
+                    // TODO(burdon): Disambiguate Key.
+                    Key: {
+                      Key,
+                      DomainUri
+                    }
                   }
-                }
-              };
-            })
-          }
-        }, callback);
-      });
+                };
+              })
+            }
+          }, callback);
+        });
+
+      }));
     });
   }
 }

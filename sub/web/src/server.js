@@ -13,13 +13,10 @@ const ENV = {
   STATIC_DIR: './static'
 };
 
-// TODO(burdon): Config.
 const config = {
   appConfig: {
-
-    rootId: 'root',
-
-    apiRoot: 'https://t2isk8i7ek.execute-api.us-east-1.amazonaws.com/dev'
+    rootId: 'orb-root',
+    apiRoot: 'https://api.orbitaldb.com'
   },
 
   appBundle: {
@@ -55,7 +52,10 @@ export const createApp = init => {
     _.assign(res.locals, {
       req,
       event: req.apiGateway.event,
-      root: '/' + req.apiGateway.event.requestContext.stage
+      root: ''
+
+      // TODO(burdon): Only from non domain URL.
+//    root: '/' + req.apiGateway.event.requestContext.stage
     });
 
     next();
@@ -97,7 +97,12 @@ export const createApp = init => {
   });
 
   app.get('/app', (req, res) => {
-    res.render('app', config);
+    let { pollInterval } = req.apiGateway.event.queryStringParameters || {};
+    res.render('app', _.merge({}, config, {
+      appConfig: {
+        pollInterval: parseInt(pollInterval) || 0
+      }
+    }));
   });
 
   app.get('/debug', (req, res) => {

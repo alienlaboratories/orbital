@@ -3,15 +3,15 @@
 //
 
 import _ from 'lodash';
-import { GraphClient } from './client';
+
+import { Orb } from 'orbital-api';
 
 /**
  * Registry commands.
  */
 export const Registry = (config) => {
-  const { ApiEndpoint } = config;
 
-  let client = new GraphClient(ApiEndpoint + '/registry');
+  let registry = Orb.Registry();
 
   return {
     command: ['registry', 'reg'],
@@ -26,24 +26,7 @@ export const Registry = (config) => {
         command: 'list',
         describe: 'List services.',
         handler: argv => {
-
-          const query = `
-            query Query($query: ServiceQuery!) {
-              services: getServices(query: $query) {
-                id
-                domain
-                name
-              }
-            }
-          `;
-
-          let variables = {
-            query: {
-              domain: 'test.com'
-            }
-          };
-
-          argv._result = client.query(query, variables, { verbose: argv.verbose }).then(result => {
+          argv._result = registry.list().then(result => {
             let { data: { services } } = result;
 
             console.log();
@@ -64,27 +47,7 @@ export const Registry = (config) => {
         describe: 'Add/update service record.',
         handler: argv => {
           let { domain, id, name } = argv;
-
-          const query = `
-            mutation Mutation($batches: [Batch]!) {
-              result: update(batches: $batches) {
-                nodes {
-                  id
-                  title
-                }
-              }
-            }
-          `;
-
-          let variables = {
-            service: {
-              domain,
-              id,
-              name
-            }
-          };
-
-          argv._result = client.query(query, variables, { verbose: argv.verbose }).then(result => {
+          argv._result = registry.update(domain, id, name).then(result => {
             console.log(JSON.stringify(result, null, 2));
           });
         }
@@ -95,10 +58,7 @@ export const Registry = (config) => {
         describe: 'Test service.',
         handler: argv => {
           let { id } = argv;
-
-          // TODO(burdon): Test/Invoke service (need endpoint).
-          // TODO(burdon): Query for service endpoint then invoke.
-          console.log('TESTING: ' + id);
+          argv._result = registry.test(id);
         }
       })
 
@@ -106,13 +66,7 @@ export const Registry = (config) => {
         command: 'clear',
         describe: 'Clear entire registry.',
         handler: argv => {
-          const query = `
-            mutation Reset {
-              reset
-            }
-          `;
-
-          argv._result = client.query(query, null, { verbose: argv.verbose });
+          argv._result = registry.clear();
         }
       })
 

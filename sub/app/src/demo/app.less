@@ -19,11 +19,27 @@ a {
   text-decoration: none;
 }
 
+button {
+  outline: none;
+  border: none;
+  background-color: #BBB;
+}
+button:hover {
+  background-color: #DDD;
+}
+button:active {
+  background-color: #AAA;
+}
+
+input, textarea {
+  outline: none;
+}
+
 //
 // Lib
 //
 
-.orb-root {
+#orb-root {
   display: flex;
   position: absolute;
   left: 0; right: 0; top: 0; bottom: 0;
@@ -33,12 +49,10 @@ a {
 .orb-panel {
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
 }
 
 .orb-x-panel {
-  .orb-panel;
-
+  display: flex;
   flex-direction: row;
 }
 
@@ -46,10 +60,57 @@ a {
   flex-grow: 1;
 }
 
+.orb-toolbar {
+  display: flex;
+  flex-shrink: 0;
+  background-color: #CCC;
+  line-height: 0;
+}
+
 //
 // App-specific.
 //
 
-.app-list {
+@ux-scrollbar-width:        4px;
+@ux-scrollbar-height:       8px;
+@ux-scrollbar-color:        #666;
+@ux-scrollbar-background:   transparent;
+
+.app-sidebar {
   width: 200px;
+
+  background-color: #6cc38f;
+}
+
+.app-list {
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    width: @ux-scrollbar-width;
+    height: @ux-scrollbar-height;
+    background-color: @ux-scrollbar-background;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: @ux-scrollbar-color;
+  }
+
+  div {
+    padding: 12px;
+    font-size: large;
+    cursor: pointer;
+    overflow: hidden;
+  }
+  div:hover {
+    background-color: lightgreen;
+  }
+}
+
+.app-status-bar {
+  text-align: center;
+  padding: 2px;
+  color: #aab7b8;
+  background-color: #232f3e;
+  font-size: small;
+  font-weight: 100;
 }

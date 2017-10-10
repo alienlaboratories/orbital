@@ -5,7 +5,7 @@
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-// TODO(burdon): See beta rules.
+// TODO(burdon): Copy defaults to root directory.
 
 module.exports = {
 
@@ -37,7 +37,6 @@ module.exports = {
 
   entry: {
     'app': [
-      'babel-polyfill',
       path.resolve(__dirname, './src/demo/app.js')
     ]
   },
@@ -57,8 +56,8 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,      // Don't transpile deps.
         include: [
-          path.resolve('src'),
-          path.resolve(__dirname, '../services'),
+          path.resolve('.'),
+          path.resolve(__dirname, '../api'),
           path.resolve(__dirname, '../util')
         ],
         use: {

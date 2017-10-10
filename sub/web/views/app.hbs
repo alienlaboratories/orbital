@@ -3,13 +3,9 @@
 {{/section}}
 
 {{#section 'body'}}
-  <h1>Orbital App</h1>
-
   <div id="{{ appConfig.rootId }}"></div>
 
-  <script>
-    window.config = {{{ json appConfig }}};
-  </script>
+  <script>window.config = {{{ json appConfig }}};</script>
 
   <script src="{{ appBundle.js }}"></script>
 {{/section}}

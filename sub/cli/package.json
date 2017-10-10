@@ -8,21 +8,17 @@
     "orb": "bin/orb.js"
   },
   "devDependencies": {
-    "babel-cli": "^6.24.1",
-    "babel-core": "^6.24.1",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
     "babel-jest": "^21.0.2",
-    "babel-plugin-inline-import": "^2.0.4",
-    "babel-plugin-transform-async-to-generator": "^6.24.1",
     "babel-preset-env": "^1.6.0",
-    "babel-preset-es2015": "^6.24.1",
-    "babel-preset-stage-0": "^6.24.1",
-    "babel-register": "^6.24.1",
-    "regenerator-runtime": "^0.11.0"
+    "babel-preset-stage-0": "^6.24.1"
   },
   "dependencies": {
     "lodash": "^4.17.4",
     "moment": "^2.18.1",
     "node-yaml": "^3.1.0",
+    "orbital-api": "0.0.1",
     "orbital-util": "0.0.1",
     "yargs": "^9.0.1"
   },

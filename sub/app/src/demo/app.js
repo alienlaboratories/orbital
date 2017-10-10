@@ -3,73 +3,135 @@
 //
 
 import { ApolloClient, createNetworkInterface } from 'apollo-client';
+import PropTypes from 'prop-types';
 import { ApolloProvider } from 'react-apollo';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { TestResolver } from 'orbital-services/testing';
+import { TestDataGenerator, TestNetworkInterface } from 'orbital-api';
 
-import { GraphContainer } from './containers/graph';
-import { ListContainer } from './containers/list';
-import { StatusContainer } from './containers/status';
+import { EditorContainer, GraphContainer, ListContainer, StatusContainer } from './container';
+import { QueryManager } from './container/subscription';
 
 import './app.less';
 
 const config = window.config;
-let { rootId, apiRoot } = config;
+let { rootId, apiRoot, network } = config;
+
+// TODO(burdon): TypeScript/Flow
+// http://dev.apollodata.com/react/using-with-types.html
+// http://dev-blog.apollodata.com/a-stronger-typed-react-apollo-c43bd52be0d8
+// http://discuss.reactjs.org/t/if-typescript-is-so-great-how-come-all-notable-reactjs-projects-use-babel/4887
 
 // TODO(burdon): Redux.
 // TODO(burdon): Router.
-// TODO(burdon): Subscriptions: http://dev.apollodata.com/react/receiving-updates.html#Subscriptions
-// TODO(burdon): Polling spools up additional instance.
+
+// TODO(burdon): Async set-up. App class.
 
 //
 // Apollo Client.
 //
 
-// http://dev.apollodata.com/core/network.html#NetworkInterface
-class TestNetworkInterface {
+let networkInterface;
+switch (network) {
+  case 'local': {
+    networkInterface = new TestNetworkInterface();
+    let generator = new TestDataGenerator(networkInterface.database).addItems(10);
+    setInterval(() => {
+      generator.addItems(1);
+    }, 5000);
+    break;
+  }
 
-  resolver = new TestResolver();
-
-  query(request) {
-    let { operationName, query, variables } = request;
-    console.log('Q:', operationName);
-
-    return this.resolver.exec(query, variables).then(result => {
-      console.log('R:', result);
-      return result;
+  default: {
+    // http://dev.apollodata.com/core/network.html#createNetworkInterface
+    networkInterface = createNetworkInterface({
+      uri: apiRoot + '/db'
     });
   }
 }
 
-// TODO(burdon): Test network interface.
+// http://dev.apollodata.com/core/apollo-client-api.html#constructor
 const client = new ApolloClient({
-
-  // http://dev.apollodata.com/core/network.html#createNetworkInterface
-  // networkInterface: createNetworkInterface({
-  //   uri: apiRoot + '/db'
-  // })
-
-  networkInterface: new TestNetworkInterface()
+  networkInterface,
+  queryDeduplication: true
 });
-
-const pollInterval = 0;
 
 //
 // Root App.
 //
 
-const WrappedApp = (
-  <ApolloProvider client={ client }>
-    <div className="orb-panel">
-      <div className="orb-x-panel">
-        <ListContainer className="app-list" pollInterval={ pollInterval }/>
-        <GraphContainer className="orb-expand" pollInterval={ pollInterval }/>
-      </div>
-      <StatusContainer/>
-    </div>
-  </ApolloProvider>
-);
+/**
+ * Header component.
+ */
+class Header extends React.Component {
 
-ReactDOM.render(WrappedApp, document.getElementById(rootId));
+  static contextTypes = {
+    queryManager: PropTypes.object.isRequired
+  };
+
+  handleRefetch() {
+    let { queryManager } = this.context;
+    queryManager.refetch();
+  }
+
+  // TODO(burdon): Searchbar.
+
+  render() {
+    return (
+      <div className="orb-x-panel orb-toolbar">
+        <div className="orb-expand"/>
+        <div>
+          <button onClick={ this.handleRefetch.bind(this) }>Refresh</button>
+        </div>
+      </div>
+    );
+  }
+}
+
+class Application extends React.Component {
+
+  static childContextTypes = {
+    queryManager: PropTypes.object.isRequired
+  };
+
+  getChildContext() {
+    return {
+      queryManager: new QueryManager()
+    };
+  }
+
+  render() {
+    let { config: { pollInterval }, client } = this.props;
+
+    return (
+      <ApolloProvider client={ client }>
+        <div className="orb-panel orb-expand">
+          <Header/>
+
+          <div className="orb-x-panel orb-expand">
+            <div className="app-sidebar orb-panel">
+              <div className="orb-panel orb-expand">
+                <ListContainer className="app-list orb-expand"
+                               pollInterval={ pollInterval }
+                               queryId="list"/>
+
+                <EditorContainer/>
+              </div>
+            </div>
+
+            <GraphContainer className="orb-expand" pollInterval={ pollInterval }/>
+          </div>
+
+          <StatusContainer className="app-status-bar"/>
+        </div>
+      </ApolloProvider>
+    );
+  }
+}
+
+ReactDOM.render(
+  <Application
+    config={ config }
+    client={ client }/>,
+  document.getElementById(rootId));

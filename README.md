@@ -1,4 +1,9 @@
-# Orbital
+# OrbitalDB
+
+## Demo
+
+https://www.orbitaldb.com
+
 
 ## Getting Started
 
@@ -6,6 +11,7 @@
   yarn install
   jest
 ~~~~
+
 
 ## Purpose
 
@@ -18,13 +24,11 @@
 - Third-party services are triggered by database mutations; services can query and mutate the graph.
 
 
+## Troubleshooting
+
+- `yarn remove` fails: https://github.com/yarnpkg/yarn/issues/4334
+  - workaround: remove modules from sub package and run yarn install from root.
+- `yarn global add` fails with workspace dependencies.
+- Pycharm graphql plugin doesn't handle multiple schema files?
 
 
-## Issues
-
-- yarn remove failes: https://github.com/yarnpkg/yarn/issues/4334
-  - workaround: remove modules from sub package and run yarn install from root
-
-- yarn global add (CLI) fails with workspace dependencies
-
-- graphql plugin multiple schema files? Merge

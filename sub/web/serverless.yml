@@ -13,7 +13,8 @@
 # unzip -vl .serverless/web.zip
 #
 
-service: web
+service: orbital-demo
+
 
 provider:
   name: aws
@@ -22,30 +23,39 @@ provider:
 
   stage: dev
 
+  environment:
+    SERVICE_NAME: ${self:service}
+
+
 plugins:
+  # Custom domain name.
+  # https://serverless.com/blog/serverless-api-gateway-domain
+  # https://www.npmjs.com/package/serverless-domain-manager
+  - "serverless-domain-manager"
+
   # Webpack
   # NOTE: Configures packaging (so package field in this config is ignored).
   # https://www.npmjs.com/package/serverless-webpack
   - "serverless-webpack"
 
-  # TODO(burdon): Custom domain name.
-  # https://serverless.com/blog/serverless-api-gateway-domain
-#  - "serverless-domain-manager"
-
-  # TODO(burdon): Not used.
+  # TODO(burdon): Test.
 #  - "serverless-offline"
+
 
 custom:
 
-  # TODO(burdon): Registered with AWS.
   # https://console.aws.amazon.com/route53/home#DomainListing
-  # TODO(burdon): Configure CERT
   # https://serverless.com/blog/serverless-api-gateway-domain
-#  customDomain:
-#    domainName: orbitaldb.com
-#    basePath: ''
-#    stage: ${self:provider.stage}
-#    createRoute53Record: true
+  # sls create_domain Assigns cert to domain and configures CNAMES
+  # TODO(burdon): https://github.com/amplify-education/serverless-domain-manager/issues/31 (burdon)
+  # TODO(burdon): https://github.com/amplify-education/serverless-domain-manager/issues/32 (burdon)
+  # TODO(burdon): https://console.aws.amazon.com/support/home?region=us-east-1#/case/?displayId=4512256671&language=en
+  customDomain:
+    domainName: www.orbitaldb.com
+    basePath: ''
+    stage: ${self:provider.stage}
+    createRoute53Record: true
+
 
 # TODO(burdon): https://forum.serverless.com/t/use-wildcard-in-path-for-http-endpoints/2203 (wildcards)
 # http://www.goingserverless.com/blog/routing-api-gateway-traffic-through-one-lambda-function

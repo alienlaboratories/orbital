@@ -1,0 +1,85 @@
+#
+# Copyright 2017 Alien Labs.
+#
+
+enum Operator {
+  AND,
+  OR,
+  NOT
+}
+
+enum Comparator {
+  EQ,                               # Default
+  NE,
+  GT,
+  GTE,
+  LT,
+  LTE,
+  IN
+}
+
+enum Order {
+  ASC,                              # Default
+  DESC
+}
+
+# TODO(burdon): Should be union (boolean, comparator) but union inputs are not supported.
+# union Expression = BooleanExpression | ComparatorExpression
+# { op: 'OR', expr: [{ field: 'owner', ref: 'id' }, { field: 'assignee', ref: 'id' }] }
+
+input ExpressionInput {
+  op:         Operator
+  expr:       [ExpressionInput]
+
+  comp:       Comparator            # Default: EQ
+  field:      String
+  value:      ValueInput
+
+  # TODO(burdon): Document (accesses root).
+  ref:        String
+}
+
+input OrderByInput {
+  field:      String
+  order:      Order                 # Default: ASC
+}
+
+# TODO(burdon): Rename QueryInput.
+# TODO(burdon): Move paging here.
+input FilterInput {
+
+  # Data store namespace (e.g., system for User, etc.)
+  namespace:  String
+
+  # TODO(burdon): Part of ID? (bucket/itemId). Or part of Global ID? Need to tell resolver where to find things.
+  # TODO(burdon): ID! (User/Group ID). Should be implicit in context? And validated in frontend Auth.
+  bucket:     String
+
+  # OR
+  ids:        [ID]                  # TODO(burdon): Key?
+  fkeys:      [String]
+
+  # MUST
+  type:       String
+  labels:     [String]
+  text:       String
+  expr:       ExpressionInput       # Expression tree.
+
+  # Match empty filter.
+  matchAll:   Boolean
+
+  # Paging.
+  offset:     Int
+  count:      Int
+
+  # Sort order.
+  orderBy:    OrderByInput
+
+  # Group results.
+  # TODO(madadam): Specify aggregation key here?
+  groupBy:    Boolean
+
+  # Context information, as KeyValue pairs extracted from the user's environment or recent history.
+  # Used for "queryless" search or for context-sensitive ranking.
+  context:    [KeyValue]
+}

@@ -1,0 +1,31 @@
+{
+  "name": "orbital-data",
+  "version": "0.0.1",
+  "description": "Orbital Data Framework.",
+  "license": "UNLICENSED",
+  "repository": "https://github.com/alienlabs/orbital",
+  "main": "index.js",
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.24.1",
+    "babel-jest": "^21.0.2",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-stage-0": "^6.24.1"
+  },
+  "dependencies": {
+    "lodash": "^4.17.4",
+    "moment": "^2.18.1",
+    "uuid": "^3.1.0"
+  },
+  "jest": {
+    "verbose": false,
+    "cacheDirectory": "/tmp/jest",
+    "transformIgnorePatterns": [
+      "/node_modules/(?!orbital-)"
+    ]
+  },
+  "scripts": {
+    "lint": "eslint -c ../../eslintrc.yml ./src",
+    "test": "jest --no-cache --silent"
+  }
+}

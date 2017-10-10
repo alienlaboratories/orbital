@@ -20,7 +20,8 @@
     "express-handlebars": "^3.0.0",
     "immutability-helper": "^2.2.0",
     "lodash": "^4.17.4",
-    "serve-favicon": "^2.4.5"
+    "serve-favicon": "^2.4.5",
+    "serverless-offline": "^3.16.0"
   },
   "jest": {
     "verbose": false,

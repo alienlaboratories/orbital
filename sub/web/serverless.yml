@@ -38,8 +38,9 @@ plugins:
   # https://www.npmjs.com/package/serverless-webpack
   - "serverless-webpack"
 
-  # TODO(burdon): Test.
-#  - "serverless-offline"
+  # sls offline start
+  # http://localhost:3000
+  - "serverless-offline"
 
 
 custom:

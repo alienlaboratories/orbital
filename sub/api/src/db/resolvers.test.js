@@ -23,11 +23,33 @@ test('Basic query.', async () => {
 
   let context = {};
 
+  //
+  // Clear
+  //
+  {
+    // TODO(burdon): Clear.
+    const query = `
+      mutation Mutation {
+        result: clear
+      }
+    `;
+
+    let variables = {};
+
+    let response = await graphql(schema, query, root, context, variables);
+    let { data: { result } } = response;
+    expect(result).toBe(0);
+  }
+
+  //
+  // Mutate
+  //
   {
     const query = `
       mutation TestMutation($batches: [Batch]!) {
         result: update(batches: $batches) {
           nodes {
+            type
             id
             title
           }
@@ -41,6 +63,7 @@ test('Basic query.', async () => {
           domain: 'x',
           mutations: [              // TODO(burdon): Rename batch
             {
+              type: 'test',
               id: 'Item-1',
               mutations: [
                 {
@@ -64,11 +87,15 @@ test('Basic query.', async () => {
     expect(nodes[0].title).toBe('Item 1');
   }
 
+  //
+  // Query
+  //
   {
     const query = `
       query TestQuery($query: Query!) {
         result: query(query: $query) {
           nodes {
+            type
             id
             title
           }

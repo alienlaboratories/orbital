@@ -78,6 +78,7 @@ export class DynamoDatabase extends Database {
 
     return AWSUtil.promisify(callback => {
 
+      // TODO(burdon): Sort by timestamp.
       // http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB.html#query-property
       // http://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Query.html
       this._dynamodb.query({

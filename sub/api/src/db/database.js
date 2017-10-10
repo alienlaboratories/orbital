@@ -65,10 +65,10 @@ export class Shard {
     return Array.from(this._nodeMap.values());
   }
 
-  updateNode(id, mutations) {
+  updateNode(type, id, mutations) {
     let node = this._nodeMap.get(id);
     if (!node) {
-      node = { id };
+      node = { type, id };
       this._nodeMap.set(id, node);
     }
 
@@ -136,8 +136,8 @@ export class MemoryDatabase extends Database {
 
       return {
         nodes: _.map(mutations, mutation => {
-          let { id, mutations } = mutation;
-          return shard.updateNode(id, mutations);
+          let { type, id, mutations } = mutation;
+          return shard.updateNode(type, id, mutations);
         })
       };
     }));

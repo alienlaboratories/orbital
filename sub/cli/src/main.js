@@ -5,6 +5,8 @@
 import readline from 'readline';
 import yargs from 'yargs/yargs';
 
+import { Orb } from 'orbital-api';
+
 import { Database } from './database';
 import { Registry } from './registry';
 import { Status } from './status';
@@ -13,9 +15,7 @@ const VERSION = '0.0.1';
 
 const PROMPT = '[orb]> ';
 
-const config = {
-  ApiEndpoint: 'https://api.orbitaldb.com'
-};
+const config = {};
 
 /**
  * CLI app.
@@ -23,6 +23,9 @@ const config = {
 class App {
 
   constructor(config) {
+
+    // TODO(burdon): API config.
+    Orb.config.update({});
 
     // TODO(burdon): '*' default command.
     // https://github.com/yargs/yargs/blob/master/docs/advanced.md#commands

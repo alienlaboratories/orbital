@@ -31,6 +31,7 @@ test('AWS config.', async () => {
     const count = 3;
     let mutations = _.times(count, i => {
       return {
+        type: 'test',
         id: `Item-${i}`,
         mutations: [
           {
@@ -47,9 +48,8 @@ test('AWS config.', async () => {
       }
     ];
 
-    // TODO(burdon): Clear first.
     let database = new DynamoDatabase();
-    return database.test().then(() => {
+    return database.clear().then(() => {
       return database.update(batches).then(() => {
         return database.query({}).then(result => {
           let { nodes } = result;

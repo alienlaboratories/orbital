@@ -6,6 +6,7 @@
 # Graph Nodes and Links.
 #
 
+# TODO(burdon): Rename Item.
 type Node {
   type:       String!
   id:         String!
@@ -29,6 +30,7 @@ input Query {
 }
 
 type QueryResult {
+  # TODO(burdon): Rename items.
   nodes:      [Node]!
 }
 

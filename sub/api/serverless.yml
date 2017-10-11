@@ -61,6 +61,17 @@ functions:
           method: get
           cors: true
 
+  oauth:
+    handler: handler.oauth
+    description: "OAuth service."
+    events:
+      - http:
+          path: oauth/login/{path}
+          method: get
+      - http:
+          path: oauth/callback/{path}
+          method: get
+
   registry:
     handler: handler.registry
     description: "Registry GraphQL API."

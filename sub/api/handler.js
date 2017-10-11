@@ -18,6 +18,9 @@ import { DynamoDatabase } from './src/db/aws/dynamo';
 
 import { MemoryServiceRegistry } from './src/registry/registry';
 
+// TODO(burdon): Swagger (OpenAPI)
+// https://swagger.io/specification
+
 const HEADERS = {
   'Content-Type': 'application/json',
   'Access-Control-Allow-Origin': '*',         // Required for CORS support to work.
@@ -77,8 +80,6 @@ module.exports = {
       version: ENV.VERSION
     };
 
-    console.log('Status:', JSON.stringify(response));
-
     // TODO(burdon): When invoking from `sls invoke` the body can be JSON.
     // From curl unless a string is returned we get 502 (Bad Gateway).
     // https://medium.com/@jconning/tutorial-aws-lambda-with-api-gateway-36a8513ec8e3
@@ -91,8 +92,31 @@ module.exports = {
   },
 
   /**
+   * OAuth Service.
+   * Register callback with Google APIs (see google.yml config).
+   *    /oauth2/login/google
+   *    /oauth2/callback/google
+   */
+  oauth: (event, context, callback) => {
+    let { pathParameters: { path:service } } = event;
+    let { path } = event;
+
+    let action = path.match(/\/.+\/(.+)\/.+/)[1];
+
+    // TODO(burdon): Must use express.
+    // https://stackoverflow.com/questions/23376252/is-it-possible-to-use-passport-js-without-expressjs
+
+    callback(null, {
+      statusCode: 200,
+      headers: HEADERS,
+      body: JSON.stringify({ action, service })
+    });
+  },
+
+  /**
    * Registry Service.
    */
+  // TODO(burdon): Factor out sub/registry.
   registry: (event, context, callback) => {
     let { functionName, awsRequestId } = context;
     console.log(JSON.stringify({ functionName, awsRequestId }));
@@ -128,6 +152,7 @@ module.exports = {
   /**
    * Database Service.
    */
+  // TODO(burdon): Factor out sub/db.
   database: (event, context, callback) => {
     let { functionName, awsRequestId } = context;
     console.log(JSON.stringify({ functionName, awsRequestId }));

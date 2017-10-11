@@ -17,7 +17,6 @@
     "flow-bin": "^0.56.0",
     "less": "^2.7.2",
     "less-loader": "^4.0.5",
-    "regenerator-runtime": "^0.11.0",
     "serverless-finch": "^1.1.1",
     "style-loader": "^0.18.2",
     "webpack-dev-server": "^2.9.1"

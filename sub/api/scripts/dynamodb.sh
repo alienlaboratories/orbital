@@ -20,6 +20,8 @@
 # https://github.com/serverless/examples/tree/master/aws-node-rest-api-with-dynamodb
 # https://github.com/serverless/examples/blob/master/aws-node-rest-api-with-dynamodb/todos/create.js
 
+# TODO(burdon): Move to admin CLI?
+
 for i in "$@"
 do
 case $i in
@@ -29,9 +31,6 @@ case $i in
   ;;
   create)
   aws dynamodb create-table --cli-input-json file://./config/items.json
-  ;;
-  update)
-  aws dynamodb update-table --cli-input-json file://./config/items_update.json
   ;;
   list)
   aws dynamodb list-tables

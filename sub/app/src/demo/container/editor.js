@@ -12,7 +12,7 @@ import { Editor } from '../component/editor';
 const UpdateMutation = gql`
   mutation UpdateMutation($batches: [Batch]!) {
     result: update(batches: $batches) {
-      nodes {
+      items {
         type
         id
         title

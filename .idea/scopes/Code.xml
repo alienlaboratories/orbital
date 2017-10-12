@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="Code" pattern="file[orbital]:*/&amp;&amp;!file[orbital]:sub/*/node_modules//*&amp;&amp;!file[orbital]:sub/*/dist//*" />
+</component>

@@ -42,7 +42,7 @@ export class DB {
     const query = `
       query Query($query: Query!) {
         result: query(query: $query) {
-          nodes {
+          items {
             type
             id
             title
@@ -77,7 +77,7 @@ export class DB {
     const query = `
       mutation Mutation($batches: [Batch]!) {
         result: update(batches: $batches) {              
-          nodes {
+          items {
             type
             id
             title
@@ -113,12 +113,12 @@ export class DB {
         console.error(JSON.stringify(errors, null, 2));
       } else {
         let { result } = data;
-        let nodes = _.reduce(result, (result, value) => {
-          result.nodes = result.nodes.concat(value.nodes);
-          return result.nodes;
-        }, { nodes: [] });
+        let items = _.reduce(result, (result, value) => {
+          result.items = result.items.concat(value.items);
+          return result.items;
+        }, { items: [] });
 
-        return { nodes };
+        return { items };
       }
     });
   }

@@ -48,7 +48,7 @@ test('Basic query.', async () => {
     const query = `
       mutation TestMutation($batches: [Batch]!) {
         result: update(batches: $batches) {
-          nodes {
+          items {
             type
             id
             title
@@ -82,9 +82,9 @@ test('Basic query.', async () => {
     expect(result).toHaveLength(1);
 
     let batch = result[0];
-    let { nodes } = batch;
-    expect(nodes).toHaveLength(1);
-    expect(nodes[0].title).toBe('Item 1');
+    let { items } = batch;
+    expect(items).toHaveLength(1);
+    expect(items[0].title).toBe('Item 1');
   }
 
   //
@@ -94,7 +94,7 @@ test('Basic query.', async () => {
     const query = `
       query TestQuery($query: Query!) {
         result: query(query: $query) {
-          nodes {
+          items {
             type
             id
             title
@@ -111,8 +111,8 @@ test('Basic query.', async () => {
 
     let response = await graphql(schema, query, root, context, variables);
     let { data: { result } } = response;
-    let { nodes } = result;
+    let { items } = result;
 
-    expect(nodes).toHaveLength(1);
+    expect(items).toHaveLength(1);
   }
 });

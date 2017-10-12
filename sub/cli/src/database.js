@@ -6,19 +6,19 @@ import _ from 'lodash';
 
 import { Orb } from 'orbital-api';
 
-const log = (nodes) => {
+const log = (items) => {
   const col = 48;
 
   console.log(_.padEnd('Key', col), 'Data');
   console.log(_.padEnd('---', col, '-'), _.pad('---', col, '-'));
 
-  _.each(nodes, node => {
-    let { type, id } = node;
+  _.each(items, item => {
+    let { type, id } = item;
 
     // TODO(burdon): Util.
     let key = `${type}/${id}`;
 
-    console.log(_.padEnd(key, col), JSON.stringify(_.omit(node, 'type', 'id')));
+    console.log(_.padEnd(key, col), JSON.stringify(_.omit(item, 'type', 'id')));
   });
 };
 
@@ -37,12 +37,12 @@ export const Database = (config) => {
       .command({
         command: 'query',
         aliases: ['q'],
-        describe: 'Query nodes.',
+        describe: 'Query items.',
         handler: argv => {
           argv._result = db.query().then(result => {
-            let { nodes } = result;
+            let { items } = result;
             console.log();
-            log(nodes);
+            log(items);
           });
         }
       })
@@ -58,9 +58,9 @@ export const Database = (config) => {
               title
             }
           ]).then(result => {
-            let { nodes } = result;
+            let { items } = result;
             console.log();
-            log(nodes);
+            log(items);
           });
         }
       })

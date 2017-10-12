@@ -32,7 +32,7 @@ input Query {
 
 type QueryResult {
   # TODO(burdon): Rename items.
-  nodes:      [Item]!
+  items:      [Item]!
 }
 
 type RootQuery {
@@ -62,7 +62,7 @@ input Batch {
 }
 
 type BatchResult {
-  nodes:      [Item]!               # TODO(burdon): Rename.
+  items:      [Item]!               # TODO(burdon): Rename.
 }
 
 type RootMutation {

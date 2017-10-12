@@ -12,7 +12,7 @@ import { subscribe } from './subscription';
 const NodeQuery = gql`
   query NodeQuery($query: Query!) {
     result: query(query: $query) {
-      nodes {
+      items {
         type
         id
         title

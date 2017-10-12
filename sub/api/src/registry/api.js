@@ -45,7 +45,7 @@ export class Registry {
     const query = `
       mutation Mutation($batches: [Batch]!) {
         result: update(batches: $batches) {
-          nodes {
+          items {
             id
             title
           }

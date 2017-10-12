@@ -52,8 +52,8 @@ test('AWS config.', async () => {
     return database.clear().then(() => {
       return database.update(batches).then(() => {
         return database.query({}).then(result => {
-          let { nodes } = result;
-          expect(nodes).toHaveLength(count);
+          let { items } = result;
+          expect(items).toHaveLength(count);
         });
       });
     });

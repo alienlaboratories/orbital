@@ -11,7 +11,7 @@ import { Graph } from '../component/graph';
 const GraphQuery = gql`
   query GraphQuery($query: Query!) {
     result: query(query: $query) {
-      nodes {
+      items {
         type
         id
         title
@@ -34,10 +34,10 @@ export const GraphContainer = compose(graphql(GraphQuery, {
 
   props: ({ ownProps, data }) => {
     let { errors, loading, result={} } = data;
-    let { nodes=[] } = result;
+    let { items=[] } = result;
 
     return {
-      errors, loading, nodes
+      errors, loading, items
     };
   }
 

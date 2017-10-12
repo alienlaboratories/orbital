@@ -60,8 +60,6 @@ class DragController {
         self._dragLine
           .attr('x2', function(d) { return mx; })
           .attr('y2', function(d) { return my; });
-
-        // TODO(burdon): Deterine link (pass in nodes).
       })
 
       .on('end', function(d) {
@@ -165,13 +163,13 @@ export class Graph extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    let { nodes } = nextProps;
+    let { items } = nextProps;
 
     // TODO(burdon): Note type-specific adapter (e.g., links from properties).
     // TODO(burdon): Create mutation via adapter.
 
-    let adapter = (nodes) => {
-      nodes = _.map(nodes, n => _.pick(n, 'id', 'title'));
+    let adapter = (items) => {
+      let nodes = _.map(items, n => _.pick(n, 'id', 'title'));
       let links = [
         { source: nodes[0], target: nodes[1], left: false, right: true }
       ];
@@ -179,7 +177,7 @@ export class Graph extends React.Component {
       return { nodes, links };
     };
 
-    this.setState(adapter((nodes)));
+    this.setState(adapter(items));
   }
 
   handleInit(root) {

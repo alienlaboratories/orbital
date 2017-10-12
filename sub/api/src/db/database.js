@@ -117,15 +117,15 @@ export class MemoryDatabase extends Database {
       let shard = this._getOrCreateShard(domain);
 
       // TODO(burdon): Data model.
-      // TODO(burdon): Merge (nodes should have a map of domain specific sub-nodes).
-      let nodes = shard.queryNodes(query);
-      _.each(nodes, node => {
-        results.set(node.id, node);
+      // TODO(burdon): Merge (items should have a map of domain specific sub-items).
+      let items = shard.queryNodes(query);
+      _.each(items, item => {
+        results.set(item.id, item);
       });
     });
 
     return Promise.resolve({
-      nodes: Array.from(results.values())
+      items: Array.from(results.values())
     });
   }
 
@@ -135,7 +135,7 @@ export class MemoryDatabase extends Database {
       let shard = this._getOrCreateShard(domain);
 
       return {
-        nodes: _.map(mutations, mutation => {
+        items: _.map(mutations, mutation => {
           let { type, id, mutations } = mutation;
           return shard.updateNode(type, id, mutations);
         })

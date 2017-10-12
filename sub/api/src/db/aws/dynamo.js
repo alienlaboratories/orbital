@@ -91,12 +91,12 @@ export class DynamoDatabase extends Database {
         }
       }, callback);
     }).then(result => {
-      let nodes = _.map(_.get(result, 'Items'), item => {
+      let items = _.map(_.get(result, 'Items'), item => {
         return DynamoDatabase.recordToItem(item);
       });
 
       return {
-        nodes
+        items
       };
     });
   }
@@ -105,7 +105,7 @@ export class DynamoDatabase extends Database {
     let promises = _.map(batches, batch => {
       let { mutations } = batch;
 
-      let nodes = [];
+      let items = [];
       return AWSUtil.promisify(callback => {
 
         // http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB.html#batchWriteItem-property
@@ -129,7 +129,7 @@ export class DynamoDatabase extends Database {
                 }
               };
 
-              nodes.push(DynamoDatabase.recordToItem(item));
+              items.push(DynamoDatabase.recordToItem(item));
 
               return {
                 PutRequest: {
@@ -141,7 +141,7 @@ export class DynamoDatabase extends Database {
         }, callback);
       }).then(result => {
         return {
-          nodes
+          items
         };
       });
     });

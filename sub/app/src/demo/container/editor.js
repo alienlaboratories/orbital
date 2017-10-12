@@ -28,6 +28,8 @@ export const EditorContainer = compose(
 
     props: ({ ownProps, mutate }) => {
       return {
+
+        // TODO(burdon): Link.
         createItem: (title) => {
 
           // TODO(burdon): Update query (add to query results).
@@ -52,7 +54,7 @@ export const EditorContainer = compose(
               ]
             }
           });
-        }
+        },
       };
     }
   }

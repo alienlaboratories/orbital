@@ -11,6 +11,8 @@ type Node {
   type:       String!
   id:         String!
   title:      String!
+
+  links:      [Node]
 }
 
 #

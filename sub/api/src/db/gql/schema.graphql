@@ -6,13 +6,12 @@
 # Graph Nodes and Links.
 #
 
-# TODO(burdon): Rename Item.
-type Node {
+type Item {
   type:       String!
   id:         String!
   title:      String!
 
-  links:      [Node]
+  items:      [Item]
 }
 
 #
@@ -33,7 +32,7 @@ input Query {
 
 type QueryResult {
   # TODO(burdon): Rename items.
-  nodes:      [Node]!
+  nodes:      [Item]!
 }
 
 type RootQuery {
@@ -63,7 +62,7 @@ input Batch {
 }
 
 type BatchResult {
-  nodes:      [Node]!
+  nodes:      [Item]!               # TODO(burdon): Rename.
 }
 
 type RootMutation {

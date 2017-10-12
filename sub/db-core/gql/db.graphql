@@ -1,0 +1,15 @@
+#
+# Copyright 2017 Alien Labs.
+#
+
+#
+# Graph Nodes and Links.
+#
+
+type Item {
+  type:       String!
+  id:         String!
+  title:      String!
+
+  items:      [Item]
+}

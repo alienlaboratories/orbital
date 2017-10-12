@@ -5,7 +5,9 @@
 import assert from 'assert';
 import { concatenateTypeDefs, makeExecutableSchema } from 'graphql-tools';
 
-import DatabaseSchema from './gql/schema.graphql';
+import { Schema } from 'orbital-db-core';
+
+import APISchema from '../../gql/api.graphql';
 
 /**
  * Creates the GQL client schema.
@@ -17,7 +19,7 @@ export const createSchema = (database) => {
   return makeExecutableSchema({
 
     // Schema defs.
-    typeDefs: concatenateTypeDefs([ DatabaseSchema ]),
+    typeDefs: concatenateTypeDefs(Schema.concat(APISchema)),
 
     // http://dev.apollodata.com/tools/graphql-tools/resolvers.html
     resolvers: new Resolvers(database).getMap()

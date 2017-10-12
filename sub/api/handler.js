@@ -7,14 +7,12 @@ import { graphql } from 'graphql';
 import path from 'path';
 import yaml from 'node-yaml';
 
-import { Util } from './src/util';
-import { AWSUtil } from './src/util/aws';
+import { DynamoDatabase, MemoryDatabase } from 'orbital-db';
+import { AWSUtil } from 'orbital-node-util';
+import { TypeUtil } from 'orbital-util';
 
 import { createSchema as createDatabaseSchema } from './src/db/resolvers';
 import { createSchema as createRegistrySchema } from './src/registry/resolvers';
-
-import { MemoryDatabase } from './src/db/database';
-import { DynamoDatabase } from './src/db/aws/dynamo';
 
 import { MemoryServiceRegistry } from './src/registry/registry';
 
@@ -27,7 +25,7 @@ const HEADERS = {
   'Access-Control-Allow-Credentials' : true   // Required for cookies, authorization headers with HTTPS.
 };
 
-const ENV = Util.defaults(_.assign({}, process.env), {
+const ENV = TypeUtil.defaults(_.assign({}, process.env), {
   CONFIG_DIR:   '../../config',
   DATABASE:     'memory',
   AWS_USER:     'testing',

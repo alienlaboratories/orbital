@@ -6,12 +6,12 @@ import _ from 'lodash';
 import path from 'path';
 import yaml from 'node-yaml';
 
-import { Util } from '../../util';
-import { AWSUtil } from '../../util/aws';
+import { AWSUtil } from 'orbital-node-util';
+import { TypeUtil } from 'orbital-util';
 
 import { DynamoDatabase } from './dynamo';
 
-const ENV = Util.defaults(_.assign({}, process.env), {
+const ENV = TypeUtil.defaults(_.assign({}, process.env), {
   CONFIG_DIR:   '../../config',
   AWS_USER:     'testing',
   AWS_CONFIG:   'aws-dev.yml'

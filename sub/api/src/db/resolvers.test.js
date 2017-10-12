@@ -4,7 +4,8 @@
 
 import { graphql } from 'graphql';
 
-import { MemoryDatabase } from './database';
+import { MemoryDatabase } from 'orbital-db-core';
+
 import { createSchema } from './resolvers';
 
 // TODO(burdon): Configure query with multiple graph domains (context).
@@ -14,7 +15,6 @@ import { createSchema } from './resolvers';
 
 test('Basic query.', async () => {
 
-  // TODO(burdon): Test DB.
   let database = new MemoryDatabase();
 
   let schema = createSchema(database);

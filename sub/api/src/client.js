@@ -20,14 +20,15 @@ export class ApiClient {
       url,
 
       headers: {
-        'User-Agent': 'orbital-cli',
-        'Content-Type': 'application/json',
-        'Accept': '*/*',
+        'User-Agent':     'orbital-cli',
+        'Content-Type':   'application/json',
+        'Accept':         '*/*',
 
         // https://swagger.io/docs/specification/authentication/api-keys
-        'X-API-Key': apiKey,
+        'X-API-Key':      apiKey,
 
-//      'Authorization': ''   // JWT
+        // JWT
+//      'Authorization':  ''
       },
 
       body: JSON.stringify({

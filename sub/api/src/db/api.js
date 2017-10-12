@@ -2,18 +2,16 @@
 // Copyright 2017 Alien Labs.
 //
 
-// TODO(burdon): Move to sub/data?
-
 import _ from 'lodash';
 
 import { ID } from 'orbital-util';
 
-import { ApiClient } from '../util/client';
+import { ApiClient } from '../client';
 
 /**
  * DB API.
  */
-export class DB {
+export class DB { // TODO(burdon): Rename DatabaseClient.
 
   constructor(config) {
     console.assert(config);

@@ -29,6 +29,10 @@ module.exports = {
         exclude: /node_modules/,    // Don't transpile deps.
         include: [
           path.resolve('.'),
+          path.resolve(__dirname, '../api'),
+          path.resolve(__dirname, '../db'),
+          path.resolve(__dirname, '../db-core'),
+          path.resolve(__dirname, '../node-util'),
           path.resolve(__dirname, '../util')
         ],
         use: {

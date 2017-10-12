@@ -5,8 +5,9 @@
 import { graphql } from 'graphql';
 import { print } from 'graphql/language/printer';
 
+import { MemoryDatabase } from 'orbital-db-core';
+
 import { createSchema } from './resolvers';
-import { MemoryDatabase } from './database';
 
 /**
  * Test data generator.

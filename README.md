@@ -26,8 +26,14 @@ https://www.orbitaldb.com
 
 ## Troubleshooting
 
+### Tools
 - `yarn remove` fails: https://github.com/yarnpkg/yarn/issues/4334
   - workaround: remove modules from sub package and run yarn install from root.
 - `yarn global add` fails with workspace dependencies.
 - Pycharm graphql plugin doesn't handle multiple schema files?
-- babel --no-cache (graphql files cached)
+
+### Compile
+- NOTE: GraphQL files are cached: `jest --no-cache` (or rm -rf /tmp/jest)
+- `You may need an appropriate loader to handle this file type.`
+  - Ensure `.babelrc` in each module.
+  - Ensure `babel-loader` rule configured in webpack for each submodule.

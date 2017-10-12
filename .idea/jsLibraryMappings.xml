@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="JavaScriptLibraryMappings">
-    <file url="PROJECT" libraries="{d3-DefinitelyTyped, jest-DefinitelyTyped, lodash-DefinitelyTyped, node-DefinitelyTyped, react-DefinitelyTyped, react-dom-DefinitelyTyped, react-router-DefinitelyTyped}" />
+    <file url="PROJECT" libraries="{jest-DefinitelyTyped, lodash-DefinitelyTyped, node-DefinitelyTyped}" />
+    <excludedPredefinedLibrary name="orbital/sub/db/node_modules" />
   </component>
 </project>

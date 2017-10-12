@@ -1,7 +1,7 @@
 {
-  "name": "orbital-db",
+  "name": "orbital-node-util",
   "version": "0.0.1",
-  "description": "Orbital Data Framework.",
+  "description": "Orbital Util (node-only).",
   "license": "UNLICENSED",
   "repository": "https://github.com/alienlabs/orbital",
   "main": "index.js",
@@ -14,12 +14,8 @@
   },
   "dependencies": {
     "aws-sdk": "^2.130.0",
-    "graphql-tools": "^2.4.0",
     "lodash": "^4.17.4",
-    "moment": "^2.19.1",
-    "orbital-db-core": "0.0.1",
-    "orbital-node-util": "0.0.1",
-    "orbital-util": "0.0.1",
+    "moment": "^2.18.1",
     "uuid": "^3.1.0"
   },
   "jest": {

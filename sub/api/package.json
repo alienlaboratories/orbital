@@ -16,7 +16,6 @@
     "serverless-plugin-info-json": "^1.0.1"
   },
   "dependencies": {
-    "aws-sdk": "^2.130.0",
     "aws-serverless-express": "^3.0.2",
     "graphql": "^0.11.3",
     "graphql-server-express": "^1.1.2",
@@ -26,6 +25,7 @@
     "lodash": "^4.17.4",
     "moment": "^2.18.1",
     "orbital-db": "0.0.1",
+    "orbital-db-core": "0.0.1",
     "node-yaml": "^3.1.1"
   },
   "peerDependencies": {
@@ -42,6 +42,7 @@
     "//": "NOTE: By default jest caches node (incl. GQL bundles).",
     "lint": "eslint -c ../../eslintrc.yml ./src",
     "test": "jest --no-cache --silent",
+    "clean": "rm /tmp/jest",
     "update-schema": "BABEL_DISABLE_CACHE=1 babel-node ./lib/update_schema.js",
     "deploy": "sls deploy"
   }

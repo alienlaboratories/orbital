@@ -5,9 +5,8 @@
 import _ from 'lodash';
 import AWS from 'aws-sdk';
 
-import { AWSUtil } from '../../util/aws';
-
-import { Database } from '../database';
+import { AWSUtil } from 'orbital-node-util';
+import { Database } from 'orbital-db-core';
 
 /**
  * DynamoDB implementation.

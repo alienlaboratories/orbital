@@ -62,6 +62,7 @@ module.exports = {
         include: [
           path.resolve('.'),
           path.resolve(__dirname, '../api'),
+          path.resolve(__dirname, '../db-core'),
           path.resolve(__dirname, '../util')
         ],
         use: {

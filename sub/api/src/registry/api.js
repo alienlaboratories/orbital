@@ -2,7 +2,7 @@
 // Copyright 2017 Alien Labs.
 //
 
-import { ApiClient } from '../util/client';
+import { ApiClient } from '../client';
 
 /**
  * Registry API.

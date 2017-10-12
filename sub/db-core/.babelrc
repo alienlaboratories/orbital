@@ -1,0 +1,12 @@
+{
+  "presets": [
+    "env",
+    "stage-0"
+  ],
+
+  "plugins": [
+    // Import raw/literal content (e.g., GraphQL defs.)
+    // http://www.npmjs.com/package/babel-plugin-inline-import
+    "babel-plugin-inline-import"
+  ]
+}

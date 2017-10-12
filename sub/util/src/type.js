@@ -156,6 +156,20 @@ export class TypeUtil {
   }
 
   /**
+   *
+   * @param obj
+   * @param defaults
+   * @returns {*}
+   */
+  static defaults(obj, defaults) {
+    _.each(defaults, (defaultValue, key) => {
+      obj[key] = _.get(obj, key, defaultValue);
+    });
+
+    return obj;
+  }
+
+  /**
    * Appends non-null values to array.
    * @param array
    * @param value Value or array of values.

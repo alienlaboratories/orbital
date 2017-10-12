@@ -2,37 +2,8 @@
 # Copyright 2017 Alien Labs.
 #
 
-#
-# Graph Nodes and Links.
-#
-
-type Item {
-  type:       String!
-  id:         String!
-  title:      String!
-
-  items:      [Item]
-}
-
-#
-# Queries.
-# TODO(burdon): Query by label, domain domain, URI
-#
-
 type StatusResult {
   version:    String
-}
-
-# TODO(burdon): Does ID reference domain?
-
-input Query {
-  domains:    [String]
-  ids:        [String]
-}
-
-type QueryResult {
-  # TODO(burdon): Rename items.
-  items:      [Item]!
 }
 
 type RootQuery {
@@ -40,10 +11,7 @@ type RootQuery {
   query(query: Query!): QueryResult!
 }
 
-#
-# Mutations.
-# TODO(burdon): OT mutations.
-#
+# TODO(burdon): Replace mutations.
 
 input FieldMutation {
   key:        String!
@@ -66,7 +34,7 @@ type BatchResult {
 }
 
 type RootMutation {
-  clear: Int
+  clear: Int                        # TODO(burdon): Rename reset.
   update(batches: [Batch]!): [BatchResult]!
 }
 

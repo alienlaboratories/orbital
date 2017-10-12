@@ -4,6 +4,14 @@
 
 import _ from 'lodash';
 import assert from 'assert';
+import { concatenateTypeDefs } from 'graphql-tools';
+
+import DatabaseSchema from '../gql/db.graphql';
+import MutationSchema from '../gql/mutation.graphql';
+import QuerySchema from '../gql/query.graphql';
+
+export const Schema = [ DatabaseSchema, MutationSchema, QuerySchema ];
+export const TypeDefs = concatenateTypeDefs(Schema);
 
 /**
  * Database interface.

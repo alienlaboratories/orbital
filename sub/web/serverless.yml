@@ -68,12 +68,19 @@ functions:
       - http:
           path: favicon.ico
           method: get
+
+      # TODO(burdon): Each sub-path needs to be declared.
       - http:
           path: static/{path}
           method: get
       - http:
           path: static/css/{path}
           method: get
+      # TODO(burdon): Images not working: https://github.com/awslabs/aws-serverless-express/issues/39
+      - http:
+          path: static/img/{path}
+          method: get
+
       - http:
           path: /
           method: get

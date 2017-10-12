@@ -3,7 +3,8 @@
 //
 
 import _ from 'lodash';
-import express from 'express';
+import bodyParser from 'body-parser';
+ import express from 'express';
 import favicon from 'serve-favicon';
 import handlebars from 'express-handlebars';
 import path from 'path';
@@ -43,6 +44,9 @@ export const createApp = init => {
   app.use(favicon(path.join(ENV.STATIC_DIR, 'favicon.ico')));
 
   app.use('/static', express.static(ENV.STATIC_DIR));
+
+  app.use(bodyParser.urlencoded({ extended: false }));
+  app.use(bodyParser.json());
 
   //
   // Middleware.

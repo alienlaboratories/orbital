@@ -25,6 +25,7 @@
     "immutability-helper": "^2.2.0",
     "lodash": "^4.17.4",
     "moment": "^2.18.1",
+    "orbital-db": "0.0.1",
     "node-yaml": "^3.1.1"
   },
   "peerDependencies": {

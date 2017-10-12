@@ -1,5 +1,5 @@
 {
-  "name": "orbital-data",
+  "name": "orbital-db",
   "version": "0.0.1",
   "description": "Orbital Data Framework.",
   "license": "UNLICENSED",
@@ -14,7 +14,8 @@
   },
   "dependencies": {
     "lodash": "^4.17.4",
-    "moment": "^2.18.1",
+    "moment": "^2.19.1",
+    "orbital-util": "0.0.1",
     "uuid": "^3.1.0"
   },
   "jest": {

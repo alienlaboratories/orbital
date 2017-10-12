@@ -62,7 +62,7 @@ input Batch {
 }
 
 type BatchResult {
-  items:      [Item]!               # TODO(burdon): Rename.
+  items:      [Item]!
 }
 
 type RootMutation {

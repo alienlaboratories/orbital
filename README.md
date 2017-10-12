@@ -30,5 +30,4 @@ https://www.orbitaldb.com
   - workaround: remove modules from sub package and run yarn install from root.
 - `yarn global add` fails with workspace dependencies.
 - Pycharm graphql plugin doesn't handle multiple schema files?
-
-
+- babel --no-cache (graphql files cached)

@@ -5,11 +5,15 @@
 import _ from 'lodash';
 import path from 'path';
 import yaml from 'node-yaml';
+import { Chance } from 'chance';
 
 import { AWSUtil } from 'orbital-node-util';
 import { ID, TypeUtil } from 'orbital-util';
 
 import { DynamoDatabase } from './dynamo';
+
+// TODO(burdon): Create Randomizer (with seed).
+const chance = new Chance();
 
 const ENV = TypeUtil.defaults(_.assign({}, process.env), {
   CONFIG_DIR:   '../../config',
@@ -35,7 +39,7 @@ test('AWS config.', async () => {
         {
           field: 'title',
           value: {
-            string: `Item ${i}`
+            string: chance.name()
           }
         }
       ];

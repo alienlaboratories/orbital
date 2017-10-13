@@ -4,11 +4,14 @@
 
 import gql from 'graphql-tag';
 import { compose, graphql } from 'react-apollo';
+import { Chance } from 'chance';
 
 import { ID } from 'orbital-util';
 
 import { Graph } from '../component/graph';
 import { subscribe } from './subscription';
+
+const chance = new Chance();
 
 // TODO(burdon): Factor out query.
 const GraphQuery = gql`
@@ -80,39 +83,57 @@ export const GraphContainer = compose(
     props: ({ ownProps, mutate }) => {
       return {
         onDrop: (event) => {
-          console.log('DROP', JSON.stringify(event));
+          console.log('Drop', JSON.stringify(event));
 
           let { source, target } = event;
           if (source === target) {
             return;
           }
 
-          // TODO(burdon): Create.
+          let mutations = [];
+
+          // Create item.
           if (!target) {
-            return;
+            target = {
+              type: source.type,
+              id: ID.createId()
+            };
+
+            mutations.push({
+              key: target,
+              mutations: [
+                {
+                  field: 'title',
+                  value: {
+                    string: chance.name()
+                  }
+                }
+              ]
+            });
           }
+
+          // Link item.
+          mutations.push({
+            key: source,
+            mutations: [
+              {
+                field: 'items',
+                value: {
+                  set: {
+                    value: {
+                      string: ID.encodeKey(target)
+                    }
+                  }
+                }
+              }
+            ]
+          });
 
           mutate({
             variables: {
               batches: [
                 {
-                  mutations: [
-                    {
-                      key: source,
-                      mutations: [
-                        {
-                          field: 'items',
-                          value: {
-                            set: {
-                              value: {
-                                string: ID.encodeKey(target)
-                              }
-                            }
-                          }
-                        }
-                      ]
-                    }
-                  ]
+                  mutations
                 }
               ]
             }

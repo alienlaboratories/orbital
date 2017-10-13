@@ -113,7 +113,7 @@ export class Graph extends React.Component {
         let { source, target } = event;
         onDrop && onDrop({
           source: ID.decodeKey(source),   // TODO(burdon): Get from adapter.
-          target: ID.decodeKey(target)
+          target: target && ID.decodeKey(target)
         });
       });
 

@@ -67,11 +67,15 @@ export class DB { // TODO(burdon): Rename DatabaseClient.
       query Query($query: QueryInput!) {
         result: query(query: $query) {
           items {
-            type
-            id
+            key {
+              type
+              id
+            }
             title
             items {
-              id
+              key {
+                id
+              }
             }
           }
         }
@@ -105,8 +109,10 @@ export class DB { // TODO(burdon): Rename DatabaseClient.
       mutation UpdateMutation($batches: [BatchInput]!) {
         result: update(batches: $batches) {              
           items {
-            type
-            id
+            key {
+              type
+              id
+            }
             title
           }
         }

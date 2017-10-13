@@ -6,6 +6,7 @@ import assert from 'assert';
 import { concatenateTypeDefs, makeExecutableSchema } from 'graphql-tools';
 
 import { Schema } from 'orbital-db-core';
+import { ID } from 'orbital-util';
 
 import APISchema from '../../gql/api.graphql';
 
@@ -51,9 +52,9 @@ export class Resolvers {
           console.log('RESOLVE:', obj);
 
           // TODO(burdon): Query for items with ID.
-          return _.map(items, itemId => {
+          return _.map(items, encodedKey => {
             return {
-              id: itemId
+              key: ID.decodeKey(encodedKey)
             };
           });
         }

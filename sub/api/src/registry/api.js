@@ -46,7 +46,9 @@ export class Registry {
       mutation UpdateMutation($batches: [Batch]!) {
         result: update(batches: $batches) {
           items {
-            id
+            key {
+              id
+            }
             title
           }
         }

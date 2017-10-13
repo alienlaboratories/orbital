@@ -13,8 +13,10 @@ const UpdateMutation = gql`
   mutation UpdateMutation($batches: [BatchInput]!) {
     result: update(batches: $batches) {
       items {
-        type
-        id
+        key {
+          type
+          id
+        }
         title
       }
     }

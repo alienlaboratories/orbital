@@ -60,6 +60,7 @@ export class Transforms {
 
     // Map delta.
     if (value.map !== undefined) {
+      console.assert(_.isArray(value.set));
       _.each(value.map, value => {
         object[field] = Transforms.applyMapMutation(context, object[field] || [], value);
       });
@@ -68,6 +69,7 @@ export class Transforms {
 
     // Set delta.
     if (value.set !== undefined) {
+      console.assert(_.isArray(value.set));
       _.each(value.set, value => {
         object[field] = Transforms.applySetMutation(context, object[field] || [], value);
       });
@@ -76,6 +78,7 @@ export class Transforms {
 
     // Array delta.
     if (value.array !== undefined) {
+      console.assert(_.isArray(value.set));
       _.each(value.array, value => {
         object[field] = Transforms.applyArrayMutation(context, object[field] || [], value);
       });
@@ -84,6 +87,7 @@ export class Transforms {
 
     // Object delta.
     if (value.object !== undefined) {
+      console.assert(_.isArray(value.set));
       _.each(value.object, value => {
         object[field] = Transforms.applyObjectMutation(context, object[field] || {}, value);
       });

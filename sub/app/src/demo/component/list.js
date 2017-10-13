@@ -15,8 +15,8 @@ export class List extends React.Component {
     let defaultAttrs = ReactUtil.defaultProps(this.props);
     let { result: { items } } = this.props;
 
-    let list = _.map(items, ({ id, title }) => (
-      <div key={id}>{title}</div>
+    let list = _.map(items, ({ key: { id }, title }) => (
+      <div key={ id }>{ title }</div>
     ));
 
     return (

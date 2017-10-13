@@ -76,11 +76,11 @@ export class Shard {
   }
 
   updateNode(key, mutations) {
-    let { type, id } = key;
+    let { id } = key;
 
     let node = this._nodeMap.get(id);
     if (!node) {
-      node = { type, id };
+      node = { key };
       this._nodeMap.set(id, node);
     }
 
@@ -119,8 +119,7 @@ export class MemoryDatabase extends Database {
     let { domains=[Database.DEFAULT_DOMAIN] } = query;
 
     // TODO(burdon): Ordered.
-    let results = new Map();
-
+    let itemMap = new Map();
     _.each(domains, domain => {
       let shard = this._getOrCreateShard(domain);
 
@@ -128,12 +127,12 @@ export class MemoryDatabase extends Database {
       // TODO(burdon): Merge (items should have a map of domain specific sub-items).
       let items = shard.queryNodes(query);
       _.each(items, item => {
-        results.set(item.id, item);
+        itemMap.set(item.id, item);
       });
     });
 
     return Promise.resolve({
-      items: Array.from(results.values())
+      items: Array.from(itemMap.values())
     });
   }
 

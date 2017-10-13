@@ -13,8 +13,10 @@ const NodeQuery = gql`
   query NodeQuery($query: QueryInput!) {
     result: query(query: $query) {
       items {
-        type
-        id
+        key {
+          type
+          id
+        }
         title
       }
     }

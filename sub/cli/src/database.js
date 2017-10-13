@@ -5,6 +5,7 @@
 import _ from 'lodash';
 
 import { Orb } from 'orbital-api';
+import { ID } from 'orbital-util';
 
 // TODO(burdon): Util.
 const log = (items) => {
@@ -14,12 +15,8 @@ const log = (items) => {
   console.log(_.padEnd('---', col, '-'), _.pad('---', col, '-'));
 
   _.each(items, item => {
-    let { type, id } = item;
-
-    // TODO(burdon): Util.
-    let key = `${type}/${id}`;
-
-    console.log(_.padEnd(key, col), JSON.stringify(_.omit(item, 'type', 'id')));
+    let { key } = item;
+    console.log(_.padEnd(ID.encodeKey(key), col), JSON.stringify(_.omit(item, 'key')));
   });
 };
 

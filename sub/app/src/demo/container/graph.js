@@ -5,6 +5,8 @@
 import gql from 'graphql-tag';
 import { compose, graphql } from 'react-apollo';
 
+import { ID } from 'orbital-util';
+
 import { Graph } from '../component/graph';
 import { subscribe } from './subscription';
 
@@ -13,11 +15,16 @@ const GraphQuery = gql`
   query GraphQuery($query: QueryInput!) {
     result: query(query: $query) {
       items {
-        type
-        id
+        key {
+          type
+          id
+        }
         title
         items {
-          id
+          key {
+            type
+            id
+          }
         }
       }
     }
@@ -28,11 +35,16 @@ const UpdateMutation = gql`
   mutation UpdateMutation($batches: [BatchInput]!) {
     result: update(batches: $batches) {
       items {
-        type
-        id
+        key {
+          type
+          id
+        }
         title
         items {
-          id
+          key {
+            type
+            id
+          }
         }
       }
     }
@@ -68,6 +80,8 @@ export const GraphContainer = compose(
     props: ({ ownProps, mutate }) => {
       return {
         onDrop: (event) => {
+          console.log('DROP', JSON.stringify(event));
+
           let { source, target } = event;
           if (source === target) {
             return;
@@ -84,17 +98,14 @@ export const GraphContainer = compose(
                 {
                   mutations: [
                     {
-                      key: {
-                        type: 'test',             // TODO(burdon): FIX.
-                        id: source
-                      },
+                      key: source,
                       mutations: [
                         {
                           field: 'items',
                           value: {
                             set: {
                               value: {
-                                string: target
+                                string: ID.encodeKey(target)
                               }
                             }
                           }

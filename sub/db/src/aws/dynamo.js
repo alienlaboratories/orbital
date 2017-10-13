@@ -7,7 +7,7 @@ import AWS from 'aws-sdk';
 
 import { Database, Transforms } from 'orbital-db-core';
 import { AWSUtil } from 'orbital-node-util';
-import { TypeUtil } from 'orbital-util';
+import { ID, TypeUtil } from 'orbital-util';
 
 /**
  * DynamoDB implementation.
@@ -27,26 +27,14 @@ export class DynamoDatabase extends Database {
   //
   // Permalink:     google.com/mail/team-X:contact/x-123
 
-  static encodeKey(type, id) {
-    console.assert(type && id);
-    return type + '/' + id;
-  }
-
-  static decodeKey(key) {
-    console.assert(key);
-    let [ type, id ] = key.split('/');
-    return {
-      type, id
-    };
-  }
-
   static recordToItem(item) {
     let data = JSON.parse(_.get(item, 'Data.S'));
 
     return {
-      domain: _.get(item, 'DomainUri.S'),
-
-      ...DynamoDatabase.decodeKey(_.get(item, 'ItemKey.S')),
+      key: {
+        domain: _.get(item, 'DomainUri.S'),
+        ...ID.decodeKey(_.get(item, 'ItemKey.S'))
+      },
 
       ...data
     };
@@ -119,7 +107,7 @@ export class DynamoDatabase extends Database {
 
   update(batches) {
 
-    // TODO(burdon): babel-preset-env should allow async syntax.
+    // TODO(burdon): babel-preset-env should allow async syntax?
 
     let promises = _.map(batches, batch => {
       let { domain=Database.DEFAULT_DOMAIN, mutations } = batch;
@@ -127,7 +115,7 @@ export class DynamoDatabase extends Database {
       // TODO(burdon): Query by ID.
       return this._queryDomain({}, domain).then(result => {
         let { items:currentItems } = result;
-        let currentItemMap = _.keyBy(currentItems, 'id');
+        let currentItemMap = _.keyBy(currentItems, 'key.id');
 
         let items = [];
         return AWSUtil.promisify(callback => {
@@ -137,15 +125,15 @@ export class DynamoDatabase extends Database {
             RequestItems: {
               [DynamoDatabase.TABLE_NAME]: _.map(mutations, mutation => {
                 let { key, mutations } = mutation;
-                let { type, id } = key;
+                let { id } = key;
 
                 // TODO(burdon): Separate field for meta, data, etc.
-                let data = _.omit(currentItemMap[id], 'type', 'id') || {};
+                let data = _.omit(currentItemMap[id], 'key') || {};
                 Transforms.applyObjectMutations({}, data, mutations);
 
                 let record = {
                   'DomainUri': AWSUtil.Property.S(Database.DEFAULT_DOMAIN),
-                  'ItemKey': AWSUtil.Property.S(DynamoDatabase.encodeKey(type, id)),
+                  'ItemKey': AWSUtil.Property.S(ID.encodeKey(key)),
                   'Data': AWSUtil.Property.S(JSON.stringify(data))
                 };
 

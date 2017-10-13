@@ -49,8 +49,10 @@ test('Basic query.', async () => {
       mutation TestMutation($batches: [BatchInput]!) {
         result: update(batches: $batches) {
           items {
-            type
-            id
+            key {
+              type
+              id
+            }
             title
           }
         }
@@ -99,8 +101,10 @@ test('Basic query.', async () => {
       query TestQuery($query: QueryInput!) {
         result: query(query: $query) {
           items {
-            type
-            id
+            key {
+              type
+              id
+            }
             title
           }
         }

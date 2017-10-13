@@ -6,6 +6,8 @@ import * as d3 from 'd3';
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import { ID } from 'orbital-util';
+
 import { D3Canvas } from './d3';
 import { ReactUtil } from './util';
 
@@ -46,7 +48,8 @@ export class Graph extends React.Component {
 
       .force('charge', d3.forceManyBody().strength(-1000))
 
-      .force('link', d3.forceLink().id(function(d) { return d.id; })
+      .force('link', d3.forceLink()
+        .id(function(d) { return ID.encodeKey(d.key); })     // How to identify nodes (must be string).
         .distance(100)
         .strength(1))
 
@@ -74,10 +77,9 @@ export class Graph extends React.Component {
     let { items } = nextProps;
 
     // TODO(burdon): Note type-specific adapter (e.g., links from properties).
-    // TODO(burdon): Create mutation via adapter.
-
-    let adapter = (items) => {
-      let nodes = _.map(items, n => _.pick(n, 'id', 'title'));
+    const adapter = (items) => {
+      let nodes = _.map(items, n => _.pick(n, 'key', 'title'));
+//    console.log('Nodes', JSON.stringify(items, 0, 2));
 
       let links = [];
       _.each(items, item => {
@@ -87,12 +89,13 @@ export class Graph extends React.Component {
 
           // Linking by ID requires forceLink().id() method.
           links.push({
-            source: item.id,
-            target: linkedItem.id
+            source: ID.encodeKey(item.key),
+            target: ID.encodeKey(linkedItem.key)
           });
         });
       });
 
+//    console.log('LINKS', JSON.stringify(links, 0, 2));
       return { nodes, links };
     };
 
@@ -107,7 +110,11 @@ export class Graph extends React.Component {
     this._dragController = new DragController(this._dragGroup)
       .on('drop', (event) => {
         let { onDrop } = this.props;
-        onDrop && onDrop(event);
+        let { source, target } = event;
+        onDrop && onDrop({
+          source: ID.decodeKey(source),   // TODO(burdon): Get from adapter.
+          target: ID.decodeKey(target)
+        });
       });
 
     let center = { x: root.clientWidth / 2, y: root.clientHeight / 2 };
@@ -142,12 +149,12 @@ export class Graph extends React.Component {
     //
 
     let nodeSelection = this._nodeGroup.selectAll('circle')
-      .data(this._simulation.nodes());
+      .data(this._simulation.nodes(), function(d) { return ID.encodeKey(d.key); });
 
     nodeSelection.enter()
       .append('circle')
       .classed('orb-node', true)
-      .attr('id', function(d) { return d.id; })
+      .attr('id', function(d) { return ID.encodeKey(d.key); })    // TODO(burdon): Is this required?
       .attr('r', function(d) { return 20; })
 
       .on('mouseover', function(d) {
@@ -263,6 +270,7 @@ class DragController {
 
   highlight(node) {
     this._dropNode = node;
+    console.log('Hi', node && node.attr('id'));
   }
 
   on(event, handler) {

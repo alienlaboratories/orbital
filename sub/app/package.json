@@ -49,7 +49,7 @@
   "scripts": {
     "lint": "eslint -c ../../eslintrc.yml ./src",
     "test": "jest --no-cache --silent",
-    "start": "webpack-dev-server",
+    "start": "BABEL_DISABLE_CACHE=1 webpack-dev-server",
     "deploy": "webpack && sls client deploy"
   }
 }

@@ -7,7 +7,7 @@ import path from 'path';
 import yaml from 'node-yaml';
 
 import { AWSUtil } from 'orbital-node-util';
-import { TypeUtil } from 'orbital-util';
+import { ID, TypeUtil } from 'orbital-util';
 
 import { DynamoDatabase } from './dynamo';
 
@@ -30,19 +30,35 @@ test('AWS config.', async () => {
 
     const count = 3;
     let mutations = _.times(count, i => {
+
+      let fieldMutations = [
+        {
+          field: 'title',
+          value: {
+            string: `Item ${i}`
+          }
+        }
+      ];
+
+      if (i > 0) {
+        fieldMutations.push({
+          field: 'items',
+          value: {
+            set: [{
+              value: {
+                string: ID.encodeKey({ type: 'test', id: 'Item-0' })
+              }
+            }]
+          }
+        });
+      }
+
       return {
         key: {
           type: 'test',
           id: `Item-${i}`,
         },
-        mutations: [
-          {
-            field: 'title',
-            value: {
-              string: `Item ${i}`
-            }
-          }
-        ]
+        mutations: fieldMutations
       };
     });
 

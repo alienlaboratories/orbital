@@ -1,13 +1,9 @@
 {
-
-  "README_schema": "Specifies how to load the GraphQL schema that completion, error highlighting, and documentation is based on in the IDE",
   "schema": {
-
-    "README_file": "Remove 'file' to use request url below. A relative or absolute path to the JSON from a schema introspection query, e.g. '{ data: ... }'. Changes to the file are watched.",
     "file": "./sub/api/dist/database.json"
   },
 
-  "README_endpoints": "A list of GraphQL endpoints that can be queried from '.graphql' files in the IDE",
+  "//": "GraphQL endpoints (query .graphql files)",
   "endpoints": [
     {
       "name": "Local",
@@ -28,5 +24,4 @@
       }
     }
   ]
-
 }

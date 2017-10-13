@@ -3,13 +3,24 @@
 #
 
 #
-# Graph Nodes and Links.
+# Node Key.
+# Partition (hash) key:   domain
+# Sort key:               type/id
+#
+
+type Key {
+  domain:     String      # Default if blank
+  type:       String!
+  id:         ID!         # GUID
+}
+
+#
+# Graph Node.
 #
 
 type Item {
-  type:       String!
-  id:         String!
-  title:      String!
+  key:        Key!
 
-  items:      [Item]
+  title:      String!
+  items:      [Item]      # TODO(burdon): Type specific.
 }

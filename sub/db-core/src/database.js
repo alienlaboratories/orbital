@@ -84,9 +84,7 @@ export class Shard {
       this._nodeMap.set(id, node);
     }
 
-    _.each(mutations, mutation => {
-      Transforms.applyObjectMutation({}, node, mutation);
-    });
+    Transforms.applyObjectMutations({}, node, mutations);
 
     return node;
   }

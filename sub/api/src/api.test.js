@@ -17,9 +17,4 @@ test('Test Deployed API.', async () => {
     let result = db.test();
     expect(result).toBeTruthy();
   }
-
-  {
-    let result = await db.clear();
-    expect(result).toBeTruthy();
-  }
 });

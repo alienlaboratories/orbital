@@ -37,3 +37,5 @@ https://www.orbitaldb.com
 - `You may need an appropriate loader to handle this file type.`
   - Ensure `.babelrc` in each module.
   - Ensure `babel-loader` rule configured in webpack for each submodule.
+- `module initialization error: ReferenceError`
+  - Check babel configuration (e.g., missing plugin to adapt to browser/node version.)

@@ -1,8 +1,9 @@
 {
   "presets": [
     ["env", {
+      "debug": true,
       "targets": {
-        "node": "current"
+        "node": "6.10"
       },
       "useBuiltIns": true
     }],

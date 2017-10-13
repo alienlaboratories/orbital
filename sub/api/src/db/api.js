@@ -4,7 +4,7 @@
 
 import _ from 'lodash';
 
-import { ID } from 'orbital-util';
+import { ID, TypeUtil } from 'orbital-util';
 
 import { ApiClient } from '../client';
 
@@ -49,11 +49,10 @@ export class DB { // TODO(burdon): Rename DatabaseClient.
     return this._client.query(query, variables, { verbose }).then(response => {
       let { errors, data } = response;
       if (errors) {
-        console.error(JSON.stringify(errors, null, 2));
-        return false;
-      } else {
-        return data;
+        throw new Error(JSON.stringify(errors, null, 2));
       }
+
+      return data;
     });
   }
 
@@ -71,6 +70,9 @@ export class DB { // TODO(burdon): Rename DatabaseClient.
             type
             id
             title
+            items {
+              id
+            }
           }
         }
       }
@@ -83,11 +85,11 @@ export class DB { // TODO(burdon): Rename DatabaseClient.
     return this._client.query(query, variables, { verbose }).then(response => {
       let { errors, data } = response;
       if (errors) {
-        console.error(JSON.stringify(errors, null, 2));
-      } else {
-        let { result } = data;
-        return result;
+        throw new Error(JSON.stringify(errors, null, 2));
       }
+
+      let { result } = data;
+      return result;
     });
   }
 
@@ -139,16 +141,11 @@ export class DB { // TODO(burdon): Rename DatabaseClient.
     return this._client.query(query, variables, { verbose }).then(response => {
       let { errors, data } = response;
       if (errors) {
-        console.error(JSON.stringify(errors, null, 2));
-      } else {
-        let { result } = data;
-        let items = _.reduce(result, (result, value) => {
-          result.items = result.items.concat(value.items);
-          return result.items;
-        }, { items: [] });
-
-        return { items };
+        throw new Error(JSON.stringify(errors, null, 2));
       }
+
+      let { result } = data;
+      return TypeUtil.deepMerge({ items: [] }, ...result);
     });
   }
 
@@ -170,11 +167,10 @@ export class DB { // TODO(burdon): Rename DatabaseClient.
     return this._client.query(query, variables, { verbose }).then(response => {
       let { errors, data } = response;
       if (errors) {
-        console.error(JSON.stringify(errors, null, 2));
-        return false;
-      } else {
-        return data;
+        throw new Error(JSON.stringify(errors, null, 2));
       }
+
+      return data;
     });
   }
 }

@@ -120,7 +120,7 @@ class Application extends React.Component {
               </div>
             </div>
 
-            <GraphContainer className="orb-expand" pollInterval={ pollInterval } onDrop={ event => { console.log(event); }}/>
+            <GraphContainer className="orb-expand" pollInterval={ pollInterval } queryId="graph"/>
           </div>
 
           <StatusContainer className="app-status-bar"/>

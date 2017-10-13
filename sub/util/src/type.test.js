@@ -67,3 +67,14 @@ test('maybeSet', () => {
   expect(_.get(TypeUtil.maybeSet(obj, 'b.x', null), 'b.x')).toBeUndefined();
   expect(_.get(TypeUtil.maybeSet(obj, 'b.x', false), 'b.x')).toBe(false);
 });
+
+test('deepMerge', () => {
+
+  let array = [
+    { foo: [1, 2, 3] },
+    { foo: [4, 5]},
+    {}
+  ];
+
+  expect(_.get(TypeUtil.deepMerge({ foo: [] }, ...array), 'foo')).toHaveLength(5);
+});

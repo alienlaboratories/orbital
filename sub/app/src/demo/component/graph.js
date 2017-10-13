@@ -12,99 +12,6 @@ import { ReactUtil } from './util';
 import './graph.less';
 
 /**
- * Drag controller.
- */
-class DragController {
-
-  _eventHandlers = new Map();
-
-  _dragNode = null;
-  _dropNode = null;
-  _dragCircle = null;
-  _dragLine = null;
-
-  constructor(dragGroup) {
-    console.assert(dragGroup);
-    this._dragGroup = dragGroup;
-
-    let self = this;
-
-    // TODO(burdon): SHIFT to drag node.
-
-    // https://bl.ocks.org/mbostock/22994cc97fefaeede0d861e6815a847e
-    this._drag = d3.drag()
-
-      .on('start', function(d) {
-        self._dragNode = d3.select(this).raise().classed('orb-active', true);
-
-        self._dragCircle = self._dragGroup.append('circle')
-          .classed('orb-drag', true)
-          .attr('r', function(d) { return 5; })
-          .attr('cx', function(d) { return self._dragNode.attr('cx'); })
-          .attr('cy', function(d) { return self._dragNode.attr('cy'); });
-
-        self._dragLine = self._dragGroup.append('line')
-          .attr('x1', function(d) { return self._dragNode.attr('cx'); })
-          .attr('y1', function(d) { return self._dragNode.attr('cy'); })
-          .attr('x2', function(d) { return self._dragNode.attr('cx'); })
-          .attr('y2', function(d) { return self._dragNode.attr('cy'); });
-      })
-
-      .on('drag', function(d) {
-        let [ mx, my ] = d3.mouse(this);
-
-        self._dragCircle
-          .attr('cx', function(d) { return mx; })
-          .attr('cy', function(d) { return my; });
-
-        self._dragLine
-          .attr('x2', function(d) { return mx; })
-          .attr('y2', function(d) { return my; });
-      })
-
-      .on('end', function(d) {
-        d3.select(this).classed('orb-active', false);
-
-        // Callback.
-        let handler = self._eventHandlers.get('drop');
-        handler && handler({
-          start: self._dragNode.attr('id'),
-          end: self._dropNode && self._dropNode.attr('id')
-        });
-
-        self._dragNode = null;
-        self._dragCircle.remove();
-        self._dragCircle = null;
-        self._dragLine.remove();
-        self._dragLine = null;
-      });
-  }
-
-  update() {
-    if (this._dragNode) {
-      let [ x1, y1 ] = [ this._dragNode.attr('cx'), this._dragNode.attr('cy') ];
-
-      this._dragLine
-        .attr('x1', function(d) { return x1; })
-        .attr('y1', function(d) { return y1; });
-    }
-  }
-
-  highlight(node) {
-    this._dropNode = node;
-  }
-
-  on(event, handler) {
-    this._eventHandlers.set(event, handler);
-    return this;
-  }
-
-  get drag() {
-    return this._drag;
-  }
-}
-
-/**
  * Graph of nodes.
  */
 export class Graph extends React.Component {
@@ -135,10 +42,11 @@ export class Graph extends React.Component {
     // http://blockbuilder.org/tarekrached/a7628dd96c62155068dd
 
     this._simulation = d3.forceSimulation()
-      .alphaTarget(1)
+      .alphaTarget(.1)
+
       .force('charge', d3.forceManyBody().strength(-1000))
 
-      .force('link', d3.forceLink().id(function(d) { return d.index; })
+      .force('link', d3.forceLink().id(function(d) { return d.id; })
         .distance(100)
         .strength(1))
 
@@ -170,9 +78,20 @@ export class Graph extends React.Component {
 
     let adapter = (items) => {
       let nodes = _.map(items, n => _.pick(n, 'id', 'title'));
-      let links = [
-        { source: nodes[0], target: nodes[1], left: false, right: true }
-      ];
+
+      let links = [];
+      _.each(items, item => {
+        let { items:linkedItems } = item;
+
+        _.each(linkedItems, linkedItem => {
+
+          // Linking by ID requires forceLink().id() method.
+          links.push({
+            source: item.id,
+            target: linkedItem.id
+          });
+        });
+      });
 
       return { nodes, links };
     };
@@ -182,8 +101,8 @@ export class Graph extends React.Component {
 
   handleInit(root) {
     this._dragGroup = d3.select(root).append('svg:g');
-    this._nodeGroup = d3.select(root).append('svg:g');
     this._linkGroup = d3.select(root).append('svg:g');
+    this._nodeGroup = d3.select(root).append('svg:g');
 
     this._dragController = new DragController(this._dragGroup)
       .on('drop', (event) => {
@@ -259,5 +178,98 @@ export class Graph extends React.Component {
                 onRender={this.handleRender.bind(this)}
                 onResize={this.handleResize.bind(this)}/>
     );
+  }
+}
+
+/**
+ * Drag controller.
+ */
+class DragController {
+
+  _eventHandlers = new Map();
+
+  _dragNode = null;
+  _dropNode = null;
+  _dragCircle = null;
+  _dragLine = null;
+
+  constructor(dragGroup) {
+    console.assert(dragGroup);
+    this._dragGroup = dragGroup;
+
+    let self = this;
+
+    // TODO(burdon): SHIFT to drag node.
+
+    // https://bl.ocks.org/mbostock/22994cc97fefaeede0d861e6815a847e
+    this._drag = d3.drag()
+
+      .on('start', function(d) {
+        self._dragNode = d3.select(this).raise().classed('orb-active', true);
+
+        self._dragCircle = self._dragGroup.append('circle')
+          .classed('orb-drag', true)
+          .attr('r', function(d) { return 5; })
+          .attr('cx', function(d) { return self._dragNode.attr('cx'); })
+          .attr('cy', function(d) { return self._dragNode.attr('cy'); });
+
+        self._dragLine = self._dragGroup.append('line')
+          .attr('x1', function(d) { return self._dragNode.attr('cx'); })
+          .attr('y1', function(d) { return self._dragNode.attr('cy'); })
+          .attr('x2', function(d) { return self._dragNode.attr('cx'); })
+          .attr('y2', function(d) { return self._dragNode.attr('cy'); });
+      })
+
+      .on('drag', function(d) {
+        let [ mx, my ] = d3.mouse(this);
+
+        self._dragCircle
+          .attr('cx', function(d) { return mx; })
+          .attr('cy', function(d) { return my; });
+
+        self._dragLine
+          .attr('x2', function(d) { return mx; })
+          .attr('y2', function(d) { return my; });
+      })
+
+      .on('end', function(d) {
+        d3.select(this).classed('orb-active', false);
+
+        // Callback.
+        let handler = self._eventHandlers.get('drop');
+        handler && handler({
+          source: self._dragNode.attr('id'),
+          target: self._dropNode && self._dropNode.attr('id')
+        });
+
+        self._dragNode = null;
+        self._dragCircle.remove();
+        self._dragCircle = null;
+        self._dragLine.remove();
+        self._dragLine = null;
+      });
+  }
+
+  update() {
+    if (this._dragNode) {
+      let [ x1, y1 ] = [ this._dragNode.attr('cx'), this._dragNode.attr('cy') ];
+
+      this._dragLine
+        .attr('x1', function(d) { return x1; })
+        .attr('y1', function(d) { return y1; });
+    }
+  }
+
+  highlight(node) {
+    this._dropNode = node;
+  }
+
+  on(event, handler) {
+    this._eventHandlers.set(event, handler);
+    return this;
+  }
+
+  get drag() {
+    return this._drag;
   }
 }

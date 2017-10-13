@@ -24,7 +24,7 @@ export class QueryManager {
   }
 
   registerQuery(queryId, refetch) {
-    console.assert(queryId && refetch);
+    console.assert(queryId, 'Invalid queryID');
     this._queryMap.set(queryId, refetch);
   }
 
@@ -49,7 +49,12 @@ export const subscribe = (WrappedComponent) => {
     componentDidMount() {
       let { queryId } = this.props;
       let { queryManager } = this.context;
-      queryManager.registerQuery(queryId, () => this.props.refetch());
+      queryManager.registerQuery(queryId, () => {
+        // TODO(burdon): If many queries, then name and list them.
+        let { refetch } = this.props;
+        console.assert(refetch, 'Return refetch property in graphql HOC.');
+        return refetch();
+      });
     }
 
     componentWillUnmount() {

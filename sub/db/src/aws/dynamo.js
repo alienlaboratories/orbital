@@ -5,8 +5,9 @@
 import _ from 'lodash';
 import AWS from 'aws-sdk';
 
-import { AWSUtil } from 'orbital-node-util';
 import { Database, Transforms } from 'orbital-db-core';
+import { AWSUtil } from 'orbital-node-util';
+import { TypeUtil } from 'orbital-util';
 
 /**
  * DynamoDB implementation.
@@ -74,7 +75,22 @@ export class DynamoDatabase extends Database {
   }
 
   query(query) {
-    let { domain=Database.DEFAULT_DOMAIN } = query || {};
+    let { domains=[Database.DEFAULT_DOMAIN] } = query || {};
+
+    return Promise.all(_.map(domains, domain => {
+      return this._queryDomain(_.omit(query, 'domains'), domain);
+    })).then(results => {
+      // TODO(burdon): If multiple domains, then join.
+      return TypeUtil.deepMerge({ items: [] }, ...results);
+    });
+  }
+
+  /**
+   * Query individual domain.
+   * NOTE: Can't query across multiple HASH keys.
+   */
+  _queryDomain(query, domain) {
+    console.assert(query && domain);
 
     return AWSUtil.promisify(callback => {
 
@@ -91,8 +107,8 @@ export class DynamoDatabase extends Database {
         }
       }, callback);
     }).then(result => {
-      let items = _.map(_.get(result, 'Items'), item => {
-        return DynamoDatabase.recordToItem(item);
+      let items = _.map(_.get(result, 'Items'), record => {
+        return DynamoDatabase.recordToItem(record);
       });
 
       return {
@@ -102,46 +118,52 @@ export class DynamoDatabase extends Database {
   }
 
   update(batches) {
+
+    // TODO(burdon): babel-preset-env should allow async syntax.
+
     let promises = _.map(batches, batch => {
-      let { mutations } = batch;
+      let { domain=Database.DEFAULT_DOMAIN, mutations } = batch;
 
-      let items = [];
-      return AWSUtil.promisify(callback => {
+      // TODO(burdon): Query by ID.
+      return this._queryDomain({}, domain).then(result => {
+        let { items:currentItems } = result;
+        let currentItemMap = _.keyBy(currentItems, 'id');
 
-        // http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB.html#batchWriteItem-property
-        this._dynamodb.batchWriteItem({
-          RequestItems: {
-            [DynamoDatabase.TABLE_NAME]: _.map(mutations, mutation => {
-              let { key, mutations } = mutation;
-              let { type, id } = key;
+        let items = [];
+        return AWSUtil.promisify(callback => {
 
-              // TODO(burdon): Query current items.
+          // http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB.html#batchWriteItem-property
+          this._dynamodb.batchWriteItem({
+            RequestItems: {
+              [DynamoDatabase.TABLE_NAME]: _.map(mutations, mutation => {
+                let { key, mutations } = mutation;
+                let { type, id } = key;
 
-              let data = {};
-              _.each(mutations, mutation => {
-                Transforms.applyObjectMutation({}, data, mutation);
-              });
+                // TODO(burdon): Separate field for meta, data, etc.
+                let data = _.omit(currentItemMap[id], 'type', 'id') || {};
+                Transforms.applyObjectMutations({}, data, mutations);
 
-              let item = {
-                'DomainUri': AWSUtil.Property.S(Database.DEFAULT_DOMAIN),
-                'ItemKey': AWSUtil.Property.S(DynamoDatabase.encodeKey(type, id)),
-                'Data': AWSUtil.Property.S(JSON.stringify(data))
-              };
+                let record = {
+                  'DomainUri': AWSUtil.Property.S(Database.DEFAULT_DOMAIN),
+                  'ItemKey': AWSUtil.Property.S(DynamoDatabase.encodeKey(type, id)),
+                  'Data': AWSUtil.Property.S(JSON.stringify(data))
+                };
 
-              items.push(DynamoDatabase.recordToItem(item));
+                items.push(DynamoDatabase.recordToItem(record));
 
-              return {
-                PutRequest: {
-                  Item: item
-                }
-              };
-            })
-          }
-        }, callback);
-      }).then(result => {
-        return {
-          items
-        };
+                return {
+                  PutRequest: {
+                    Item: record
+                  }
+                };
+              })
+            }
+          }, callback);
+        }).then(result => {
+          return {
+            items
+          };
+        });
       });
     });
 

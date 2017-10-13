@@ -26,7 +26,7 @@ export class TypeUtil {
   }
 
   /**
-   * Convert Map ot Object.
+   * Convert Map to Object.
    * @param {Map} map
    * @return {Object}
    */
@@ -36,11 +36,9 @@ export class TypeUtil {
 
   /**
    * Deep merge including concatenation of arrays.
-   * @param obj
-   * @param src
    */
-  static deepMerge(obj, src) {
-    return _.merge(obj, src, (obj, src) => {
+  static deepMerge() {
+    return _.mergeWith(...arguments, (obj, src) => {
       if (_.isArray(obj)) {
         return obj.concat(src);
       }

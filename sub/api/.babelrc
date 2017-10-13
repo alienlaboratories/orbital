@@ -1,8 +1,10 @@
 {
   "presets": [
     ["env", {
+      "debug": false,
       "targets": {
-        "node": "current"
+        // NOTE: Must match serverless.yml config.
+        "node": "6.10"
       },
       "useBuiltIns": true
     }],
@@ -11,6 +13,7 @@
   ],
 
   "plugins": [
+
     // Import raw/literal content (e.g., GraphQL defs.)
     // http://www.npmjs.com/package/babel-plugin-inline-import
     "babel-plugin-inline-import"

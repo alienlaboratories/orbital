@@ -3,11 +3,13 @@
 #
 
 #
+# Config:
+# https://serverless.com/framework/docs/providers/aws/guide/serverless.yml
+#
 # Console:
 # https://console.aws.amazon.com/lambda/home?region=us-east-1#/functions?display=list
 #
 
-# TODO(burdon): Change sub/api
 service: orbital-api
 
 

@@ -52,6 +52,8 @@ test('AWS config.', async () => {
       }
     ];
 
+    // TODO(burdon): Use test domain.
+
     let database = new DynamoDatabase();
     return database.clear().then(() => {
       return database.update(batches).then(() => {

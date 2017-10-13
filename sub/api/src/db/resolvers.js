@@ -9,6 +9,8 @@ import { Schema } from 'orbital-db-core';
 
 import APISchema from '../../gql/api.graphql';
 
+const VERSION = '0.0.1';
+
 /**
  * Creates the GQL client schema.
  *
@@ -41,12 +43,28 @@ export class Resolvers {
 
       // TODO(burdon): Catch exceptions (see beta).
 
+      Item: {
+
+        items: (obj, args, context) => {
+          let { items } = obj;
+
+          console.log('RESOLVE:', obj);
+
+          // TODO(burdon): Query for items with ID.
+          return _.map(items, itemId => {
+            return {
+              id: itemId
+            };
+          });
+        }
+      },
+
       RootQuery: {
 
         status: (obj, args, context) => {
           return {
             timestamp: Date.now(),
-            version: '0.0.1'
+            version: VERSION
           };
         },
 

@@ -35,6 +35,14 @@ export const Database = (config) => {
     builder: yargs => yargs
 
       .command({
+        command: 'status',
+        describe: 'DB Status.',
+        handler: argv => {
+          argv._result = db.status();
+        }
+      })
+
+      .command({
         command: 'query',
         aliases: ['q'],
         describe: 'Query items.',

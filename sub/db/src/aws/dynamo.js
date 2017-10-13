@@ -6,7 +6,7 @@ import _ from 'lodash';
 import AWS from 'aws-sdk';
 
 import { AWSUtil } from 'orbital-node-util';
-import { Database } from 'orbital-db-core';
+import { Database, Transforms } from 'orbital-db-core';
 
 /**
  * DynamoDB implementation.
@@ -39,14 +39,15 @@ export class DynamoDatabase extends Database {
     };
   }
 
-  // TODO(burdon): Schema (property types)?
   static recordToItem(item) {
+    let data = JSON.parse(_.get(item, 'Data.S'));
+
     return {
       domain: _.get(item, 'DomainUri.S'),
 
       ...DynamoDatabase.decodeKey(_.get(item, 'ItemKey.S')),
 
-      title: _.get(item, 'Data.M.title.S')
+      ...data
     };
   }
 
@@ -111,21 +112,20 @@ export class DynamoDatabase extends Database {
         this._dynamodb.batchWriteItem({
           RequestItems: {
             [DynamoDatabase.TABLE_NAME]: _.map(mutations, mutation => {
-              let { type, id, mutations } = mutation;
+              let { key, mutations } = mutation;
+              let { type, id } = key;
 
-              // TODO(burdon): Apply mutations.
+              // TODO(burdon): Query current items.
+
               let data = {};
               _.each(mutations, mutation => {
-                let { key, value } = mutation;
-                data[key] = AWSUtil.Property.S(value);
+                Transforms.applyObjectMutation({}, data, mutation);
               });
 
               let item = {
                 'DomainUri': AWSUtil.Property.S(Database.DEFAULT_DOMAIN),
                 'ItemKey': AWSUtil.Property.S(DynamoDatabase.encodeKey(type, id)),
-                'Data': {
-                  M: data
-                }
+                'Data': AWSUtil.Property.S(JSON.stringify(data))
               };
 
               items.push(DynamoDatabase.recordToItem(item));

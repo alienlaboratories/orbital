@@ -10,7 +10,7 @@ import { subscribe } from './subscription';
 
 // TODO(burdon): Factor out query.
 const NodeQuery = gql`
-  query NodeQuery($query: Query!) {
+  query NodeQuery($query: QueryInput!) {
     result: query(query: $query) {
       items {
         type

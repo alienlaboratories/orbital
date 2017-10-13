@@ -39,7 +39,7 @@ export class Resolvers {
   getMap() {
     return {
 
-      // TODO(burdon): Should format result here (not in database).
+      // TODO(burdon): Catch exceptions (see beta).
 
       RootQuery: {
 

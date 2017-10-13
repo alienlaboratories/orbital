@@ -4,7 +4,8 @@
 
 import { Orb } from './api';
 
-test('Basic API.', async () => {
+// TODO(burdon): Test locally.
+test('Test Deployed API.', async () => {
 
   Orb.config.update({
     API_KEY: 'test'

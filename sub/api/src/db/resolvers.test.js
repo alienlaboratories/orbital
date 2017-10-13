@@ -46,7 +46,7 @@ test('Basic query.', async () => {
   //
   {
     const query = `
-      mutation TestMutation($batches: [Batch]!) {
+      mutation TestMutation($batches: [BatchInput]!) {
         result: update(batches: $batches) {
           items {
             type
@@ -63,12 +63,16 @@ test('Basic query.', async () => {
           domain: 'x',
           mutations: [              // TODO(burdon): Rename batch
             {
-              type: 'test',
-              id: 'Item-1',
+              key: {
+                type: 'test',
+                id: 'Item-1'
+              },
               mutations: [
                 {
-                  key: 'title',
-                  value: 'Item 1'
+                  field: 'title',
+                  value: {
+                    string: 'Item 1'
+                  }
                 }
               ]
             }
@@ -92,7 +96,7 @@ test('Basic query.', async () => {
   //
   {
     const query = `
-      query TestQuery($query: Query!) {
+      query TestQuery($query: QueryInput!) {
         result: query(query: $query) {
           items {
             type

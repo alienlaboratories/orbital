@@ -10,7 +10,7 @@ import { ID } from 'orbital-util';
 import { Editor } from '../component/editor';
 
 const UpdateMutation = gql`
-  mutation UpdateMutation($batches: [Batch]!) {
+  mutation UpdateMutation($batches: [BatchInput]!) {
     result: update(batches: $batches) {
       items {
         type
@@ -40,12 +40,16 @@ export const EditorContainer = compose(
                 {
                   mutations: [
                     {
-                      type: 'test',
-                      id: ID.createId(),
+                      key: {
+                        type: 'test',
+                        id: ID.createId()
+                      },
                       mutations: [
                         {
-                          key: 'title',
-                          value: title
+                          field: 'title',
+                          value: {
+                            string: title
+                          }
                         }
                       ]
                     }

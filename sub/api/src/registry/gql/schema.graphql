@@ -41,7 +41,7 @@ type RootQuery {
 
 type RootMutation {
 
-  reset: Int
+  clear: Int
 
   updateService(service: ServiceInput!): Service!
 }

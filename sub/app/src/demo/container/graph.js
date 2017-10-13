@@ -9,7 +9,7 @@ import { Graph } from '../component/graph';
 
 // TODO(burdon): Factor out query.
 const GraphQuery = gql`
-  query GraphQuery($query: Query!) {
+  query GraphQuery($query: QueryInput!) {
     result: query(query: $query) {
       items {
         type

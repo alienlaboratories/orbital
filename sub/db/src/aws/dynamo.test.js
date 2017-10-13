@@ -31,12 +31,16 @@ test('AWS config.', async () => {
     const count = 3;
     let mutations = _.times(count, i => {
       return {
-        type: 'test',
-        id: `Item-${i}`,
+        key: {
+          type: 'test',
+          id: `Item-${i}`,
+        },
         mutations: [
           {
-            key: 'title',
-            value: `Item ${i}`
+            field: 'title',
+            value: {
+              string: `Item ${i}`
+            }
           }
         ]
       };

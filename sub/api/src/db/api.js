@@ -32,13 +32,40 @@ export class DB { // TODO(burdon): Rename DatabaseClient.
 
   /**
    *
+   */
+  status() {
+    let { verbose } = this._config;
+
+    const query = `
+      query StatusQuery {
+        status {
+          version
+        }
+      }
+    `;
+
+    let variables = {};
+
+    return this._client.query(query, variables, { verbose }).then(response => {
+      let { errors, data } = response;
+      if (errors) {
+        console.error(JSON.stringify(errors, null, 2));
+        return false;
+      } else {
+        return data;
+      }
+    });
+  }
+
+  /**
+   *
    * @return {*}
    */
   query() {
     let { verbose } = this._config;
 
     const query = `
-      query Query($query: Query!) {
+      query Query($query: QueryInput!) {
         result: query(query: $query) {
           items {
             type
@@ -73,7 +100,7 @@ export class DB { // TODO(burdon): Rename DatabaseClient.
     let { verbose } = this._config;
 
     const query = `
-      mutation Mutation($batches: [Batch]!) {
+      mutation UpdateMutation($batches: [BatchInput]!) {
         result: update(batches: $batches) {              
           items {
             type
@@ -88,15 +115,19 @@ export class DB { // TODO(burdon): Rename DatabaseClient.
       batches: [
         {
           mutations: _.map(items, item => {
-            let { type='test', title } = item;
+            let { type='test', title } = item;        // TODO(burdon): Default type.
 
             return {
-              type,
-              id: ID.createId(),
+              key: {
+                type,
+                id: ID.createId()
+              },
               mutations: [
                 {
-                  key: 'title',
-                  value: title
+                  field: 'title',
+                  value: {
+                    string: title
+                  }
                 }
               ]
             };
@@ -129,7 +160,7 @@ export class DB { // TODO(burdon): Rename DatabaseClient.
     let { verbose } = this._config;
 
     const query = `
-      mutation Mutation {
+      mutation ClearMutation {
         result: clear
       }
     `;

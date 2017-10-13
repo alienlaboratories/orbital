@@ -43,7 +43,7 @@ export class Registry {
     let { verbose } = this._config;
 
     const query = `
-      mutation Mutation($batches: [Batch]!) {
+      mutation UpdateMutation($batches: [Batch]!) {
         result: update(batches: $batches) {
           items {
             id
@@ -76,8 +76,8 @@ export class Registry {
     let { verbose } = this._config;
 
     const query = `
-      mutation Reset {
-        reset
+      mutation ClearMutation {
+        clear
       }
     `;
 

@@ -25,11 +25,16 @@ export class TestDataGenerator {
     let mutations = _.times(count, i => {
       this._counter++;
       return {
-        id: `I-${this._counter}`,
+        key: {
+          type: 'test',
+          id: `I-${this._counter}`,
+        },
         mutations: [
           {
-            key: 'title',
-            value: `Item ${this._counter}`
+            field: 'title',
+            value: {
+              string: `Item ${this._counter}`
+            }
           }
         ]
       };

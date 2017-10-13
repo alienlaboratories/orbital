@@ -6,6 +6,8 @@ import _ from 'lodash';
 import assert from 'assert';
 import { concatenateTypeDefs } from 'graphql-tools';
 
+import { Transforms } from 'orbital-db-core';
+
 import DatabaseSchema from '../gql/db.graphql';
 import MutationSchema from '../gql/mutation.graphql';
 import QuerySchema from '../gql/query.graphql';
@@ -73,17 +75,17 @@ export class Shard {
     return Array.from(this._nodeMap.values());
   }
 
-  updateNode(type, id, mutations) {
+  updateNode(key, mutations) {
+    let { type, id } = key;
+
     let node = this._nodeMap.get(id);
     if (!node) {
       node = { type, id };
       this._nodeMap.set(id, node);
     }
 
-    // TODO(burdon): OT mutations.
     _.each(mutations, mutation => {
-      let { key, value } = mutation;
-      node[key] = value;
+      Transforms.applyObjectMutation({}, node, mutation);
     });
 
     return node;
@@ -144,8 +146,8 @@ export class MemoryDatabase extends Database {
 
       return {
         items: _.map(mutations, mutation => {
-          let { type, id, mutations } = mutation;
-          return shard.updateNode(type, id, mutations);
+          let { key, mutations } = mutation;
+          return shard.updateNode(key, mutations);
         })
       };
     }));

@@ -45,7 +45,7 @@ export class Resolvers {
 
       RootMutation: {
 
-        reset: (obj, args, context) => {
+        clear: (obj, args, context) => {
           this._registry.clear();
           return 0;
         },

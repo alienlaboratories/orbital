@@ -83,16 +83,3 @@ input FilterInput {
   # Used for "queryless" search or for context-sensitive ranking.
   context:    [KeyValue]
 }
-
-# TODO(burdon): Does ID reference domain?
-
-# TODO(burdon): Replace with above.
-input Query {
-  domains:    [String]
-  ids:        [String]
-}
-
-type QueryResult {
-  # TODO(burdon): Rename items.
-  items:      [Item]!
-}

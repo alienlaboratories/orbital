@@ -38,7 +38,7 @@ test('Basic registry.', async () => {
 
     let mutationResult = await graphql(schema, mutation, root, context, variables);
     let { data: { updateService:service } } = mutationResult;
-    console.log('Updated:', service);
+//  console.log('Updated:', service);
     expect(service.uri).toBe('test.com/test');
   }
 
@@ -61,14 +61,14 @@ test('Basic registry.', async () => {
 
     let queryResult = await graphql(schema, query, root, context, variables);
     let { data: { getServices:services } } = queryResult;
-    console.log('Services:', services);
+//  console.log('Services:', services);
     expect(services).toHaveLength(1);
   }
 
   {
     const query = `
       mutation Reset {
-        reset
+        clear
       }
     `;
 

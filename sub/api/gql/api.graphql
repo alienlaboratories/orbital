@@ -2,40 +2,43 @@
 # Copyright 2017 Alien Labs.
 #
 
+#
+# Query.
+#
+
 type StatusResult {
-  version:    String
+  version: String
+}
+
+input QueryInput {
+  domains: [String]
+}
+
+type QueryResult {
+  items: [Item]!
 }
 
 type RootQuery {
   status: StatusResult!
-  query(query: Query!): QueryResult!
+  query(query: QueryInput!): QueryResult!
 }
 
-# TODO(burdon): Replace mutations.
+#
+# Mutation.
+#
 
-input FieldMutation {
-  key:        String!
-  value:      String
-}
-
-input ItemMutations {
-  type:       String!
-  id:         String!
-  mutations:  [FieldMutation]!
-}
-
-input Batch {
-  domain:     String
-  mutations:  [ItemMutations]!      # TODO(burdon): Rename.
+input BatchInput {
+  domain: String
+  mutations: [ItemMutationInput]!
 }
 
 type BatchResult {
-  items:      [Item]!
+  items: [Item]!
 }
 
 type RootMutation {
-  clear: Int                        # TODO(burdon): Rename reset.
-  update(batches: [Batch]!): [BatchResult]!
+  clear: Int
+  update(batches: [BatchInput]!): [BatchResult]!
 }
 
 #
@@ -43,6 +46,6 @@ type RootMutation {
 #
 
 schema {
-  query:      RootQuery,
-  mutation:   RootMutation
+  query: RootQuery,
+  mutation: RootMutation
 }

@@ -55,6 +55,7 @@ export class Editor extends React.Component {
     return (
       <div className="orb-toolbar">
         <input type="text" className="orb-expand" value={text}
+               spellCheck={ false }
                onChange={this.handleTextChange.bind(this)}
                onKeyDown={this.handleKeyDown.bind(this)}
                ref={node => this._input = node}/>

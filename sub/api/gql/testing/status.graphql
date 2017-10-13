@@ -1,0 +1,9 @@
+#
+# Copyright 2017 Alien Labs.
+#
+
+query StatusQuery {
+  status {
+    version
+  }
+}

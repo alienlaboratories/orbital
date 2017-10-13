@@ -4,14 +4,23 @@
   "schema": {
 
     "README_file": "Remove 'file' to use request url below. A relative or absolute path to the JSON from a schema introspection query, e.g. '{ data: ... }'. Changes to the file are watched.",
-    "file": "sub/services/dist/database.json"
+    "file": "./sub/api/dist/database.json"
   },
 
   "README_endpoints": "A list of GraphQL endpoints that can be queried from '.graphql' files in the IDE",
   "endpoints": [
     {
-      "name": "Default (http://localhost:8080/graphql)",
-      "url": "http://localhost:8080/graphql",
+      "name": "Local",
+      "url": "http://localhost:3000/db",
+      "options": {
+        "headers": {
+          "user-agent": "JS GraphQL"
+        }
+      }
+    },
+    {
+      "name": "Production",
+      "url": "https://api.orbitaldb.com/db",
       "options": {
         "headers": {
           "user-agent": "JS GraphQL"

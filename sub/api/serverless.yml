@@ -33,6 +33,15 @@ plugins:
   # https://www.npmjs.com/package/serverless-domain-manager
   - "serverless-domain-manager"
 
+  # TODO(burdon): DynamoDB local.
+  # https://www.gorillastack.com/news/serverless-framework-local-development-environments
+  # https://www.npmjs.com/package/serverless-dynamodb-local
+# - "serverless-dynamodb-local"
+
+  # sls offline start
+  # https://www.npmjs.com/package/serverless-offline
+  - "serverless-offline"
+
   # sls info --json | jq
   # https://www.npmjs.com/package/serverless-plugin-info-json
   - "serverless-plugin-info-json"
@@ -50,6 +59,11 @@ custom:
     basePath: ''
     stage: ${self:provider.stage}
     createRoute53Record: true
+
+  # TODO(burdon): Config dir: ../../config (workaround ln -s)
+  # https://www.npmjs.com/package/serverless-offline#usage-and-command-line-options
+  serverless-offline:
+    port: 3000
 
 
 functions:

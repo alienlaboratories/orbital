@@ -247,6 +247,7 @@ class DragController {
         self._dragCircle = null;
         self._dragLine.remove();
         self._dragLine = null;
+        self._dropNode = null;
       });
   }
 

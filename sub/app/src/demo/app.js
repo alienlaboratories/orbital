@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import { ApolloProvider } from 'react-apollo';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 
 import { TestDataGenerator, TestNetworkInterface } from 'orbital-api/testing';
 
@@ -23,13 +24,12 @@ let { rootId, apiRoot, network } = config;
 // http://dev-blog.apollodata.com/a-stronger-typed-react-apollo-c43bd52be0d8
 // http://discuss.reactjs.org/t/if-typescript-is-so-great-how-come-all-notable-reactjs-projects-use-babel/4887
 
-// TODO(burdon): Redux.
 // TODO(burdon): Router.
 
 // TODO(burdon): Async set-up. App class.
 
 //
-// Apollo Client.
+// Apollo network interface.
 //
 
 let networkInterface;
@@ -51,11 +51,37 @@ switch (network) {
   }
 }
 
+//
+// Apollo client.
 // http://dev.apollodata.com/core/apollo-client-api.html#constructor
+//
+
 const client = new ApolloClient({
   networkInterface,
   queryDeduplication: true
 });
+
+//
+// Redux.
+// http://dev.apollodata.com/react/redux.html
+// TODO(burdon): Add reducers and get state.
+// TODO(burdon): connect() state (use util from beta to make object).
+//
+
+const store = createStore(
+  combineReducers({
+    apollo: client.reducer(),
+  }),
+  {
+    selection: null
+  },
+  compose(
+    applyMiddleware(client.middleware()),
+
+    // TODO(burdon): Devtools.
+    (typeof window.__REDUX_DEVTOOLS_EXTENSION__ !== 'undefined') ? window.__REDUX_DEVTOOLS_EXTENSION__() : f => f
+  )
+);
 
 //
 // Root App.
@@ -64,6 +90,7 @@ const client = new ApolloClient({
 /**
  * Header component.
  */
+// TODO(burdon): Factor out.
 class Header extends React.Component {
 
   static contextTypes = {
@@ -105,7 +132,7 @@ class Application extends React.Component {
     let { config: { pollInterval }, client } = this.props;
 
     return (
-      <ApolloProvider client={ client }>
+      <ApolloProvider client={ client } store={ store }>
         <div className="orb-panel orb-expand">
           <Header/>
 

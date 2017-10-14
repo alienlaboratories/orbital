@@ -16,11 +16,23 @@ type Key {
 
 #
 # Graph Node.
+# TODO(burdon): Meta type for timestamp, version, foreign-keys, etc.
 #
 
 type Item {
   key:        Key!
 
   title:      String!
+
   items:      [Item]      # TODO(burdon): Type specific.
+}
+
+
+#
+# Graph Domain.
+#
+
+type Domain {
+  domain:   String!
+  name:     String!
 }

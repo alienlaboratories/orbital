@@ -49,8 +49,6 @@ export class Resolvers {
         items: (obj, args, context) => {
           let { items } = obj;
 
-          console.log('RESOLVE:', obj);
-
           // TODO(burdon): Query for items with ID.
           return _.map(items, encodedKey => {
             return {
@@ -72,6 +70,10 @@ export class Resolvers {
         query: (obj, args, context) => {
           let { query } = args;
           return this._database.query(query);
+        },
+
+        domains: (obj, args, context) => {
+          return [];
         }
       },
 

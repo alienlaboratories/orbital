@@ -41,6 +41,15 @@ export const Database = (config) => {
       })
 
       .command({
+        command: 'domains',
+        aliases: ['dom'],
+        describe: 'List domains.',
+        handler: argv => {
+          argv._result = db.domains();
+        }
+      })
+
+      .command({
         command: 'query',
         aliases: ['q'],
         describe: 'Query items.',

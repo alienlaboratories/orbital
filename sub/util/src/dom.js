@@ -66,7 +66,8 @@ class ResizeManager {
  */
 export class DomUtil {
 
-  static resizeManager = new ResizeManager();
+  // TODO(burdon): Lazily create.
+  static resizeManager = typeof window !== 'undefined' && new ResizeManager();
 
   static init() {
     console.log('INIT');

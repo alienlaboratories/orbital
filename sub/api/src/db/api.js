@@ -58,6 +58,33 @@ export class DB { // TODO(burdon): Rename DatabaseClient.
 
   /**
    *
+   */
+  domains() {
+    let { verbose } = this._config;
+
+    const query = `
+      query DomainsQuery {
+        domains {
+          domain
+          name
+        }
+      }
+    `;
+
+    let variables = {};
+
+    return this._client.query(query, variables, { verbose }).then(response => {
+      let { errors, data } = response;
+      if (errors) {
+        throw new Error(JSON.stringify(errors, null, 2));
+      }
+
+      return data;
+    });
+  }
+
+  /**
+   *
    * @return {*}
    */
   query() {

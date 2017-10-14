@@ -5,6 +5,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+// TODO(burdon): Factor out.
 // TODO(burdon): Subscriptions: http://dev.apollodata.com/react/receiving-updates.html#Subscriptions
 // TODO(burdon): Polling spools up additional instance. Back-off?
 

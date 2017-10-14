@@ -6,10 +6,9 @@ import * as d3 from 'd3';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import { ID } from 'orbital-util';
+import { ID, ReactUtil } from 'orbital-util';
 
 import { D3Canvas } from './d3';
-import { ReactUtil } from './util';
 
 import './graph.less';
 
@@ -19,7 +18,8 @@ import './graph.less';
 export class Graph extends React.Component {
 
   static propTypes = {
-    onDrop: PropTypes.func
+    selectedItem: PropTypes.object,
+    onDrop:       PropTypes.func
   };
 
   constructor() {
@@ -78,9 +78,24 @@ export class Graph extends React.Component {
 
     // TODO(burdon): Note type-specific adapter (e.g., links from properties).
     const adapter = (items) => {
-      let nodes = _.map(items, n => _.pick(n, 'key', 'title'));
+
+      // Existing nodes.
+      let currentNodeMap = _.keyBy(this._simulation.nodes(), node => node.key.id);
+
+      // Merge nodes.
+      let nodes = _.map(items, item => {
+        let { key: { id } } = item;
+        let node = currentNodeMap[id];
+        if (!node) {
+          node = _.pick(item, 'key', 'title');
+        }
+
+        return node;
+      });
+
 //    console.log('Nodes', JSON.stringify(items, 0, 2));
 
+      // Links.
       let links = [];
       _.each(items, item => {
         let { items:linkedItems } = item;
@@ -122,10 +137,11 @@ export class Graph extends React.Component {
   }
 
   handleRender(root) {
+    let { nodes=[], links=[] } = this.state;
     let self = this;
 
-    let { nodes=[], links=[] } = this.state;
-
+    // TODO(burdon): Causes jitter.
+    // https://bl.ocks.org/HarryStevens/bc938c8d45008d99faed47039fbe5d49
     this._simulation
       .nodes(nodes)
       .force('link')
@@ -154,7 +170,12 @@ export class Graph extends React.Component {
     nodeSelection.enter()
       .append('circle')
       .classed('orb-node', true)
-      .attr('id', function(d) { return ID.encodeKey(d.key); })    // TODO(burdon): Is this required?
+
+      // TODO(burdon): Scope by graph's ID to make unique. Change to data/datum.
+      // TODO(burdon): http://bl.ocks.org/hugolpz/824446bb2f9bc8cce607
+      .attr('id', function(d) { return ID.encodeKey(d.key); })
+      // .datum(d => d.key)
+
       .attr('r', function(d) { return 20; })
 
       .on('mouseover', function(d) {
@@ -170,6 +191,15 @@ export class Graph extends React.Component {
 
     nodeSelection.exit()
       .remove();
+
+    //
+    // Selection
+    //
+
+    // TODO(burdon): Rename key.
+    let { selectedItem } = this.props;
+    this._nodeGroup.selectAll('circle')
+      .classed('orb-selected', d => d.key.id === _.get(selectedItem, 'id'));
   }
 
   handleResize(root, size) {
@@ -180,7 +210,7 @@ export class Graph extends React.Component {
     let defaultAttrs = ReactUtil.defaultProps(this.props, { className: 'orb-graph' });
 
     return (
-      <D3Canvas {...defaultAttrs}
+      <D3Canvas { ...defaultAttrs }
                 onInit={this.handleInit.bind(this)}
                 onRender={this.handleRender.bind(this)}
                 onResize={this.handleResize.bind(this)}/>
@@ -243,6 +273,7 @@ class DragController {
         d3.select(this).classed('orb-active', false);
 
         // Callback.
+        // TODO(burdon): Provide mouse position to drop new node.
         let handler = self._eventHandlers.get('drop');
         handler && handler({
           source: self._dragNode.attr('id'),
@@ -270,7 +301,6 @@ class DragController {
 
   highlight(node) {
     this._dropNode = node;
-    console.log('Hi', node && node.attr('id'));
   }
 
   on(event, handler) {

@@ -5,26 +5,6 @@
 import _ from 'lodash';
 
 /**
- * React utils.
- */
-export class ReactUtil {
-
-  /**
-   * Default component properties.
-   * @param props
-   * @param defaults
-   * @returns {{className: (string|_.LoDashExplicitWrapper<string>)}}
-   */
-  static defaultProps = (props, defaults={}) => {
-    let { className } = props;
-
-    return {
-      className: _.compact([className, defaults.className]).join(' ') || undefined
-    };
-  };
-}
-
-/**
  * Manages resize callbacks for registered elements.
  */
 class ResizeManager {
@@ -94,5 +74,13 @@ export class DomUtil {
 
   static getResizeManager() {
     return DomUtil.resizeManager;
+  }
+
+  /**
+   * @param {[string]} ... variable length class names (which may be blank).
+   * @returns {string} Space separated list of classnames.
+   */
+  static className() {
+    return _.compact(arguments).join(' ');
   }
 }

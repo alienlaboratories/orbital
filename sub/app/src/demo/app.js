@@ -7,12 +7,13 @@ import PropTypes from 'prop-types';
 import { ApolloProvider } from 'react-apollo';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
+import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 
 import { TestDataGenerator, TestNetworkInterface } from 'orbital-api/testing';
 
 import { EditorContainer, GraphContainer, ListContainer, StatusContainer } from './container';
 import { QueryManager } from './container/subscription';
+import { AppReducer } from './reducer/app_reducer';
 
 import './app.less';
 
@@ -68,12 +69,15 @@ const client = new ApolloClient({
 // TODO(burdon): connect() state (use util from beta to make object).
 //
 
+const appReducer = new AppReducer();
+
 const store = createStore(
   combineReducers({
     apollo: client.reducer(),
+    [AppReducer.NS]: appReducer.reducer()
   }),
   {
-    selection: null
+    [AppReducer.NS]: appReducer.state
   },
   compose(
     applyMiddleware(client.middleware()),

@@ -6,10 +6,11 @@ import gql from 'graphql-tag';
 import { compose, graphql } from 'react-apollo';
 import { Chance } from 'chance';
 
-import { ID } from 'orbital-util';
+import { ID, ReduxUtil } from 'orbital-util';
 
 import { Graph } from '../component/graph';
 import { subscribe } from './subscription';
+import { AppReducer } from '../reducer/app_reducer';
 
 const chance = new Chance();
 
@@ -55,6 +56,16 @@ const UpdateMutation = gql`
 `;
 
 export const GraphContainer = compose(
+
+  ReduxUtil.connect({
+    mapStateToProps: (state, ownProps) => {
+      let { selectedItem } = AppReducer.state(state);
+
+      return {
+        selectedItem
+      };
+    }
+  }),
 
   graphql(GraphQuery, {
 

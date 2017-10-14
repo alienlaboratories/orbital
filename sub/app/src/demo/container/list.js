@@ -5,8 +5,11 @@
 import gql from 'graphql-tag';
 import { compose, graphql } from 'react-apollo';
 
+import { ReduxUtil } from 'orbital-util';
+
 import { List } from '../component/list';
 import { subscribe } from './subscription';
+import { AppReducer } from '../reducer/app_reducer';
 
 // TODO(burdon): Factor out query.
 const NodeQuery = gql`
@@ -23,7 +26,27 @@ const NodeQuery = gql`
   }
 `;
 
+
 export const ListContainer = compose(
+
+  ReduxUtil.connect({
+    mapStateToProps: (state, ownProps) => {
+      let { selectedItem } = AppReducer.state(state);
+
+      return {
+        selectedItem
+      };
+    },
+
+    mapDispatchToProps: (dispatch, ownProps) => {
+      return {
+        selectItem: (key) => {
+          dispatch(AppReducer.selectItem(key));
+        }
+      };
+    }
+  }),
+
   graphql(NodeQuery, {
     options: (props) => {
       let { pollInterval } = props;
@@ -44,4 +67,5 @@ export const ListContainer = compose(
       };
     }
   }
+
 ))(subscribe(List));

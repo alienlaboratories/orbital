@@ -1,10 +1,8 @@
 #!/usr/bin/env bash
 
-MODULES="api app web"
+MODULES="orbital-api orbital-app orbital-web"
 
 for mod in ${MODULES[@]};
 do
-  pushd sub/$mod
-  npm run deploy
-  popd
+  yarn workspace ${mod} run deploy
 done

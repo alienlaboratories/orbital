@@ -61,21 +61,7 @@ export class Graph extends React.Component {
       // .force('x', d3.forceX())
       // .force('y', d3.forceY())
 
-      .on('tick', () => {
-        console.assert(this._nodeGroup);
-        this._nodeGroup.selectAll('circle')
-          .attr('cx', function(d) { return d.x; })
-          .attr('cy', function(d) { return d.y; });
-
-        console.assert(this._linkGroup);
-        this._linkGroup.selectAll('line')
-          .attr('x1', function(d) { return d.source.x; })
-          .attr('y1', function(d) { return d.source.y; })
-          .attr('x2', function(d) { return d.target.x; })
-          .attr('y2', function(d) { return d.target.y; });
-
-        this._dragController.update();
-      });
+      .on('tick', this.handleTick.bind(this));
 
     // d3.range(100).forEach(this._simulation.tick);
   }
@@ -129,7 +115,7 @@ export class Graph extends React.Component {
     this._linkGroup = d3.select(root).append('svg:g');
     this._nodeGroup = d3.select(root).append('svg:g');
 
-    this._dragController = new DragController(this._dragGroup)
+    this._dragController = new DragController(root, this._dragGroup)
       .on('drop', (event) => {
         let { onDrop } = this.props;
         let { source, target } = event;
@@ -157,7 +143,7 @@ export class Graph extends React.Component {
         .links(links);
 
     //
-    // Links
+    // Links.
     //
 
     let linkSelection = this._linkGroup.selectAll('line')
@@ -170,31 +156,20 @@ export class Graph extends React.Component {
       .remove();
 
     //
-    // Nodes
+    // Nodes and Labels.
     //
 
-    let nodeSelection = this._nodeGroup.selectAll('g')
+    let nodeSelection = this._nodeGroup.selectAll('g.orb-node')
       .data(this._simulation.nodes(), function(d) { return ID.encodeKey(d.key); });
+
     let enter = nodeSelection.enter()
-      .append('svg:g');
-
-    console.log(':::', nodeSelection);
-
-
-    enter
-      .append('svg:circle')
-      .classed('orb-node', true)
+      .append('svg:g')
+      .attr('class', 'orb-node')
 
       // TODO(burdon): Scope by graph's ID to make unique. Change to data/datum.
       // TODO(burdon): http://bl.ocks.org/hugolpz/824446bb2f9bc8cce607
       .attr('id', function(d) { return ID.encodeKey(d.key); })
       // .datum(d => d.key)
-
-      // .attr('x', function(d) { console.log(d.x); return 800; })
-      // .attr('y', function(d) { return 200; })
-      // .attr('fixed', true)
-
-      .attr('r', function(d) { return 20; })
 
       .on('mouseover', function(d) {
         d3.select(this).classed('orb-active', true);
@@ -207,13 +182,26 @@ export class Graph extends React.Component {
 
       .call(this._dragController.drag);
 
-    // enter
-    //   .append("svg:text")
-    //     .attr("x", 114)
-    //     .attr("y", 200)
-    //     .text(function (d) {
-    //       return 'hello';
-    //     });
+    // Nodes
+    enter
+      .append('svg:circle')
+      .classed('orb-node', true)
+
+      // TODO(burdon): Initial position?
+      // .attr('x', function(d) { return 0; })
+      // .attr('y', function(d) { return 0; })
+      // .attr('fixed', true)
+
+      .attr('r', function(d) { return 20; });
+
+    // Labels
+    enter
+      .append('svg:text')
+        .attr('x', 24)
+        .attr('y', 8)
+        .text(function (d) {
+          return d.title;
+        });
 
     nodeSelection.exit()
       .remove();
@@ -226,6 +214,21 @@ export class Graph extends React.Component {
     let { selectedItem } = this.props;
     this._nodeGroup.selectAll('circle')
       .classed('orb-selected', d => d.key.id === _.get(selectedItem, 'id'));
+  }
+
+  handleTick() {
+    console.assert(this._nodeGroup);
+    this._nodeGroup.selectAll('g.orb-node')
+      .attr('transform', function(d) { return `translate(${d.x}, ${d.y})`; });
+
+    console.assert(this._linkGroup);
+    this._linkGroup.selectAll('line')
+      .attr('x1', function(d) { return d.source.x; })
+      .attr('y1', function(d) { return d.source.y; })
+      .attr('x2', function(d) { return d.target.x; })
+      .attr('y2', function(d) { return d.target.y; });
+
+    this._dragController.update();
   }
 
   handleResize(root, size) {
@@ -251,13 +254,16 @@ class DragController {
 
   _eventHandlers = new Map();
 
+  _root = null;
+
   _dragNode = null;
   _dropNode = null;
   _dragCircle = null;
   _dragLine = null;
 
-  constructor(dragGroup) {
-    console.assert(dragGroup);
+  constructor(root, dragGroup) {
+    console.assert(root && dragGroup);
+    this._root = root;
     this._dragGroup = dragGroup;
 
     let self = this;
@@ -267,7 +273,11 @@ class DragController {
     // https://bl.ocks.org/mbostock/22994cc97fefaeede0d861e6815a847e
     this._drag = d3.drag()
 
+      //
+      // Start
+      //
       .on('start', function(d) {
+
         self._dragNode = d3.select(this).raise().classed('orb-active', true);
 
         self._dragCircle = self._dragGroup.append('circle')
@@ -277,14 +287,18 @@ class DragController {
           .attr('cy', function(d) { return self._dragNode.attr('cy'); });
 
         self._dragLine = self._dragGroup.append('line')
-          .attr('x1', function(d) { return self._dragNode.attr('cx'); })
-          .attr('y1', function(d) { return self._dragNode.attr('cy'); })
           .attr('x2', function(d) { return self._dragNode.attr('cx'); })
           .attr('y2', function(d) { return self._dragNode.attr('cy'); });
+
+        self.update();
       })
 
+      //
+      // Drag
+      //
       .on('drag', function(d) {
-        let [ mx, my ] = d3.mouse(this);
+        // TODO(burdon): Relative to center.
+        let [ mx, my ] = d3.mouse(self._root);
 
         self._dragCircle
           .attr('cx', function(d) { return mx; })
@@ -295,6 +309,9 @@ class DragController {
           .attr('y2', function(d) { return my; });
       })
 
+      //
+      // End
+      //
       .on('end', function(d) {
         d3.select(this).classed('orb-active', false);
 
@@ -315,9 +332,14 @@ class DragController {
       });
   }
 
+  // Called when force updates (since drag node may have moved).
   update() {
     if (this._dragNode) {
-      let [ x1, y1 ] = [ this._dragNode.attr('cx'), this._dragNode.attr('cy') ];
+      // TODO(burdon): Get center of transformed group?
+      let t = this._dragNode.attr('transform');
+      let match = t.match(/translate[(]([0-9.]+), ([0-9.]+)[)]/);
+      let x1 = parseFloat(match[1]);
+      let y1 = parseFloat(match[2]);
 
       this._dragLine
         .attr('x1', function(d) { return x1; })

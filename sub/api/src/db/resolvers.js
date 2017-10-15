@@ -67,13 +67,13 @@ export class Resolvers {
           };
         },
 
+        // domains: (obj, args, context) => {
+        //   return [];
+        // },
+
         query: (obj, args, context) => {
           let { query } = args;
           return this._database.query(query);
-        },
-
-        domains: (obj, args, context) => {
-          return [];
         }
       },
 

@@ -39,3 +39,12 @@ https://www.orbitaldb.com
   - Ensure `babel-loader` rule configured in webpack for each submodule.
 - `module initialization error: ReferenceError`
   - Check babel configuration (e.g., missing plugin to adapt to browser/node version.)
+
+
+## IDEAS
+
+- Serverless Services (e.g., thumbnails)
+  - https://github.com/serverless/serverless#services-v10
+- Serverless Plugins
+  - https://github.com/serverless/serverless#plugins-v10
+  

@@ -28,6 +28,15 @@ provider:
 
 
 plugins:
+
+  # Config AWS Gateway (e.g., binary images); runs on deploy hook.
+  # https://console.aws.amazon.com/apigateway/home?region=us-east-1#/apis/luzw3mhmpc/binary-media-types
+  # https://aws.amazon.com/blogs/compute/binary-support-for-api-integrations-with-amazon-api-gateway
+  # TODO(burdon): sls remove required first?
+  # TODO(burdon): `Invalid patch path /binaryMediaTypes` When added manually.
+  # https://github.com/GFG/serverless-apigateway-plugin
+  - "serverless-apigw-binary"
+
   # Custom domain name.
   # https://serverless.com/blog/serverless-api-gateway-domain
   # https://www.npmjs.com/package/serverless-domain-manager
@@ -46,6 +55,8 @@ plugins:
 
 custom:
 
+  # TODO(burdon): Different domain for app.
+
   # https://console.aws.amazon.com/route53/home#DomainListing
   # https://serverless.com/blog/serverless-api-gateway-domain
   # sls create_domain Assigns cert to domain and configures CNAMES
@@ -57,6 +68,10 @@ custom:
     basePath: ''
     stage: ${self:provider.stage}
     createRoute53Record: true
+
+  apigwBinary:
+    types:
+      - "image/png"
 
 
 # TODO(burdon): https://forum.serverless.com/t/use-wildcard-in-path-for-http-endpoints/2203 (wildcards)
@@ -78,6 +93,8 @@ functions:
           path: static/css/{path}
           method: get
       # TODO(burdon): Images not working: https://github.com/awslabs/aws-serverless-express/issues/39
+      # https://github.com/awslabs/aws-serverless-express/issues/104 [burdon]
+      # https://github.com/awslabs/aws-serverless-express/issues/99
       - http:
           path: static/img/{path}
           method: get

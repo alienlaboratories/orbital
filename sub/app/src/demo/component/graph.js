@@ -17,6 +17,9 @@ import './graph.less';
  */
 export class Graph extends React.Component {
 
+  // WOW! Sparse Force Graph.
+  // https://bl.ocks.org/syntagmatic/c334d4293b72a2d1b8827c70e88d4d4f
+
   static propTypes = {
     selectedItem: PropTypes.object,
     onDrop:       PropTypes.func
@@ -44,7 +47,8 @@ export class Graph extends React.Component {
     // http://blockbuilder.org/tarekrached/a7628dd96c62155068dd
 
     this._simulation = d3.forceSimulation()
-      .alphaTarget(.1)
+      // TODO(burdon): ???
+      .alphaTarget(0.1)
 
       .force('charge', d3.forceManyBody().strength(-1000))
 
@@ -53,8 +57,9 @@ export class Graph extends React.Component {
         .distance(100)
         .strength(1))
 
-      .force('x', d3.forceX())
-      .force('y', d3.forceY())
+        // TODO(burdon): ???
+      // .force('x', d3.forceX())
+      // .force('y', d3.forceY())
 
       .on('tick', () => {
         console.assert(this._nodeGroup);
@@ -71,6 +76,8 @@ export class Graph extends React.Component {
 
         this._dragController.update();
       });
+
+    // d3.range(100).forEach(this._simulation.tick);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -132,8 +139,10 @@ export class Graph extends React.Component {
         });
       });
 
+    // TODO(burdon): On resize.
     let center = { x: root.clientWidth / 2, y: root.clientHeight / 2 };
     this._simulation.force('center', d3.forceCenter(center.x, center.y));
+    console.log(center);
   }
 
   handleRender(root) {
@@ -155,7 +164,7 @@ export class Graph extends React.Component {
       .data(links);
 
     linkSelection.enter()
-      .append('line');
+      .append('svg:line');
 
     linkSelection.exit()
       .remove();
@@ -164,17 +173,26 @@ export class Graph extends React.Component {
     // Nodes
     //
 
-    let nodeSelection = this._nodeGroup.selectAll('circle')
+    let nodeSelection = this._nodeGroup.selectAll('g')
       .data(this._simulation.nodes(), function(d) { return ID.encodeKey(d.key); });
+    let enter = nodeSelection.enter()
+      .append('svg:g');
 
-    nodeSelection.enter()
-      .append('circle')
+    console.log(':::', nodeSelection);
+
+
+    enter
+      .append('svg:circle')
       .classed('orb-node', true)
 
       // TODO(burdon): Scope by graph's ID to make unique. Change to data/datum.
       // TODO(burdon): http://bl.ocks.org/hugolpz/824446bb2f9bc8cce607
       .attr('id', function(d) { return ID.encodeKey(d.key); })
       // .datum(d => d.key)
+
+      // .attr('x', function(d) { console.log(d.x); return 800; })
+      // .attr('y', function(d) { return 200; })
+      // .attr('fixed', true)
 
       .attr('r', function(d) { return 20; })
 
@@ -188,6 +206,14 @@ export class Graph extends React.Component {
       })
 
       .call(this._dragController.drag);
+
+    // enter
+    //   .append("svg:text")
+    //     .attr("x", 114)
+    //     .attr("y", 200)
+    //     .text(function (d) {
+    //       return 'hello';
+    //     });
 
     nodeSelection.exit()
       .remove();

@@ -81,6 +81,9 @@ export class Graph extends React.Component {
         let node = currentNodeMap[id];
         if (!node) {
           node = _.pick(item, 'key', 'title');
+
+          // Initial position.
+          _.assign(node, this._dragController.lastPosition());
         }
 
         return node;
@@ -186,12 +189,6 @@ export class Graph extends React.Component {
     enter
       .append('svg:circle')
       .classed('orb-node', true)
-
-      // TODO(burdon): Initial position?
-      // .attr('x', function(d) { return 0; })
-      // .attr('y', function(d) { return 0; })
-      // .attr('fixed', true)
-
       .attr('r', function(d) { return 20; });
 
     // Labels
@@ -199,9 +196,7 @@ export class Graph extends React.Component {
       .append('svg:text')
         .attr('x', 24)
         .attr('y', 8)
-        .text(function (d) {
-          return d.title;
-        });
+        .text(function (d) { return d.title; });
 
     nodeSelection.exit()
       .remove();
@@ -274,9 +269,10 @@ class DragController {
     this._drag = d3.drag()
 
       //
-      // Start
+      // Drag start.
       //
       .on('start', function(d) {
+        let [ x, y ] = d3.mouse(self._root);
 
         self._dragNode = d3.select(this).raise().classed('orb-active', true);
 
@@ -287,33 +283,34 @@ class DragController {
           .attr('cy', function(d) { return self._dragNode.attr('cy'); });
 
         self._dragLine = self._dragGroup.append('line')
-          .attr('x2', function(d) { return self._dragNode.attr('cx'); })
-          .attr('y2', function(d) { return self._dragNode.attr('cy'); });
+          .attr('x2', function(d) { return x; })
+          .attr('y2', function(d) { return y; });
 
         self.update();
       })
 
       //
-      // Drag
+      // Drag move.
       //
       .on('drag', function(d) {
-        // TODO(burdon): Relative to center.
-        let [ mx, my ] = d3.mouse(self._root);
+        let [ x, y ] = d3.mouse(self._root);
 
         self._dragCircle
-          .attr('cx', function(d) { return mx; })
-          .attr('cy', function(d) { return my; });
+          .attr('cx', function(d) { return x; })
+          .attr('cy', function(d) { return y; });
 
         self._dragLine
-          .attr('x2', function(d) { return mx; })
-          .attr('y2', function(d) { return my; });
+          .attr('x2', function(d) { return x; })
+          .attr('y2', function(d) { return y; });
       })
 
       //
-      // End
+      // Drag end.
       //
       .on('end', function(d) {
         d3.select(this).classed('orb-active', false);
+        let [ x, y ] = d3.mouse(self._root);
+        self._lastPosition = { x, y };
 
         // Callback.
         // TODO(burdon): Provide mouse position to drop new node.
@@ -330,6 +327,10 @@ class DragController {
         self._dragLine = null;
         self._dropNode = null;
       });
+  }
+
+  lastPosition() {
+    return this._lastPosition;
   }
 
   // Called when force updates (since drag node may have moved).

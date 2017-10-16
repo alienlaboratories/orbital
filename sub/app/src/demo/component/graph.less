@@ -11,17 +11,19 @@
     circle {
       fill: lightgray;
 
-      &.orb-active {
-        stroke: darkblue;
-        stroke-width: 2px;
-      }
-
       &.orb-selected {
         fill: lightskyblue;
       }
 
       &.orb-drag {
         fill: white;
+        stroke: red;
+        stroke-width: 2px;
+      }
+    }
+
+    &.orb-active {
+      circle {
         stroke: darkblue;
         stroke-width: 2px;
       }

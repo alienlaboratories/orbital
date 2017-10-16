@@ -131,7 +131,6 @@ export class Graph extends React.Component {
     // TODO(burdon): On resize.
     let center = { x: root.clientWidth / 2, y: root.clientHeight / 2 };
     this._simulation.force('center', d3.forceCenter(center.x, center.y));
-    console.log(center);
   }
 
   handleRender(root) {
@@ -279,8 +278,8 @@ class DragController {
         self._dragCircle = self._dragGroup.append('circle')
           .classed('orb-drag', true)
           .attr('r', function(d) { return 5; })
-          .attr('cx', function(d) { return self._dragNode.attr('cx'); })
-          .attr('cy', function(d) { return self._dragNode.attr('cy'); });
+          .attr('cx', function(d) { return x; })
+          .attr('cy', function(d) { return y; });
 
         self._dragLine = self._dragGroup.append('line')
           .attr('x2', function(d) { return x; })

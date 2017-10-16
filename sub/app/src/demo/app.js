@@ -120,6 +120,14 @@ class Header extends React.Component {
   }
 }
 
+class DomainsPanel extends React.Component {
+  render() {
+    return (
+      <div className="orb-domains-panel">Domains</div>
+    );
+  }
+}
+
 class Application extends React.Component {
 
   static childContextTypes = {
@@ -143,11 +151,14 @@ class Application extends React.Component {
           <div className="orb-x-panel orb-expand">
             <div className="app-sidebar orb-panel">
               <div className="orb-panel orb-expand">
-                <ListContainer className="app-list orb-expand"
-                               pollInterval={ pollInterval }
-                               queryId="list"/>
+                <DomainsPanel/>
 
-                <EditorContainer/>
+                <div className="orb-panel orb-expand">
+                  <ListContainer className="app-list orb-expand"
+                                 pollInterval={ pollInterval }
+                                 queryId="list"/>
+                  <EditorContainer/>
+                </div>
               </div>
             </div>
 

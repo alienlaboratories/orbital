@@ -94,8 +94,6 @@ export const GraphContainer = compose(
     props: ({ ownProps, mutate }) => {
       return {
         onDrop: (event) => {
-          console.log('Drop', JSON.stringify(event));
-
           let { source, target } = event;
           if (source === target) {
             return;

@@ -6,35 +6,37 @@
 
   cursor: crosshair;
 
-  circle.orb-node {
-    fill: lightgray;
+  g.orb-node {
 
-    &.orb-active {
-      stroke: darkblue;
-      stroke-width: 2px;
+    circle {
+      fill: lightgray;
+
+      &.orb-active {
+        stroke: darkblue;
+        stroke-width: 2px;
+      }
+
+      &.orb-selected {
+        fill: lightskyblue;
+      }
+
+      &.orb-drag {
+        fill: white;
+        stroke: darkblue;
+        stroke-width: 2px;
+      }
     }
 
-    &.orb-selected {
-      fill: lightskyblue;
+    text {
+      font-family: 'Roboto', Arial, Helvetica, sans-serif;
+      font-weight: normal;
+      stroke-width: .1;
+      font-size: 12px;
     }
-  }
-
-  circle.orb-drag {
-    fill: white;
-    stroke: darkblue;
-    stroke-width: 2px;
   }
 
   line {
     stroke: darkblue;
     stroke-width: 1px;
-  }
-
-  text {
-    stroke: #323232;
-    font-family: "Lucida Grande", "Droid Sans", Arial, Helvetica, sans-serif;
-    font-weight: normal;
-    stroke-width: .5;
-    font-size: 14px;
   }
 }

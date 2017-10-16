@@ -20,7 +20,7 @@ type QueryResult {
 
 type RootQuery {
   status: StatusResult!
-  domains: [Domain]
+#  domains: [Domain]
   query(query: QueryInput!): QueryResult!
 }
 

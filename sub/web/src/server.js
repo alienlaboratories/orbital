@@ -4,7 +4,7 @@
 
 import _ from 'lodash';
 import bodyParser from 'body-parser';
- import express from 'express';
+import express from 'express';
 import favicon from 'serve-favicon';
 import handlebars from 'express-handlebars';
 import path from 'path';
@@ -27,14 +27,15 @@ const config = {
 };
 
 /**
- * Create App.
- *
- * @param {Function} init
+ * Initialize App.
  */
-export const createApp = init => {
-  let app = express();
+export const init = (app) => {
 
-  init(app);
+  // TODO(burdon): Break into routers.
+
+  //
+  app.use(bodyParser.urlencoded({ extended: false }));
+  app.use(bodyParser.json());
 
   //
   // Static files.
@@ -44,9 +45,6 @@ export const createApp = init => {
   app.use(favicon(path.join(ENV.STATIC_DIR, 'favicon.ico')));
 
   app.use('/static', express.static(ENV.STATIC_DIR));
-
-  app.use(bodyParser.urlencoded({ extended: false }));
-  app.use(bodyParser.json());
 
   //
   // Middleware.
@@ -96,24 +94,25 @@ export const createApp = init => {
   // Routes.
   //
 
-  app.get('/', (req, res) => {
-    res.render('home');
-  });
+  {
+    app.get('/', (req, res) => {
+      res.render('home');
+    });
 
-  app.get('/app', (req, res) => {
-    let { pollInterval } = req.apiGateway.event.queryStringParameters || {};
-    res.render('app', _.merge({}, config, {
-      appConfig: {
-        pollInterval: parseInt(pollInterval) || 0
-      }
-    }));
-  });
+    app.get('/app', (req, res) => {
+      let { pollInterval } = req.apiGateway.event.queryStringParameters || {};
+      res.render('app', _.merge({}, config, {
+        appConfig: {
+          pollInterval: parseInt(pollInterval) || 0
+        }
+      }));
+    });
 
-  app.get('/debug', (req, res) => {
-    res.json(req.apiGateway.event);
-  });
+    app.get('/debug', (req, res) => {
+      res.json(req.apiGateway.event);
+    });
+  }
 
-  // TODO(burdon): From beta; separate service to handle OAuth callback, etc.
   {
     let loginRouter = express.Router();
 

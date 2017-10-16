@@ -9,6 +9,7 @@ brew update
 
 brew install cask
 
+brew cask install dynamodb-local
 brew cask install java
 brew cask install minikube
 brew cask install virtualbox

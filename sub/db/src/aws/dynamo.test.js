@@ -30,6 +30,8 @@ async function config(baseDir) {
 // TODO(burdon): Large (non-unit) test. Use testing service domain.
 test('AWS config.', async () => {
   return config(ENV.CONFIG_DIR).then(config => {
+    _.set(config, 'aws.endpoint', 'http://localhost:8000');
+
     AWSUtil.config(config, ENV.AWS_USER);
 
     const count = 3;

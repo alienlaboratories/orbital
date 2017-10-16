@@ -22,18 +22,29 @@
 
 # TODO(burdon): Move to admin CLI?
 
+ENDPOINT=""
+
+ENDPOINT=0
+
 for i in "$@"
 do
 case $i in
+
+  --local)
+  ENDPOINT="--endpoint-url http://localhost:8000"
+  ;;
+
   delete)
   echo "Deleting (can take a minute...)"
-  aws dynamodb delete-table --table-name Items
+  aws dynamodb delete-table ${ENDPOINT} --table-name Items
   ;;
+
   create)
-  aws dynamodb create-table --cli-input-json file://./config/items.json
+  aws dynamodb create-table ${ENDPOINT} --cli-input-json file://./config/items.json
   ;;
+
   list)
-  aws dynamodb list-tables
+  aws dynamodb list-tables ${ENDPOINT}
   ;;
 esac
 done

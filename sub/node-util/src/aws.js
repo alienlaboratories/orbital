@@ -22,7 +22,8 @@ export class AWSUtil {
     AWS.config.update({
       region: _.get(config, 'aws.region'),
       accessKeyId: _.get(config, `aws.users.${user}.aws_access_key_id`),
-      secretAccessKey: _.get(config, `aws.users.${user}.aws_secret_access_key`)
+      secretAccessKey: _.get(config, `aws.users.${user}.aws_secret_access_key`),
+      endpoint: _.get(config, 'aws.endpoint')
     });
   }
 

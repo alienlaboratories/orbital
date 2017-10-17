@@ -17,6 +17,7 @@ const NodeQuery = gql`
     result: query(query: $query) {
       items {
         key {
+          domain
           type
           id
         }
@@ -30,9 +31,10 @@ export const ListContainer = compose(
 
   ReduxUtil.connect({
     mapStateToProps: (state, ownProps) => {
-      let { selectedItem } = AppReducer.state(state);
+      let { activeDomains, selectedItem } = AppReducer.state(state);
 
       return {
+        activeDomains,
         selectedKey: selectedItem
       };
     },
@@ -48,10 +50,13 @@ export const ListContainer = compose(
 
   graphql(NodeQuery, {
     options: (props) => {
-      let { pollInterval } = props;
+      let { activeDomains, pollInterval } = props;
+
       return {
         variables: {
-          query: {}
+          query: {
+            domains: activeDomains
+          }
         },
         pollInterval
       };

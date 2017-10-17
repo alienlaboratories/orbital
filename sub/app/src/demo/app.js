@@ -65,6 +65,14 @@ export class Application extends React.Component {
 
     // TODO(burdon): Router.
 
+    const nodeClassMapper = (key) => {
+      let { domain='_' } = key;
+      let parts = domain.split('/');
+      if (parts.length === 2) {
+        return 'app-domain-' + parts[1];
+      }
+    };
+
     return (
       <ApolloProvider client={ client } store={ store }>
         <div className="orb-panel orb-expand">
@@ -84,7 +92,8 @@ export class Application extends React.Component {
               </div>
             </div>
 
-            <GraphContainer className="orb-expand" pollInterval={ pollInterval } queryId="graph"/>
+            <GraphContainer className="orb-expand" pollInterval={ pollInterval } queryId="graph"
+                            nodeClassMapper={ nodeClassMapper }/>
           </div>
 
           <StatusContainer className="app-status-bar"/>

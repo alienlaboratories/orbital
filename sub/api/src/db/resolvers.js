@@ -47,12 +47,15 @@ export class Resolvers {
       Item: {
 
         items: (obj, args, context) => {
-          let { items } = obj;
+          let { key, items } = obj;
 
           // TODO(burdon): Query for items with ID.
           return _.map(items, encodedKey => {
+            let itemKey = ID.decodeKey(encodedKey);
+            itemKey.domain = key.domain;
+
             return {
-              key: ID.decodeKey(encodedKey)
+              key: itemKey
             };
           });
         }

@@ -42,18 +42,6 @@ scalar Timestamp
 scalar JSON
 
 #===================================================================================================
-# TODO(burdon): Use
-# TODO(burdon): Move Item def here?
-#===================================================================================================
-
-input KeyInput {
-  namespace:  String        # External namespace (query provider).
-  bucket:     String        # ID of User or Group (null for system item).
-  type:       String!
-  id:         ID!
-}
-
-#===================================================================================================
 # Directives
 # TODO(burdon): Directives (for subscriptions, links, etc.)
 # https://dev-blog.apollodata.com/new-features-in-graphql-batch-defer-stream-live-and-subscribe-7585d0c28b07

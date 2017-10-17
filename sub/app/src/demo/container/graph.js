@@ -20,12 +20,14 @@ const GraphQuery = gql`
     result: query(query: $query) {
       items {
         key {
+          domain
           type
           id
         }
         title
         items {
           key {
+            domain
             type
             id
           }
@@ -40,12 +42,14 @@ const UpdateMutation = gql`
     result: update(batches: $batches) {
       items {
         key {
+          domain
           type
           id
         }
         title
         items {
           key {
+            domain
             type
             id
           }
@@ -59,9 +63,11 @@ export const GraphContainer = compose(
 
   ReduxUtil.connect({
     mapStateToProps: (state, ownProps) => {
-      let { selectedItem } = AppReducer.state(state);
+      let { activeDomains, selectedDomain, selectedItem } = AppReducer.state(state);
 
       return {
+        activeDomains,
+        selectedDomain,
         selectedKey: selectedItem
       };
     }
@@ -70,10 +76,12 @@ export const GraphContainer = compose(
   graphql(GraphQuery, {
 
     options: (props) => {
-      let { pollInterval } = props;
+      let { activeDomains, pollInterval } = props;
       return {
         variables: {
-          query: {}
+          query: {
+            domains: activeDomains
+          }
         },
         pollInterval
       };
@@ -92,10 +100,22 @@ export const GraphContainer = compose(
   graphql(UpdateMutation, {
 
     props: ({ ownProps, mutate }) => {
+      let { selectedDomain } = ownProps;
+
       return {
         onDrop: (event) => {
           let { source, target } = event;
           if (source === target) {
+            return;
+          }
+
+          if (source.domain !== selectedDomain) {
+            console.warn('Invalid domain');
+            return;
+          }
+
+          if (target && source.domain !== target.domain) {
+            console.warn('Unmatched domains:', source.domain, target.domain);
             return;
           }
 
@@ -104,6 +124,7 @@ export const GraphContainer = compose(
           // Create item.
           if (!target) {
             target = {
+              domain: source.domain,
               type: source.type,
               id: ID.createId()
             };
@@ -142,6 +163,7 @@ export const GraphContainer = compose(
             variables: {
               batches: [
                 {
+                  domain: selectedDomain,
                   mutations
                 }
               ]

@@ -14,6 +14,12 @@ type Key {
   id:         ID!         # GUID
 }
 
+input KeyInput {
+  domain:     String
+  type:       String!
+  id:         ID!
+}
+
 #
 # Graph Node.
 # TODO(burdon): Meta type for timestamp, version, foreign-keys, etc.

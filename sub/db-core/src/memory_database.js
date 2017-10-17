@@ -6,6 +6,7 @@ import _ from 'lodash';
 import assert from 'assert';
 
 import { Transforms } from 'orbital-db-core';
+import { TypeUtil } from 'orbital-util';
 
 import { Database } from './database';
 
@@ -20,12 +21,16 @@ export class Shard {
     this._nodeMap = new Map();
   }
 
+  toString() {
+    return `Shard("${this._domain}", ${this._nodeMap.size})`;
+  }
+
   get domain() {
     return this._domain;
   }
 
   queryNodes(query) {
-    return Array.from(this._nodeMap.values());
+    return _.map(Array.from(this._nodeMap.values()), item => TypeUtil.clone(item));
   }
 
   updateNode(key, mutations) {
@@ -39,7 +44,7 @@ export class Shard {
 
     Transforms.applyObjectMutations({}, node, mutations);
 
-    return node;
+    return TypeUtil.clone(node);
   }
 
   clearNodes() {
@@ -55,13 +60,15 @@ export class MemoryDatabase extends Database {
   _shardMap = new Map();
 
   _getOrCreateShard(domain) {
-    let schard = this._shardMap.get(domain);
-    if (!schard) {
-      schard = new Shard(domain);
-      this._shardMap.set(domain, schard);
+    console.assert(_.isString(domain));
+    let shard = this._shardMap.get(domain);
+    if (!shard) {
+      shard = new Shard(domain);
+      this._shardMap.set(domain, shard);
+      console.log('Created', shard.toString());
     }
 
-    return schard;
+    return shard;
   }
 
   test() {
@@ -80,26 +87,40 @@ export class MemoryDatabase extends Database {
       // TODO(burdon): Data model.
       // TODO(burdon): Merge (items should have a map of domain specific sub-items).
       let items = shard.queryNodes(query);
+
       _.each(items, item => {
+        _.set(item, 'key.domain', domain);
+
         itemMap.set(item.key.id, item);
       });
+
+//    console.log('QUERY', shard.toString(), '=>', _.size(items));
     });
 
+    let items = Array.from(itemMap.values());
+
     return Promise.resolve({
-      items: Array.from(itemMap.values())
+      items
     });
   }
 
   update(batches) {
     return Promise.resolve(_.map(batches, batch => {
       let { domain=Database.DEFAULT_DOMAIN, mutations } = batch;
+
       let shard = this._getOrCreateShard(domain);
 
+      let items = _.map(mutations, mutation => {
+        let { key, mutations } = mutation;
+        let item = shard.updateNode(key, mutations);
+        _.set(item, 'key.domain', domain);
+        return item;
+      });
+
+//    console.log('UPDATED', shard.toString());
+
       return {
-        items: _.map(mutations, mutation => {
-          let { key, mutations } = mutation;
-          return shard.updateNode(key, mutations);
-        })
+        items
       };
     }));
   }

@@ -17,11 +17,6 @@ import { List } from '../component/list';
  */
 export class DomainsPanel extends React.Component {
 
-  // TODO(burdon): Util.
-  static encodeUri(uri) {
-    return uri.replace('.', '_');
-  }
-
   // TODO(burdon): PropTypes.
 
   handleCreate() {
@@ -52,7 +47,7 @@ export class DomainsPanel extends React.Component {
         </div>
 
         <List className="app-domains-list"
-              keyMapper={ ({ uri }) => DomainsPanel.encodeUri(uri) }
+              keyMapper={ ({ uri }) => uri }
               renderer={ ListItem }
               items={ domains }
               selectedKey={ selectedDomain }

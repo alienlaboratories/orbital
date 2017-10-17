@@ -66,7 +66,6 @@ export class Graph extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    let { fixed } = this.state;
     let { items } = nextProps;
 
     // TODO(burdon): Note type-specific adapter (e.g., links from properties).
@@ -135,6 +134,7 @@ export class Graph extends React.Component {
 
   handleRender(root) {
     let { nodes=[], links=[] } = this.state;
+    let { nodeClassMapper } = this.props;
     let self = this;
 
     // TODO(burdon): Causes jitter.
@@ -166,7 +166,8 @@ export class Graph extends React.Component {
 
     let enter = nodeSelection.enter()
       .append('svg:g')
-      .attr('class', 'orb-node')
+      .attr('class', function(d) { return 'orb-node ' + (nodeClassMapper && nodeClassMapper(d.key)); })
+      // .attr('class', 'orb-node')
 
       // TODO(burdon): Scope by graph's ID to make unique. Change to data/datum.
       // TODO(burdon): http://bl.ocks.org/hugolpz/824446bb2f9bc8cce607
@@ -187,7 +188,7 @@ export class Graph extends React.Component {
     // Nodes
     enter
       .append('svg:circle')
-      .classed('orb-node', true)
+      // .classed('orb-node', true)
       .attr('r', function(d) { return 20; });
 
     // Labels

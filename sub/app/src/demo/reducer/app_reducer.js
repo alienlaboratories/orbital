@@ -44,7 +44,7 @@ export class AppReducer {
 
   _state = {
     selectedItem: null,
-    selectedDomain: null,
+    selectedDomain: '_',
     activeDomains: [ '_' ]
   };
 
@@ -63,7 +63,7 @@ export class AppReducer {
 
         case AppReducer.ACTION_DOMAIN_SELECT: {
           let { uri } = action;
-          return _.assign({}, state, { selectedDomain: uri });
+          return _.assign({}, state, { selectedDomain: uri || '_' });
         }
 
         case AppReducer.ACTION_DOMAIN_STATE: {

@@ -29,18 +29,17 @@ export class DomainsPanel extends React.Component {
   }
 
   render() {
-    let { domains, domainStates, selectedDomain, onSelect, onChange } = this.props;
+    let { domains, activeDomains, selectedDomain, onSelect, onChange } = this.props;
 
     const ListItem = ({ item, onClick }) => {
       let { uri, name } = item;
 
-      let key = DomainsPanel.encodeUri(uri);
-      let checked = _.get(domainStates, key, false);
+      let checked = _.indexOf(activeDomains, uri) !== -1;
 
       return (
         <div className="orb-x-panel">
-          <input type="checkbox" checked={ checked } onChange={ () => { onChange(key, !checked); } }/>
-          <div onClick={ onClick }>{ name }</div>
+          <input type="checkbox" checked={ checked } onChange={ () => { onChange(uri, !checked); } }/>
+          <div className="orb-expand" onClick={ onClick }>{ name }</div>
         </div>
       );
     };
@@ -76,17 +75,17 @@ export const DomainsContainer = compose(
 
   ReduxUtil.connect({
     mapStateToProps: (state, ownProps) => {
-      let { selectedDomain, domainStates } = AppReducer.state(state);
+      let { selectedDomain, activeDomains } = AppReducer.state(state);
 
       return {
-        selectedDomain, domainStates
+        selectedDomain, activeDomains
       };
     },
 
     mapDispatchToProps: (dispatch, ownProps) => {
       return {
-        onChange: (key, state) => {
-          dispatch(AppReducer.setDomainState(key, state));
+        onChange: (key, active) => {
+          dispatch(AppReducer.selectedActive(key, active));
         },
         onSelect: (key) => {
           dispatch(AppReducer.selectDomain(key));

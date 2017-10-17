@@ -47,19 +47,18 @@ export class Graph extends React.Component {
     // http://blockbuilder.org/tarekrached/a7628dd96c62155068dd
 
     this._simulation = d3.forceSimulation()
-      // TODO(burdon): ???
-      .alphaTarget(0.1)
+      .alphaTarget(0.1)                                       // TODO(burdon): Docment.
 
-      .force('charge', d3.forceManyBody().strength(-500))
+      .force('charge', d3.forceManyBody().strength(-1000))
 
       .force('link', d3.forceLink()
-        .id(function(d) { return ID.encodeKey(d.key); })     // How to identify nodes (must be string).
+        .id(function(d) { return ID.encodeKey(d.key); })      // How to identify nodes (must be string).
         .distance(100)
         .strength(1))
 
-        // TODO(burdon): ???
-      // .force('x', d3.forceX())
-      // .force('y', d3.forceY())
+      // TODO(burdon): Gravity.
+      .force('x', d3.forceX())
+      .force('y', d3.forceY())
 
       .on('tick', this.handleTick.bind(this));
 
@@ -67,6 +66,7 @@ export class Graph extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    let { fixed } = this.state;
     let { items } = nextProps;
 
     // TODO(burdon): Note type-specific adapter (e.g., links from properties).

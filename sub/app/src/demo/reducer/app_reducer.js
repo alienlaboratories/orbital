@@ -2,8 +2,6 @@
 // Copyright 2017 Alien Labs.
 //
 
-import { TypeUtil } from 'orbital-util';
-
 /**
  * Main App reducer.
  */
@@ -29,27 +27,25 @@ export class AppReducer {
     };
   }
 
-  static selectDomain(key) {
+  static selectDomain(uri) {
     return {
       type: AppReducer.ACTION_DOMAIN_SELECT,
-      key
+      uri
     };
   }
 
-  static setDomainState(key, state) {
+  static selectedActive(uri, active) {
     return {
       type: AppReducer.ACTION_DOMAIN_STATE,
-      key,
-      state
+      uri,
+      active
     };
   }
 
   _state = {
     selectedItem: null,
     selectedDomain: null,
-    domainStates: {
-      _: true
-    }
+    activeDomains: [ '_' ]
   };
 
   get state() {
@@ -66,13 +62,22 @@ export class AppReducer {
         }
 
         case AppReducer.ACTION_DOMAIN_SELECT: {
-          let { key } = action;
-          return _.assign({}, state, { selectedDomain: key });
+          let { uri } = action;
+          return _.assign({}, state, { selectedDomain: uri });
         }
 
         case AppReducer.ACTION_DOMAIN_STATE: {
-          let { key, state:domainState } = action;
-          return _.merge({}, state, { domainStates: { [key]: domainState } });
+          let { uri, active } = action;
+          let { activeDomains } = state;
+
+          let domains;
+          if (active) {
+            domains = _.union(activeDomains, [uri]);
+          } else {
+            domains = _.without(activeDomains, uri);
+          }
+
+          return _.assign({}, state, { activeDomains: domains });
         }
       }
 

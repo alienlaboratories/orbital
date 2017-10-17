@@ -9,7 +9,7 @@ import { Chance } from 'chance';
 import { ID, ReduxUtil } from 'orbital-util';
 
 import { Graph } from '../component/graph';
-import { subscribe } from './subscription';
+import { subscribe } from '../framework/subscription';
 import { AppReducer } from '../reducer/app_reducer';
 
 const chance = new Chance();

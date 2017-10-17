@@ -8,7 +8,7 @@ import { compose, graphql } from 'react-apollo';
 import { ReduxUtil } from 'orbital-util';
 
 import { List } from '../component/list';
-import { subscribe } from './subscription';
+import { subscribe } from '../framework/subscription';
 import { AppReducer } from '../reducer/app_reducer';
 
 // TODO(burdon): Factor out query.
@@ -26,7 +26,6 @@ const NodeQuery = gql`
   }
 `;
 
-
 export const ListContainer = compose(
 
   ReduxUtil.connect({
@@ -40,7 +39,7 @@ export const ListContainer = compose(
 
     mapDispatchToProps: (dispatch, ownProps) => {
       return {
-        selectItem: (key) => {
+        onSelect: (key) => {
           dispatch(AppReducer.selectItem(key));
         }
       };
@@ -60,10 +59,11 @@ export const ListContainer = compose(
 
     props: ({ ownProps, data }) => {
       let { errors, loading, refetch, result={} } = data;
+      let { items } = result;
 
       // TODO(burdon): Util to wrap standard data params.
       return {
-        errors, loading, refetch, result
+        errors, loading, refetch, items
       };
     }
   }

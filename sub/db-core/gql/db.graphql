@@ -21,9 +21,7 @@ type Key {
 
 type Item {
   key:        Key!
-
   title:      String!
-
   items:      [Item]      # TODO(burdon): Type specific.
 }
 
@@ -33,6 +31,6 @@ type Item {
 #
 
 type Domain {
-  domain:   String!
-  name:     String!
+  uri:        String!
+  name:       String!
 }

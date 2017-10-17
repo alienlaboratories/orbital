@@ -70,71 +70,6 @@ input, textarea {
   line-height: 0;
 }
 
-//
-// App-specific.
-//
-
-@ux-scrollbar-width:        4px;
-@ux-scrollbar-height:       8px;
-@ux-scrollbar-color:        #666;
-@ux-scrollbar-background:   transparent;
-
-.app-sidebar {
-  width: 200px;
-}
-
-.app-list {
-  overflow-y: scroll;
-  background-color: #6cc38f;
-
-  &::-webkit-scrollbar {
-    width: @ux-scrollbar-width;
-    height: @ux-scrollbar-height;
-    background-color: @ux-scrollbar-background;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background-color: @ux-scrollbar-color;
-  }
-
-  div.orb-selected {
-    background-color: lightskyblue;
-  }
-
-  div {
-    padding: 6px 12px;
-    font-size: large;
-    cursor: pointer;
-    overflow: hidden;
-  }
-  div:hover {
-    background-color: lightgreen;
-  }
-}
-
-.orb-domains-panel {
-  flex-shrink: 0;
-  height: 200px;
-  background-color: lighten(#6cc38f, 10%);
-
-  > .orb-x-panel {
-    background-color: lighten(#6cc38f, 5%);
-
-    h2 {
-      padding: 6px 12px;
-      font-variant: all-small-caps;
-    }
-    i {
-      display: flex;
-      align-items: center;
-      margin-right: 8px;
-      font-size: 24px;
-    }
-    i:hover {}
-
-  }
-}
-
 i.orb-icon {
   .material-icons;
 }
@@ -152,8 +87,96 @@ i.orb-icon-add:active:after {
 }
 
 //
-// App layout specific.
+// Theme
 //
+
+@ux-scrollbar-width:        4px;
+@ux-scrollbar-height:       8px;
+@ux-scrollbar-color:        #666;
+@ux-scrollbar-background:   transparent;
+
+.orb-list {
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    width: @ux-scrollbar-width;
+    height: @ux-scrollbar-height;
+    background-color: @ux-scrollbar-background;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: @ux-scrollbar-color;
+  }
+
+  > .orb-list-item {
+    &.orb-selected {
+      background-color: lightskyblue;
+    }
+
+    &:hover {
+      background-color: lightgreen;
+    }
+  }
+}
+
+//
+// App-specific.
+//
+
+.app-sidebar {
+  width: 200px;
+}
+
+.app-items-list {
+  background-color: #6cc38f;
+
+  > .orb-list-item {
+    overflow: hidden;
+    padding: 6px 12px;
+
+    font-size: large;
+    cursor: pointer;
+  }
+}
+
+.app-domains-panel {
+  flex-shrink: 0;
+  height: 200px;
+  background-color: lighten(#6cc38f, 10%);
+
+  > .orb-x-panel {
+    background-color: lighten(#6cc38f, 5%);
+
+    h2 {
+      padding: 6px 12px;
+      font-variant: all-small-caps;
+    }
+    i {
+      display: flex;
+      align-items: center;
+      margin-right: 8px;
+      font-size: 24px;
+    }
+  }
+
+  .app-domains-list {
+    > .orb-list-item {
+      overflow: hidden;
+      padding: 6px 12px;
+
+      font-size: large;
+      cursor: pointer;
+
+      > div {
+        align-items: center;
+
+        input {
+          margin-right: 8px;
+        }
+      }
+    }
+  }
+}
 
 .app-status-bar {
   text-align: center;

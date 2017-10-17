@@ -21,8 +21,8 @@ export class Graph extends React.Component {
   // https://bl.ocks.org/syntagmatic/c334d4293b72a2d1b8827c70e88d4d4f
 
   static propTypes = {
-    selectedItem: PropTypes.object,
-    onDrop:       PropTypes.func
+    selectedItem:   PropTypes.string,
+    onDrop:         PropTypes.func
   };
 
   constructor() {
@@ -50,7 +50,7 @@ export class Graph extends React.Component {
       // TODO(burdon): ???
       .alphaTarget(0.1)
 
-      .force('charge', d3.forceManyBody().strength(-100))
+      .force('charge', d3.forceManyBody().strength(-500))
 
       .force('link', d3.forceLink()
         .id(function(d) { return ID.encodeKey(d.key); })     // How to identify nodes (must be string).
@@ -204,10 +204,9 @@ export class Graph extends React.Component {
     // Selection
     //
 
-    // TODO(burdon): Rename key.
     let { selectedItem } = this.props;
     this._nodeGroup.selectAll('circle')
-      .classed('orb-selected', d => d.key.id === _.get(selectedItem, 'id'));
+      .classed('orb-selected', d => ID.encodeKey(d.key) === selectedItem);
   }
 
   handleTick() {

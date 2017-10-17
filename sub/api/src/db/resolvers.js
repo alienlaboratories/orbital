@@ -67,9 +67,22 @@ export class Resolvers {
           };
         },
 
-        // domains: (obj, args, context) => {
-        //   return [];
-        // },
+        domains: (obj, args, context) => {
+          return [
+            {
+              uri: '_',
+              name: 'Default'
+            },
+            {
+              uri: 'example.com/red',
+              name: 'Red'
+            },
+            {
+              uri: 'example.com/blue',
+              name: 'Blue'
+            }
+          ];
+        },
 
         query: (obj, args, context) => {
           let { query } = args;

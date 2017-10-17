@@ -37,6 +37,7 @@ export class TypeUtil {
   /**
    * Deep merge including concatenation of arrays.
    */
+  // TODO(burdon): Merge objects.
   static deepMerge() {
     return _.mergeWith(...arguments, (obj, src) => {
       if (_.isArray(obj)) {

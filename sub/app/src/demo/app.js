@@ -6,8 +6,8 @@ import PropTypes from 'prop-types';
 import { ApolloProvider } from 'react-apollo';
 import React from 'react';
 
-import { DomainsPanel, EditorContainer, GraphContainer, ListContainer, StatusContainer } from './container';
-import { QueryManager } from './container/subscription';
+import { DomainsContainer, EditorContainer, GraphContainer, ListContainer, StatusContainer } from './container';
+import { QueryManager } from './framework/subscription';
 
 import './app.less';
 
@@ -73,10 +73,10 @@ export class Application extends React.Component {
           <div className="orb-x-panel orb-expand">
             <div className="app-sidebar orb-panel">
               <div className="orb-panel orb-expand">
-                <DomainsPanel/>
+                <DomainsContainer queryId="domains"/>
 
                 <div className="orb-panel orb-expand">
-                  <ListContainer className="app-list orb-expand"
+                  <ListContainer className="app-items-list orb-expand"
                                  pollInterval={ pollInterval }
                                  queryId="list"/>
                   <EditorContainer/>

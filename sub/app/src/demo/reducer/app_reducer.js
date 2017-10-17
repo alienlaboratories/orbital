@@ -47,7 +47,9 @@ export class AppReducer {
   _state = {
     selectedItem: null,
     selectedDomain: null,
-    domainStates: {}
+    domainStates: {
+      _: true
+    }
   };
 
   get state() {
@@ -70,10 +72,7 @@ export class AppReducer {
 
         case AppReducer.ACTION_DOMAIN_STATE: {
           let { key, state:domainState } = action;
-          let { domainStates } = state;
-          // TODO(burdon): TypeUtil merge?
-          _.set(domainStates, key, domainState);
-          return _.assign({}, state, { domainStates });
+          return _.merge({}, state, { domainStates: { [key]: domainState } });
         }
       }
 

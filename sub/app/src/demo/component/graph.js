@@ -21,7 +21,7 @@ export class Graph extends React.Component {
   // https://bl.ocks.org/syntagmatic/c334d4293b72a2d1b8827c70e88d4d4f
 
   static propTypes = {
-    selectedItem:   PropTypes.string,
+    selectedKey:    PropTypes.string,
     onDrop:         PropTypes.func
   };
 
@@ -204,9 +204,9 @@ export class Graph extends React.Component {
     // Selection
     //
 
-    let { selectedItem } = this.props;
+    let { selectedKey } = this.props;
     this._nodeGroup.selectAll('circle')
-      .classed('orb-selected', d => ID.encodeKey(d.key) === selectedItem);
+      .classed('orb-selected', d => ID.encodeKey(d.key) === selectedKey);
   }
 
   handleTick() {

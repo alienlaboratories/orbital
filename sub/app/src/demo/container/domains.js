@@ -17,52 +17,46 @@ import { List } from '../component/list';
  */
 export class DomainsPanel extends React.Component {
 
-  static Renderer = (onChange) => (item, attrs) => {
-    let { key, label, active=false } = attrs;
+  // TODO(burdon): Util.
+  static encodeUri(uri) {
+    return uri.replace('.', '_');
+  }
 
-    console.log(key, attrs);
-
-    const onToggle = (event) => {
-      event.stopPropagation();                  // TODO(burdon): Prevents redraw? Prevent bubbling of click.
-      onChange(key, !active);
-    };
-
-    return (
-      <div className="orb-x-panel">
-        <input type="checkbox" checked={ active } onClick={ onToggle }/>
-        <div>{ label }</div>
-      </div>
-    );
-  };
+  // TODO(burdon): PropTypes.
 
   handleCreate() {
     console.log('Create domain');
   }
 
   render() {
-    let { domains, selectedDomain, domainStates, onSelect, onChange } = this.props;
+    let { domains, domainStates, selectedDomain, onSelect, onChange } = this.props;
 
-    console.log('!!!!!!!!');
+    const ListItem = ({ item, onClick }) => {
+      let { uri, name } = item;
 
-    const mapper = (item) => {
-      let { uri, name:label } = item;
-      let key = uri.replace('.', '_');          // TODO(burdon): Encode URI.
-      let active = _.get(domainStates, key);
-      return { key, label, active };
+      let key = DomainsPanel.encodeUri(uri);
+      let checked = _.get(domainStates, key, false);
+
+      return (
+        <div className="orb-x-panel">
+          <input type="checkbox" checked={ checked } onChange={ () => { onChange(key, !checked); } }/>
+          <div onClick={ onClick }>{ name }</div>
+        </div>
+      );
     };
 
     return (
       <div className="app-domains-panel">
         <div className="orb-x-panel">
           <h2 className="orb-expand">Domains</h2>
-          <i className="orb-icon orb-icon-add" onClick={this.handleCreate.bind(this)}/>
+          <i className="orb-icon orb-icon-add" onClick={ this.handleCreate.bind(this) }/>
         </div>
 
         <List className="app-domains-list"
-              mapper={ mapper }
-              renderer={ DomainsPanel.Renderer(onChange) }
+              keyMapper={ ({ uri }) => DomainsPanel.encodeUri(uri) }
+              renderer={ ListItem }
               items={ domains }
-              selectedItem={ selectedDomain }
+              selectedKey={ selectedDomain }
               onSelect={ onSelect }/>
       </div>
     );

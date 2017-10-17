@@ -33,7 +33,7 @@ export const ListContainer = compose(
       let { selectedItem } = AppReducer.state(state);
 
       return {
-        selectedItem
+        selectedKey: selectedItem
       };
     },
 

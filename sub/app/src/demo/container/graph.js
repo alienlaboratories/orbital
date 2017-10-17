@@ -62,7 +62,7 @@ export const GraphContainer = compose(
       let { selectedItem } = AppReducer.state(state);
 
       return {
-        selectedItem
+        selectedKey: selectedItem
       };
     }
   }),

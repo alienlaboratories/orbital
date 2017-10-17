@@ -3,7 +3,6 @@
 MILESTONE:
 
 - [x] Domains List (checkbox and selector with Redux state)
-  - Prevent bubble on checkbox
   
 - [ ] Configure query with domains attribute
 - [ ] DynamoDB Domain Table (test local)

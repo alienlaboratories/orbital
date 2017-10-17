@@ -58,7 +58,8 @@ export class Matcher {
     }
 
     // Matches given IDs.
-    if (filter.ids && _.indexOf(filter.ids, item.id) !== -1) {
+    // TODO(burdon): Keys?
+    if (filter.ids && _.indexOf(filter.ids, item.key.id) !== -1) {
       return true;
     }
 

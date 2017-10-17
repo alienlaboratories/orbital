@@ -41,7 +41,7 @@ module.exports = {
 
   entry: {
     'app': [
-      path.resolve(__dirname, './src/demo/app.js')
+      path.resolve(__dirname, './src/demo/main.js')
     ]
   },
 

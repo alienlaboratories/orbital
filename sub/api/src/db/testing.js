@@ -2,41 +2,71 @@
 // Copyright 2017 Alien Labs.
 //
 
+import _ from 'lodash';
+import { Chance } from 'chance';
 import { graphql } from 'graphql';
 import { print } from 'graphql/language/printer';
 
 import { MemoryDatabase } from 'orbital-db-core';
+import { ID } from 'orbital-util';
 
 import { createSchema } from './resolvers';
+
+const chance = new Chance();
 
 /**
  * Test data generator.
  */
 export class TestDataGenerator {
 
-  _counter = 0;
-
   constructor(database) {
     console.assert(database);
     this._database = database;
   }
 
-  addItems(count=20) {
-    let mutations = _.times(count, i => {
-      this._counter++;
+  // TODO(burdon): Query existing to link.
+  async addItems(count=20) {
+    const TYPE = 'test';
+
+    // TODO(burdon): Query to link existing items.
+    // let result = await this._database.query();
+
+    let ids = _.times(count, () => {
+      return ID.createId();
+    });
+
+    let mutations = _.map(ids, nodeId => {
+
+      // TODO(burdon): Check creates a closed graph.
+      let linkId = ids[chance.natural({ min: 0, max: ids.length - 1 })];
+      // if (linkId === nodeId) {
+      // }
+
+      let mutations = [
+        {
+          field: 'title',
+          value: {
+            string: chance.name()
+          }
+        },
+        {
+          field: 'items',
+          value: {
+            set: [{           // TODO(burdon): Set or scalar?
+              value: {
+                string: ID.encodeKey({ type: TYPE, id: linkId })
+              }
+            }]
+          }
+        }
+      ];
+
       return {
         key: {
-          type: 'test',
-          id: `I-${this._counter}`,
+          type: TYPE,
+          id: nodeId,
         },
-        mutations: [
-          {
-            field: 'title',
-            value: {
-              string: `Item ${this._counter}`
-            }
-          }
-        ]
+        mutations
       };
     });
 
@@ -46,8 +76,7 @@ export class TestDataGenerator {
       }
     ];
 
-    this._database.update(batches);
-    return this;
+    return this._database.update(batches);
   }
 }
 

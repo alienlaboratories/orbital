@@ -1,6 +1,13 @@
 {
   "presets": [
-    "env",
+    ["env", {
+      "debug": false,
+      "targets": {
+        "browser": "chrome"
+      },
+      "useBuiltIns": true
+    }],
+
     "flow",
     "react",
     "stage-0"

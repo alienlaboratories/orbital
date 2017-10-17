@@ -45,7 +45,7 @@ const items = _.keyBy([
     title: 'Test matcher.',
     labels: ['foo']
   }
-], item => item.id);
+], item => item.key.id);
 
 /**
  * Match buckets.

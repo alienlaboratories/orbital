@@ -2,6 +2,8 @@
 // Copyright 2017 Alien Labs.
 //
 
+@import './material';
+
 body {
   margin: 0;
   font-family: Roboto, Ariel, sans-serif;
@@ -113,9 +115,45 @@ input, textarea {
 .orb-domains-panel {
   flex-shrink: 0;
   height: 200px;
-  padding: 12px;
   background-color: lighten(#6cc38f, 10%);
+
+  > .orb-x-panel {
+    background-color: lighten(#6cc38f, 5%);
+
+    h2 {
+      padding: 6px 12px;
+      font-variant: all-small-caps;
+    }
+    i {
+      display: flex;
+      align-items: center;
+      margin-right: 8px;
+      font-size: 24px;
+    }
+    i:hover {}
+
+  }
 }
+
+i.orb-icon {
+  .material-icons;
+}
+
+i.orb-icon-add:after {
+  content: 'add';
+  color: #666;
+}
+i.orb-icon-add:hover:after {
+  color: #333;
+}
+i.orb-icon-add:active:after {
+  content: 'add_circle';
+  color: #333;
+}
+
+//
+// App layout specific.
+//
 
 .app-status-bar {
   text-align: center;

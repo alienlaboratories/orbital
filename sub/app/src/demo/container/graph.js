@@ -128,11 +128,11 @@ export const GraphContainer = compose(
               {
                 field: 'items',
                 value: {
-                  set: {
+                  set: [{
                     value: {
                       string: ID.encodeKey(target)
                     }
-                  }
+                  }]
                 }
               }
             ]

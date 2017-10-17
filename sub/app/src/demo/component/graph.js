@@ -50,7 +50,7 @@ export class Graph extends React.Component {
       // TODO(burdon): ???
       .alphaTarget(0.1)
 
-      .force('charge', d3.forceManyBody().strength(-1000))
+      .force('charge', d3.forceManyBody().strength(-100))
 
       .force('link', d3.forceLink()
         .id(function(d) { return ID.encodeKey(d.key); })     // How to identify nodes (must be string).

@@ -2,99 +2,18 @@
 // Copyright 2017 Alien Labs.
 //
 
-import { ApolloClient, createNetworkInterface } from 'apollo-client';
 import PropTypes from 'prop-types';
 import { ApolloProvider } from 'react-apollo';
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 
-import { TestDataGenerator, TestNetworkInterface } from 'orbital-api/testing';
-
-import { EditorContainer, GraphContainer, ListContainer, StatusContainer } from './container';
+import { DomainsPanel, EditorContainer, GraphContainer, ListContainer, StatusContainer } from './container';
 import { QueryManager } from './container/subscription';
-import { AppReducer } from './reducer/app_reducer';
 
 import './app.less';
-
-const config = window.config;
-let { rootId, apiRoot, network } = config;
-
-// TODO(burdon): TypeScript/Flow
-// http://dev.apollodata.com/react/using-with-types.html
-// http://dev-blog.apollodata.com/a-stronger-typed-react-apollo-c43bd52be0d8
-// http://discuss.reactjs.org/t/if-typescript-is-so-great-how-come-all-notable-reactjs-projects-use-babel/4887
-
-// TODO(burdon): Router.
-
-// TODO(burdon): Async set-up. App class.
-
-//
-// Apollo network interface.
-//
-
-let networkInterface;
-switch (network) {
-  case 'local': {
-    networkInterface = new TestNetworkInterface();
-    let generator = new TestDataGenerator(networkInterface.database).addItems(10);
-    setInterval(() => {
-      generator.addItems(1);
-    }, 5000);
-    break;
-  }
-
-  default: {
-    // http://dev.apollodata.com/core/network.html#createNetworkInterface
-    networkInterface = createNetworkInterface({
-      uri: apiRoot + '/db'
-    });
-  }
-}
-
-//
-// Apollo client.
-// http://dev.apollodata.com/core/apollo-client-api.html#constructor
-//
-
-const client = new ApolloClient({
-  networkInterface,
-  queryDeduplication: true
-});
-
-//
-// Redux.
-// http://dev.apollodata.com/react/redux.html
-// TODO(burdon): Add reducers and get state.
-// TODO(burdon): connect() state (use util from beta to make object).
-//
-
-const appReducer = new AppReducer();
-
-const store = createStore(
-  combineReducers({
-    apollo: client.reducer(),
-    [AppReducer.NS]: appReducer.reducer()
-  }),
-  {
-    [AppReducer.NS]: appReducer.state
-  },
-  compose(
-    applyMiddleware(client.middleware()),
-
-    // TODO(burdon): Devtools.
-    (typeof window.__REDUX_DEVTOOLS_EXTENSION__ !== 'undefined') ? window.__REDUX_DEVTOOLS_EXTENSION__() : f => f
-  )
-);
-
-//
-// Root App.
-//
 
 /**
  * Header component.
  */
-// TODO(burdon): Factor out.
 class Header extends React.Component {
 
   static contextTypes = {
@@ -110,7 +29,7 @@ class Header extends React.Component {
 
   render() {
     return (
-      <div className="orb-x-panel orb-toolbar">
+      <div className="orb-toolbar">
         <div className="orb-expand"/>
         <div>
           <button onClick={ this.handleRefetch.bind(this) }>Refresh</button>
@@ -120,15 +39,16 @@ class Header extends React.Component {
   }
 }
 
-class DomainsPanel extends React.Component {
-  render() {
-    return (
-      <div className="orb-domains-panel">Domains</div>
-    );
-  }
-}
+/**
+ * Main App Router.
+ */
+export class Application extends React.Component {
 
-class Application extends React.Component {
+  static propTypes = {
+    config: PropTypes.object.isRequired,
+    client: PropTypes.object.isRequired,
+    store: PropTypes.object.isRequired
+  };
 
   static childContextTypes = {
     queryManager: PropTypes.object.isRequired
@@ -141,7 +61,9 @@ class Application extends React.Component {
   }
 
   render() {
-    let { config: { pollInterval }, client } = this.props;
+    let { config: { pollInterval }, client, store } = this.props;
+
+    // TODO(burdon): Router.
 
     return (
       <ApolloProvider client={ client } store={ store }>
@@ -171,9 +93,3 @@ class Application extends React.Component {
     );
   }
 }
-
-ReactDOM.render(
-  <Application
-    config={ config }
-    client={ client }/>,
-  document.getElementById(rootId));

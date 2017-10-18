@@ -26,7 +26,10 @@ export class Editor extends React.Component {
     let { createItem } = this.props;
     let { text } = this.state;
 
-    createItem(text);
+    // TODO(burdon): Async?
+    if (_.size(text)) {
+      createItem(text);
+    }
 
     this.setState({
       text: ''
@@ -52,6 +55,7 @@ export class Editor extends React.Component {
 
   render() {
     let { text } = this.state;
+
     return (
       <div className="orb-toolbar">
         <input type="text" className="orb-expand" value={text}
@@ -60,7 +64,7 @@ export class Editor extends React.Component {
                onKeyDown={this.handleKeyDown.bind(this)}
                ref={node => this._input = node}/>
 
-        <button onClick={this.handleCreate.bind(this)}>Create</button>
+        <i className="orb-icon orb-icon-add" onClick={this.handleCreate.bind(this)}/>
       </div>
     );
   }

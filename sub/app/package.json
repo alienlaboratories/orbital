@@ -30,6 +30,7 @@
     "lodash": "^4.17.4",
     "orbital-api": "0.0.1",
     "orbital-util": "0.0.1",
+    "orbital-ux": "0.0.1",
     "popsicle": "^9.1.0",
     "prop-types": "^15.6.0",
     "react": "^16.0.0",

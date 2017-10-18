@@ -45,7 +45,10 @@ export const Database = (config) => {
         aliases: ['dom'],
         describe: 'List domains.',
         handler: argv => {
-          argv._result = db.domains();
+          argv._result = db.domains().then(result => {
+            console.log();
+            console.log(JSON.stringify(result, null, 2));
+          });
         }
       })
 

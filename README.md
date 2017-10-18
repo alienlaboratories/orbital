@@ -40,6 +40,10 @@ https://www.orbitaldb.com
 - `module initialization error: ReferenceError`
   - Check babel configuration (e.g., missing plugin to adapt to browser/node version.)
 
+### Runtime
+- `Unable to import module 'handler': Error`
+  - Ensure packate.json up-to-date.
+
 
 ## IDEAS
 
@@ -48,3 +52,6 @@ https://www.orbitaldb.com
 - Serverless Plugins
   - https://github.com/serverless/serverless#plugins-v10
   
+// TODO(burdon): Swagger (OpenAPI)
+// https://swagger.io/specification
+// https://github.com/boazdejong/serverless-graphql-api

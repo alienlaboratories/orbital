@@ -125,14 +125,25 @@ i.orb-icon-add:active:after {
 
 .app-sidebar {
   width: 200px;
+  background-color: lighten(#6cc38f, 20%);
+
+  .orb-header {
+    padding: 4px 12px;
+    background-color: #6cc38f;
+    color: black;
+  }
+
+  h2 {
+    font-variant: all-small-caps;
+    font-size: 20px;
+  }
 }
 
 .app-items-list {
-  background-color: #6cc38f;
 
   > .orb-list-item {
     overflow: hidden;
-    padding: 6px 12px;
+    padding: 4px 12px;
 
     font-size: large;
     cursor: pointer;
@@ -141,20 +152,12 @@ i.orb-icon-add:active:after {
 
 .app-domains-panel {
   flex-shrink: 0;
-  height: 200px;
-  background-color: lighten(#6cc38f, 10%);
 
   > .orb-x-panel {
-    background-color: lighten(#6cc38f, 5%);
 
-    h2 {
-      padding: 6px 12px;
-      font-variant: all-small-caps;
-    }
     i {
       display: flex;
       align-items: center;
-      margin-right: 8px;
       font-size: 24px;
     }
   }
@@ -191,19 +194,19 @@ g.orb-node {
 
   &.app-domain-red {
     circle {
-      fill: lighten(red, 40%);
+      fill: lighten(darkred, 40%);
     }
   }
 
   &.app-domain-green {
     circle {
-      fill: lighten(green, 40%);
+      fill: lighten(darkgreen, 20%);
     }
   }
 
   &.app-domain-blue {
     circle {
-      fill: lighten(blue, 40%);
+      fill: lighten(darkblue, 40%);
     }
   }
 

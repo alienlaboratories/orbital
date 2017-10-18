@@ -20,7 +20,7 @@ export class ApiClient {
       url,
 
       headers: {
-        'User-Agent':     'orbital-cli',
+        'User-Agent':     'orbital',
         'Content-Type':   'application/json',
         'Accept':         '*/*',
 

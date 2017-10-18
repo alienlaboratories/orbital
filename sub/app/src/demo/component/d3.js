@@ -5,7 +5,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import { DomUtil, ReactUtil } from 'orbital-util';
+import { DomUtil, ReactUtil } from 'orbital-ux';
 
 /**
  * D3 canvas.

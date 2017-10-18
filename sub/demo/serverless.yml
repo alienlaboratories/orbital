@@ -1,0 +1,56 @@
+#
+# Copyright 2017 Alien Labs.
+#
+
+#
+# Config:
+# https://serverless.com/framework/docs/providers/aws/guide/serverless.yml
+#
+# Console:
+# https://console.aws.amazon.com/lambda/home?region=us-east-1#/functions?display=list
+#
+
+service: orbital-demo
+
+
+provider:
+  name: aws
+  runtime: nodejs6.10
+  region: us-east-1
+
+  stage: dev
+
+  environment:
+    SERVICE_NAME:   ${self:service}
+    VERSION:        "0.0.1"
+
+
+plugins:
+
+  # sls offline start
+  # https://www.npmjs.com/package/serverless-offline
+  - "serverless-offline"
+
+  # sls info --json | jq
+  # https://www.npmjs.com/package/serverless-plugin-info-json
+  - "serverless-plugin-info-json"
+
+  # Webpack
+  # https://www.npmjs.com/package/serverless-webpack
+  - "serverless-webpack"
+
+
+custom:
+  webpack: "webpack.config.js"
+
+
+functions:
+
+  status:
+    handler: handler.status
+    description: "Demo service."
+    events:
+      - http:
+          path: status
+          method: get
+          cors: true

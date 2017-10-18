@@ -65,7 +65,7 @@ export class DB { // TODO(burdon): Rename DatabaseClient.
     const query = `
       query DomainsQuery {
         domains {
-          domain
+          uri
           name
         }
       }

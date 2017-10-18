@@ -1,0 +1,6 @@
+{
+  "//": "sls invoke --local -f site -p testing/login.json | jq",
+
+  "path":         "/status",
+  "httpMethod":   "GET"
+}

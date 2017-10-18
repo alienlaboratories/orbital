@@ -63,7 +63,8 @@ module.exports = {
           path.resolve('.'),
           path.resolve(__dirname, '../api'),
           path.resolve(__dirname, '../db-core'),
-          path.resolve(__dirname, '../util')
+          path.resolve(__dirname, '../util'),
+          path.resolve(__dirname, '../ux')
         ],
         use: {
           loader: 'babel-loader',

@@ -16,9 +16,6 @@ import { createSchema as createRegistrySchema } from './src/registry/resolvers';
 
 import { MemoryServiceRegistry } from './src/registry/registry';
 
-// TODO(burdon): Swagger (OpenAPI)
-// https://swagger.io/specification
-
 const HEADERS = {
   'Content-Type': 'application/json',
   'Access-Control-Allow-Origin': '*',         // Required for CORS support to work.
@@ -39,10 +36,16 @@ async function config(baseDir) {
   };
 }
 
+// TODO(burdon): Verbose config.
+const verbose = false;
+
 // Initialization promise.
 const Init = config(ENV.CONFIG_DIR).then(config => {
-  console.log('ENV:', JSON.stringify(ENV, null, 2));
-  console.log('CONFIG:', JSON.stringify(config, null, 2));
+
+  if (verbose) {
+    console.log('ENV:', JSON.stringify(ENV, null, 2));
+    console.log('CONFIG:', JSON.stringify(config, null, 2));
+  }
 
   let database;
   switch (ENV.DATABASE) {
@@ -58,7 +61,9 @@ const Init = config(ENV.CONFIG_DIR).then(config => {
     }
   }
 
-  console.log('Database:', database);
+  if (verbose) {
+    console.log('Database:', database);
+  }
 
   return {
     DatabaseSchema: createDatabaseSchema(database),
@@ -67,8 +72,6 @@ const Init = config(ENV.CONFIG_DIR).then(config => {
 });
 
 module.exports = {
-
-  // https://github.com/boazdejong/serverless-graphql-api
 
   /**
    * Status.
@@ -114,7 +117,6 @@ module.exports = {
   /**
    * Registry Service.
    */
-  // TODO(burdon): Factor out sub/registry.
   registry: (event, context, callback) => {
     let { functionName, awsRequestId } = context;
     console.log(JSON.stringify({ functionName, awsRequestId }));
@@ -150,7 +152,6 @@ module.exports = {
   /**
    * Database Service.
    */
-  // TODO(burdon): Factor out sub/db.
   database: (event, context, callback) => {
     let { functionName, awsRequestId } = context;
     console.log(JSON.stringify({ functionName, awsRequestId }));

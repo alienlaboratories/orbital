@@ -1,21 +1,27 @@
 # Projects
 
-MILESTONE:
+TODO(burdon): Move to github.
+
+## Milestone
 
 - [x] Domains List (checkbox and selector with Redux state)
-  
-- [ ] Configure query with domains attribute
-- [ ] DynamoDB Domain Table (test local)
+- [x] Configure query with domains attribute
+- [x] Graph Item colors (transparency)
+- [x] Local database support for domains
+
+- [ ] DynamoDB implementation:
+  - [ ] Move key.domain setting to resolver; don't write domain to links set
+  - [ ] DynamoDB Domain Table (test local)
+  - [ ] DynamoDB and Memory tests
+
 - [ ] Test service (create FK links for "merged" items)
-- [ ] Merge items in query processor
-- [ ] Graph Item colors (transparency)
+- [ ] Join items in query processor
 
+## Next
 
-NEXT:
+- [ ] Reg list API/panel?
 
 - [ ] Load data from CLI
-- [ ] Local database tests
-- [ ] Local database support for domains
 - [ ] Local Express server for API (CORS)
 
 - [ ] Graph positioning for multiple graphs

@@ -2,8 +2,10 @@
 // Copyright 2017 Alien Labs.
 //
 
+// https://github.com/serverless-heaven/serverless-webpack
+// https://github.com/serverless-heaven/serverless-webpack#node-modules--externals
+
 const path = require('path');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
 
@@ -15,17 +17,6 @@ module.exports = {
     ]
   },
 
-  // Copy static files to deployment (available locally to Lambda functions).
-  // unzip -vl .serverless/web.zip
-  plugins: [
-    new CopyWebpackPlugin([
-      {
-        from: '../../config',
-        to: 'config'
-      }
-    ])
-  ],
-
   externals: {
     // 'aws-sdk': 'AWS'
   },
@@ -36,11 +27,7 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,    // Don't transpile deps.
         include: [
-          path.resolve('.'),
-          path.resolve(__dirname, '../db'),
-          path.resolve(__dirname, '../db-core'),
-          path.resolve(__dirname, '../node-util'),
-          path.resolve(__dirname, '../util')
+          path.resolve('.')
         ],
         use: {
           loader: 'babel-loader',

@@ -6,7 +6,7 @@ import React from 'react';
 import gql from 'graphql-tag';
 import { compose, graphql } from 'react-apollo';
 
-import { ReduxUtil } from 'orbital-util';
+import { ReduxUtil } from 'orbital-ux';
 
 import { subscribe } from '../framework/subscription';
 import { AppReducer } from '../reducer/app_reducer';
@@ -33,7 +33,7 @@ export class DomainsPanel extends React.Component {
 
       return (
         <div className="orb-x-panel">
-          <input type="checkbox" checked={ checked } onChange={ () => { onChange(uri, !checked); } }/>
+          <input type="checkbox" className="orb-checkbox" checked={ checked } onChange={ () => { onChange(uri, !checked); } }/>
           <div className="orb-expand" onClick={ onClick }>{ name }</div>
         </div>
       );
@@ -41,7 +41,7 @@ export class DomainsPanel extends React.Component {
 
     return (
       <div className="app-domains-panel">
-        <div className="orb-x-panel">
+        <div className="orb-x-panel orb-header">
           <h2 className="orb-expand">Domains</h2>
           <i className="orb-icon orb-icon-add" onClick={ this.handleCreate.bind(this) }/>
         </div>

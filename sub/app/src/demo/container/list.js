@@ -5,7 +5,7 @@
 import gql from 'graphql-tag';
 import { compose, graphql } from 'react-apollo';
 
-import { ReduxUtil } from 'orbital-util';
+import { ReduxUtil } from 'orbital-ux';
 
 import { List } from '../component/list';
 import { subscribe } from '../framework/subscription';

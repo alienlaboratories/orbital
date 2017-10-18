@@ -5,7 +5,8 @@
 import gql from 'graphql-tag';
 import { compose, graphql } from 'react-apollo';
 
-import { ID, ReduxUtil } from 'orbital-util';
+import { ID } from 'orbital-util';
+import { ReduxUtil } from 'orbital-ux';
 
 import { Editor } from '../component/editor';
 import { AppReducer } from '../reducer/app_reducer';

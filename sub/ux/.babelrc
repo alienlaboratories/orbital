@@ -1,0 +1,14 @@
+{
+  "presets": [
+    ["env", {
+      "debug": false,
+      "targets": {
+        "browser": "chrome"
+      },
+      "useBuiltIns": true
+    }],
+
+    "react",
+    "stage-0"
+  ]
+}

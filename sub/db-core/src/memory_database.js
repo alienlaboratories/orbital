@@ -89,9 +89,10 @@ export class MemoryDatabase extends Database {
       let items = shard.queryNodes(query);
 
       _.each(items, item => {
-        _.set(item, 'key.domain', domain);
-
         itemMap.set(item.key.id, item);
+
+        // TODO(burdon): Move to resolver?
+        _.set(item, 'key.domain', domain);
       });
 
 //    console.log('QUERY', shard.toString(), '=>', _.size(items));
@@ -113,7 +114,10 @@ export class MemoryDatabase extends Database {
       let items = _.map(mutations, mutation => {
         let { key, mutations } = mutation;
         let item = shard.updateNode(key, mutations);
+
+        // TODO(burdon): Move to resolver?
         _.set(item, 'key.domain', domain);
+
         return item;
       });
 

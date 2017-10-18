@@ -1,0 +1,32 @@
+{
+  "name": "orbital-ux",
+  "version": "0.0.1",
+  "description": "Orbital UX.",
+  "license": "UNLICENSED",
+  "repository": "https://github.com/alienlabs/orbital",
+  "main": "index.js",
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.24.1",
+    "babel-jest": "^21.0.2",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-stage-0": "^6.24.1"
+  },
+  "dependencies": {
+    "lodash": "^4.17.4",
+    "react": "^16.0.0",
+    "react-redux": "^5.0.6",
+    "redux": "^3.7.2"
+  },
+  "jest": {
+    "verbose": false,
+    "cacheDirectory": "/tmp/jest",
+    "transformIgnorePatterns": [
+      "/node_modules/(?!orbital-)"
+    ]
+  },
+  "scripts": {
+    "lint": "eslint -c ../../eslintrc.yml ./src",
+    "test": "jest --no-cache --silent"
+  }
+}

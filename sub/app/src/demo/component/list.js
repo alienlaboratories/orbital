@@ -6,7 +6,8 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import { DomUtil, ID, ReactUtil } from 'orbital-util';
+import { ID } from 'orbital-util';
+import { DomUtil, ReactUtil } from 'orbital-ux';
 
 /**
  * List of items.

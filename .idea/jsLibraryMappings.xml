@@ -2,6 +2,7 @@
 <project version="4">
   <component name="JavaScriptLibraryMappings">
     <file url="PROJECT" libraries="{jest-DefinitelyTyped, lodash-DefinitelyTyped, node-DefinitelyTyped}" />
+    <includedPredefinedLibrary name="Node.js Core" />
     <excludedPredefinedLibrary name="orbital/sub/db/node_modules" />
   </component>
 </project>

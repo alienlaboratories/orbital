@@ -84,9 +84,14 @@ export class Application extends React.Component {
                 <DomainsContainer queryId="domains"/>
 
                 <div className="orb-panel orb-expand">
+                  <div className="orb-x-panel orb-header">
+                    <h2 className="orb-expand">Items</h2>
+                  </div>
+
                   <ListContainer className="app-items-list orb-expand"
                                  pollInterval={ pollInterval }
                                  queryId="list"/>
+
                   <EditorContainer/>
                 </div>
               </div>

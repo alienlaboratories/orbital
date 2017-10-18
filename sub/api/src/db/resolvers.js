@@ -81,6 +81,10 @@ export class Resolvers {
               name: 'Red'
             },
             {
+              uri: 'example.com/green',
+              name: 'Green'
+            },
+            {
               uri: 'example.com/blue',
               name: 'Blue'
             }

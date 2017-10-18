@@ -6,7 +6,7 @@ import gql from 'graphql-tag';
 import React from 'react';
 import { compose, graphql } from 'react-apollo';
 
-import { ReactUtil } from 'orbital-util';
+import { ReactUtil } from 'orbital-ux';
 
 /**
  * Statusbar.

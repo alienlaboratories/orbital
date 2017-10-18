@@ -4,12 +4,14 @@
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/dist" />
       <excludeFolder url="file://$MODULE_DIR$/sub/api/.serverless" />
+      <excludeFolder url="file://$MODULE_DIR$/sub/api/.webpack" />
       <excludeFolder url="file://$MODULE_DIR$/sub/api/dist" />
       <excludeFolder url="file://$MODULE_DIR$/sub/api/node_modules" />
       <excludeFolder url="file://$MODULE_DIR$/sub/app/client" />
       <excludeFolder url="file://$MODULE_DIR$/sub/app/dist" />
       <excludeFolder url="file://$MODULE_DIR$/sub/cli/dist" />
-      <excludeFolder url="file://$MODULE_DIR$/sub/services/.webpack" />
+      <excludeFolder url="file://$MODULE_DIR$/sub/demo/.serverless" />
+      <excludeFolder url="file://$MODULE_DIR$/sub/demo/dist" />
       <excludeFolder url="file://$MODULE_DIR$/sub/util/node_modules" />
       <excludeFolder url="file://$MODULE_DIR$/sub/web/.serverless" />
       <excludeFolder url="file://$MODULE_DIR$/sub/web/.webpack" />

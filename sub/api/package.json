@@ -14,10 +14,13 @@
     "babel-preset-stage-0": "^6.24.1",
     "copy-webpack-plugin": "^4.1.1",
     "serverless-offline": "^3.16.0",
-    "serverless-plugin-info-json": "^1.0.1"
+    "serverless-plugin-info-json": "^1.0.1",
+    "webpack-node-externals": "^1.6.0"
   },
   "dependencies": {
     "aws-serverless-express": "^3.0.2",
+    "babel-polyfill": "^6.26.0",
+    "babel-runtime": "^6.26.0",
     "chance": "^1.0.11",
     "graphql": "^0.11.3",
     "graphql-server-express": "^1.1.2",
@@ -28,7 +31,9 @@
     "moment": "^2.18.1",
     "node-yaml": "^3.1.1",
     "orbital-db": "0.0.1",
-    "orbital-db-core": "0.0.1"
+    "orbital-db-core": "0.0.1",
+    "orbital-node-util": "0.0.1",
+    "orbital-util": "0.0.1"
   },
   "peerDependencies": {
     "graphql": "^0.11.3"

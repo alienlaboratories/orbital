@@ -87,7 +87,7 @@ export class DB { // TODO(burdon): Rename DatabaseClient.
    *
    * @return {*}
    */
-  query() {
+  query(queryInput={}) {
     let { verbose } = this._config;
 
     const query = `
@@ -95,12 +95,15 @@ export class DB { // TODO(burdon): Rename DatabaseClient.
         result: query(query: $query) {
           items {
             key {
+              domain
               type
               id
             }
             title
             items {
               key {
+                domain
+                type
                 id
               }
             }
@@ -110,7 +113,7 @@ export class DB { // TODO(burdon): Rename DatabaseClient.
     `;
 
     let variables = {
-      query: {}
+      query: queryInput
     };
 
     return this._client.query(query, variables, { verbose }).then(response => {
@@ -126,10 +129,11 @@ export class DB { // TODO(burdon): Rename DatabaseClient.
 
   /**
    *
+   * @param {String} domain
    * @param items
    * @return {*}
    */
-  update(items) {
+  update(domain, items) {
     let { verbose } = this._config;
 
     const query = `
@@ -137,6 +141,7 @@ export class DB { // TODO(burdon): Rename DatabaseClient.
         result: update(batches: $batches) {              
           items {
             key {
+              domain
               type
               id
             }
@@ -149,6 +154,7 @@ export class DB { // TODO(burdon): Rename DatabaseClient.
     let variables = {
       batches: [
         {
+          domain,
           mutations: _.map(items, item => {
             let { type='test', title } = item;        // TODO(burdon): Default type.
 

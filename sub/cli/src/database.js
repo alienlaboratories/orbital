@@ -32,8 +32,13 @@ export const Database = (config) => {
     describe: 'Graph Database API.',
     builder: yargs => yargs
 
+      .option('domain', {
+        alias: 'd',
+      })
+
       .command({
         command: 'status',
+        aliases: ['stat'],
         describe: 'DB Status.',
         handler: argv => {
           argv._result = db.status();
@@ -57,7 +62,12 @@ export const Database = (config) => {
         aliases: ['q'],
         describe: 'Query items.',
         handler: argv => {
-          argv._result = db.query().then(result => {
+          let { domain } = argv;
+          let query = domain ? {
+            domains: _.size(domain) === 1 ? [domain] : domain
+          } : {};
+
+          argv._result = db.query(query).then(result => {
             let { items } = result;
             console.log();
             log(items);
@@ -69,8 +79,8 @@ export const Database = (config) => {
         command: 'create <title>',
         describe: 'Update node.',
         handler: argv => {
-          let { type='test', title } = argv;
-          argv._result = db.update([
+          let { domain, type='test', title } = argv;      // TODO(burdon): Default type.
+          argv._result = db.update(domain, [
             {
               type,
               title

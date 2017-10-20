@@ -132,7 +132,7 @@ export class DynamoDatabase extends Database {
                 Transforms.applyObjectMutations({}, data, mutations);
 
                 let record = {
-                  'DomainUri': AWSUtil.Property.S(Database.DEFAULT_DOMAIN),
+                  'DomainUri': AWSUtil.Property.S(domain),
                   'ItemKey': AWSUtil.Property.S(ID.encodeKey(key)),
                   'Data': AWSUtil.Property.S(JSON.stringify(data))
                 };

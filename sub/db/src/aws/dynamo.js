@@ -133,7 +133,7 @@ export class DynamoDatabase extends Database {
 
                 let record = {
                   'DomainUri': AWSUtil.Property.S(domain),
-                  'ItemKey': AWSUtil.Property.S(ID.encodeKey(key)),
+                  'ItemKey': AWSUtil.Property.S(ID.encodeKey(_.omit(key, 'domain'))),
                   'Data': AWSUtil.Property.S(JSON.stringify(data))
                 };
 
@@ -158,8 +158,7 @@ export class DynamoDatabase extends Database {
     return Promise.all(promises);
   }
 
-  clear() {
-    let { domain=Database.DEFAULT_DOMAIN } = {};
+  clear(domain=Database.DEFAULT_DOMAIN) {
 
     // TODO(burdon): Page query (max 1M results).
     // http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Query.html#Query.Pagination
@@ -180,7 +179,6 @@ export class DynamoDatabase extends Database {
       let chunks = _.chunk(_.get(result, 'Items'), DynamoDatabase.MAX_BATCH_SIZE);
 
       return Promise.all(_.map(chunks, items => {
-
         return AWSUtil.promisify(callback => {
 
           // http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB.html#batchWriteItem-property
@@ -201,7 +199,6 @@ export class DynamoDatabase extends Database {
             }
           }, callback);
         });
-
       }));
     });
   }

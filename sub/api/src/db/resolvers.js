@@ -71,21 +71,23 @@ export class Resolvers {
         },
 
         domains: (obj, args, context) => {
+          const domain = 'exapmle.com';
+
           return [
             {
               uri: '_',
               name: 'Default'
             },
             {
-              uri: 'example.com/red',
+              uri: domain + '/red',
               name: 'Red'
             },
             {
-              uri: 'example.com/green',
+              uri: domain + '/green',
               name: 'Green'
             },
             {
-              uri: 'example.com/blue',
+              uri: domain + '/blue',
               name: 'Blue'
             }
           ];

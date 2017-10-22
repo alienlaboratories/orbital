@@ -48,7 +48,7 @@ export class Database {
    *
    * @return {Promise}
    */
-  clear() {
+  clear(domain) {
     throw new Error('Not implemented');
   }
 }

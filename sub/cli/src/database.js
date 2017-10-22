@@ -5,18 +5,18 @@
 import _ from 'lodash';
 
 import { Orb } from 'orbital-api';
-import { ID } from 'orbital-util';
 
 // TODO(burdon): Util.
 const log = (items) => {
-  const col = 48;
+  const col = 100;
 
-  console.log(_.padEnd('Key', col), 'Data');
-  console.log(_.padEnd('---', col, '-'), _.pad('---', col, '-'));
+  console.log(_.padEnd('Domain', 18), _.padEnd('Type', 8), _.padEnd('ID', 36), 'Data');
+  console.log(_.padEnd('-', 18, '-'), _.padEnd('-', 8, '-'), _.padEnd('-', 36, '-'),
+    _.padEnd('-', col - (18 + 8 + 36 + 3), '-'));
 
   _.each(items, item => {
-    let { key } = item;
-    console.log(_.padEnd(ID.encodeKey(key), col), JSON.stringify(_.omit(item, 'key')));
+    let { key: { domain, type, id } } = item;
+    console.log(_.padEnd(domain, 18), _.padEnd(type, 8), _.padEnd(id, 36), JSON.stringify(_.omit(item, 'key')));
   });
 };
 
@@ -97,7 +97,8 @@ export const Database = (config) => {
         command: 'clear',
         describe: 'Clear graph.',
         handler: argv => {
-          argv._result = db.clear();
+          let { domain } = argv;
+          argv._result = db.clear(domain);
         }
       })
 

@@ -129,8 +129,8 @@ export class MemoryDatabase extends Database {
     }));
   }
 
-  clear() {
-    this._getOrCreateShard(Database.DEFAULT_DOMAIN).clearNodes();
+  clear(domain=Database.DEFAULT_DOMAIN) {
+    this._getOrCreateShard(domain).clearNodes();
 
     return Promise.resolve();
   }

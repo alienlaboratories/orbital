@@ -192,7 +192,7 @@ export class DB { // TODO(burdon): Rename DatabaseClient.
    *
    * @return {*}
    */
-  clear() {
+  clear(domain) {
     let { verbose } = this._config;
 
     const query = `
@@ -201,7 +201,9 @@ export class DB { // TODO(burdon): Rename DatabaseClient.
       }
     `;
 
-    let variables = {};
+    let variables = {
+      domain
+    };
 
     return this._client.query(query, variables, { verbose }).then(response => {
       let { errors, data } = response;
